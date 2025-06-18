@@ -213,67 +213,6 @@ namespace CSharpGenerator
 
         public static ColorPalette mesenPalette = new ColorPalette(mesenColors);
 
-        private static string filePath1;
-        public static string FilePath1
-        {
-            get { return filePath1; }
-            set { filePath1 = value; }
-        }
-
-        private static string filePath2;
-        public static string FilePath2
-        {
-            get { return filePath2; }
-            set { filePath2 = value; }
-        }
-
-        private static string filePath3;
-        public static string FilePath3
-        {
-            get { return filePath3; }
-            set { filePath3 = value; }
-        }
-
-        private static int size;
-        public static int Size
-        {
-            get { return size; }
-            set { size = value; }
-        }
-
-        private static int sideLength;
-        public static int SideLength
-        {
-            get { return sideLength; }
-            set { sideLength = value; }
-        }
-
-        private static string tintColor1;
-        public static string TintColor1
-        {
-            get { return tintColor1; }
-            set { tintColor1 = value; }
-        }
-
-        private static string tintColor2;
-        public static string TintColor2
-        {
-            get { return tintColor2; }
-            set { tintColor2 = value; }
-        }
-
-        private static bool invert;
-        public static bool Invert
-        {
-            get { return invert; }
-            set { invert = value; }
-        }
-
-        private static int tintWeight;
-        public static int TintWeight
-        {
-            get { return tintWeight; }
-            set { tintWeight = value; }
-        }
+        public static string FilePath { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace CSharpGenerator
     {
         public static Bitmap generateBitmap()
         {
-            Bitmap original = new Bitmap(GlobalVars.FilePath1);
+            Bitmap original = new Bitmap(GlobalVars.FilePath);
             if (original.Width > 1118 || original.Height > 720)
             {
                 float scaleFactor = Math.Max((float)original.Width / 1118, (float)original.Height / 720);
@@ -122,6 +122,46 @@ namespace CSharpGenerator
             }
 
             return targetPalette[colorIndex];
+        }
+
+        public static Bitmap drawPalette(string palette)
+        {
+            Color[] targetPalette = [];
+            if (palette == "NES")
+            {
+                targetPalette = GlobalVars.mesenColors;
+            }
+            if (palette == "Web Colors")
+            {
+                targetPalette = GlobalVars.webColors;
+            }
+            Bitmap bitmap = new Bitmap(224, 192);
+            int x = 0;
+            int y = 0;
+            // attempts to fill the preview area as much as possible based on the size of the palette
+            // the total available pixels are 224*192 = 43,008, but this number is reduced a bit
+            // to account for "wasted" pixel space since the dimensions won't always fill the 224 pixel width exactly
+            // 42,500 pixels divided by palette size is the area of each square, sqrt for the side length
+            int tileSize = (int)Math.Floor(Math.Sqrt(42500 / targetPalette.Length));
+            foreach (Color color in targetPalette)
+            {
+                // step through columns until it would overflow
+                if (x + tileSize < 224)
+                {
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
+                    }
+                    x += tileSize;
+                }
+                // step down a row
+                else
+                {
+                    x = 0;
+                    y += tileSize;
+                }
+            }
+            return bitmap;
         }
     }
 }

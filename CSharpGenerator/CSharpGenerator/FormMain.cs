@@ -16,18 +16,24 @@ namespace CSharpGenerator
                 Title = "Open image file"
             };
             openFileDialog1.ShowDialog(this);
-            GlobalVars.FilePath1 = openFileDialog1.FileName;
-            pictureBox1.Image = BitmapFunction.generateBitmap();
+            GlobalVars.FilePath = openFileDialog1.FileName;
+            labelFilePath.Text = $"Current file: {GlobalVars.FilePath}";
+            pictureBoxImage.Image = BitmapFunction.generateBitmap();
         }
 
         private void toolStripButtonReload_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = BitmapFunction.generateBitmap();
+            pictureBoxImage.Image = BitmapFunction.generateBitmap();
         }
 
         private void buttonPixelate_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = BitmapFunction.pixelateDrawing(pictureBox1.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
+            pictureBoxImage.Image = BitmapFunction.pixelateDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
+        }
+
+        private void comboBoxPalette_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pictureBoxPalette.Image = BitmapFunction.drawPalette(comboBoxPalette.Text);
         }
     }
 }

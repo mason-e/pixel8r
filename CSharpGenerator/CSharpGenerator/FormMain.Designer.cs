@@ -30,36 +30,40 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             openFileDialog1 = new OpenFileDialog();
-            pictureBox1 = new PictureBox();
+            pictureBoxImage = new PictureBox();
             buttonPixelate = new Button();
             comboBoxPalette = new ComboBox();
             labelPalette = new Label();
-            label1 = new Label();
+            labelAlgorithm = new Label();
             comboBoxAlgorithm = new ComboBox();
             toolStripMenu = new ToolStrip();
             toolStripButtonOpen = new ToolStripButton();
             toolStripButtonReload = new ToolStripButton();
             toolStripButtonSave = new ToolStripButton();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            labelFilePath = new Label();
+            pictureBoxPalette = new PictureBox();
+            labelPalettePreview = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
             SuspendLayout();
             // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // pictureBox1
+            // pictureBoxImage
             // 
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Location = new Point(255, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1118, 720);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            pictureBoxImage.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxImage.Location = new Point(255, 12);
+            pictureBoxImage.Name = "pictureBoxImage";
+            pictureBoxImage.Size = new Size(1118, 720);
+            pictureBoxImage.TabIndex = 2;
+            pictureBoxImage.TabStop = false;
             // 
             // buttonPixelate
             // 
-            buttonPixelate.Location = new Point(12, 150);
+            buttonPixelate.Location = new Point(12, 369);
             buttonPixelate.Name = "buttonPixelate";
             buttonPixelate.Size = new Size(84, 23);
             buttonPixelate.TabIndex = 35;
@@ -76,6 +80,7 @@
             comboBoxPalette.Name = "comboBoxPalette";
             comboBoxPalette.Size = new Size(121, 23);
             comboBoxPalette.TabIndex = 36;
+            comboBoxPalette.SelectedIndexChanged += comboBoxPalette_SelectedIndexChanged;
             // 
             // labelPalette
             // 
@@ -86,21 +91,21 @@
             labelPalette.TabIndex = 37;
             labelPalette.Text = "Select Palette";
             // 
-            // label1
+            // labelAlgorithm
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 89);
-            label1.Name = "label1";
-            label1.Size = new Size(95, 15);
-            label1.TabIndex = 39;
-            label1.Text = "Select Algorithm";
+            labelAlgorithm.AutoSize = true;
+            labelAlgorithm.Location = new Point(12, 308);
+            labelAlgorithm.Name = "labelAlgorithm";
+            labelAlgorithm.Size = new Size(95, 15);
+            labelAlgorithm.TabIndex = 39;
+            labelAlgorithm.Text = "Select Algorithm";
             // 
             // comboBoxAlgorithm
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
             comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Lowest Combined Diff", "HSV Lowest Combined Diff" });
-            comboBoxAlgorithm.Location = new Point(12, 107);
+            comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(156, 23);
             comboBoxAlgorithm.TabIndex = 38;
@@ -145,38 +150,71 @@
             toolStripButtonSave.Size = new Size(24, 22);
             toolStripButtonSave.Text = "Save Current Image As";
             // 
+            // labelFilePath
+            // 
+            labelFilePath.AutoSize = true;
+            labelFilePath.Location = new Point(255, 742);
+            labelFilePath.Name = "labelFilePath";
+            labelFilePath.Size = new Size(0, 15);
+            labelFilePath.TabIndex = 40;
+            // 
+            // pictureBoxPalette
+            // 
+            pictureBoxPalette.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxPalette.Location = new Point(12, 101);
+            pictureBoxPalette.Name = "pictureBoxPalette";
+            pictureBoxPalette.Size = new Size(224, 192);
+            pictureBoxPalette.TabIndex = 41;
+            pictureBoxPalette.TabStop = false;
+            // 
+            // labelPalettePreview
+            // 
+            labelPalettePreview.AutoSize = true;
+            labelPalettePreview.Location = new Point(12, 83);
+            labelPalettePreview.Name = "labelPalettePreview";
+            labelPalettePreview.Size = new Size(87, 15);
+            labelPalettePreview.TabIndex = 42;
+            labelPalettePreview.Text = "Palette Preview";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 766);
+            Controls.Add(labelPalettePreview);
+            Controls.Add(pictureBoxPalette);
+            Controls.Add(labelFilePath);
             Controls.Add(toolStripMenu);
-            Controls.Add(label1);
+            Controls.Add(labelAlgorithm);
             Controls.Add(comboBoxAlgorithm);
             Controls.Add(labelPalette);
             Controls.Add(comboBoxPalette);
             Controls.Add(buttonPixelate);
-            Controls.Add(pictureBox1);
+            Controls.Add(pictureBoxImage);
             Name = "FormMain";
             Text = "File to Image Generator";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxImage).EndInit();
             toolStripMenu.ResumeLayout(false);
             toolStripMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private OpenFileDialog openFileDialog1;
-        private PictureBox pictureBox1;
+        private PictureBox pictureBoxImage;
         private Button buttonPixelate;
         private ComboBox comboBoxPalette;
         private Label labelPalette;
-        private Label label1;
+        private Label labelAlgorithm;
         private ComboBox comboBoxAlgorithm;
         private ToolStrip toolStripMenu;
         private ToolStripButton toolStripButtonOpen;
         private ToolStripButton toolStripButtonReload;
         private ToolStripButton toolStripButtonSave;
+        private Label labelFilePath;
+        private PictureBox pictureBoxPalette;
+        private Label labelPalettePreview;
     }
 }
