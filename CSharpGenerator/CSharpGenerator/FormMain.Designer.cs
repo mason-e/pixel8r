@@ -161,9 +161,9 @@
             // pictureBoxPalette
             // 
             pictureBoxPalette.BorderStyle = BorderStyle.FixedSingle;
-            pictureBoxPalette.Location = new Point(12, 101);
+            pictureBoxPalette.Location = new Point(9, 101);
             pictureBoxPalette.Name = "pictureBoxPalette";
-            pictureBoxPalette.Size = new Size(224, 192);
+            pictureBoxPalette.Size = new Size(240, 192);
             pictureBoxPalette.TabIndex = 41;
             pictureBoxPalette.TabStop = false;
             // 
