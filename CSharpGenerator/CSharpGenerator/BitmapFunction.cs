@@ -135,18 +135,17 @@ namespace CSharpGenerator
             {
                 targetPalette = GlobalVars.webColors;
             }
-            Bitmap bitmap = new Bitmap(224, 192);
+            Bitmap bitmap = new Bitmap(240, 192);
             int x = 0;
             int y = 0;
             // attempts to fill the preview area as much as possible based on the size of the palette
-            // the total available pixels are 224*192 = 43,008, but this number is reduced a bit
-            // to account for "wasted" pixel space since the dimensions won't always fill the 224 pixel width exactly
-            // 42,500 pixels divided by palette size is the area of each square, sqrt for the side length
-            int tileSize = (int)Math.Floor(Math.Sqrt(42500 / targetPalette.Length)); 
+            // the total available pixels are 240*192 = 46,080, but to account for squares not evenly fitting,
+            // they should be at most 48 (the highest common factor of 240 and 192)
+            int tileSize = Math.Min(48, (int)Math.Floor(Math.Sqrt(46080 / targetPalette.Length))); 
             foreach (Color color in targetPalette)
             {
                 // step down to next row if it would overflow the current row
-                if (x + tileSize > 224)
+                if (x + tileSize > 240)
                 {
                     x = 0;
                     y += tileSize;
