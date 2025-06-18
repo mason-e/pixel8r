@@ -142,24 +142,20 @@ namespace CSharpGenerator
             // the total available pixels are 224*192 = 43,008, but this number is reduced a bit
             // to account for "wasted" pixel space since the dimensions won't always fill the 224 pixel width exactly
             // 42,500 pixels divided by palette size is the area of each square, sqrt for the side length
-            int tileSize = (int)Math.Floor(Math.Sqrt(42500 / targetPalette.Length));
+            int tileSize = (int)Math.Floor(Math.Sqrt(42500 / targetPalette.Length)); 
             foreach (Color color in targetPalette)
             {
-                // step through columns until it would overflow
-                if (x + tileSize < 224)
-                {
-                    using (Graphics g = Graphics.FromImage(bitmap))
-                    {
-                        g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
-                    }
-                    x += tileSize;
-                }
-                // step down a row
-                else
+                // step down to next row if it would overflow the current row
+                if (x + tileSize > 224)
                 {
                     x = 0;
                     y += tileSize;
                 }
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
+                }
+                x += tileSize;
             }
             return bitmap;
         }
