@@ -139,9 +139,9 @@ namespace CSharpGenerator
             int x = 0;
             int y = 0;
             // attempts to fill the preview area as much as possible based on the size of the palette
-            // the total available pixels are 240*192 = 46,080, but to account for squares not evenly fitting,
-            // they should be at most 48 (the highest common factor of 240 and 192)
-            int tileSize = Math.Min(48, (int)Math.Floor(Math.Sqrt(46080 / targetPalette.Length))); 
+            // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
+            int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
+            int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
             foreach (Color color in targetPalette)
             {
                 // step down to next row if it would overflow the current row
