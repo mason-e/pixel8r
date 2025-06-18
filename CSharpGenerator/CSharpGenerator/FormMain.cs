@@ -7,23 +7,28 @@ namespace CSharpGenerator
             InitializeComponent();
         }
 
-        private void buttonFile1_Click(object sender, EventArgs e)
+        private void buttonLoadFile_Click(object sender, EventArgs e)
         {
+            openFileDialog1 = new OpenFileDialog()
+            {
+                FileName = "Select an image file",
+                Filter = "Supported Image Files|*.jpg;*.png;*.gif;*.bmp",
+                Title = "Open image file"
+            };
             openFileDialog1.ShowDialog(this);
             GlobalVars.FilePath1 = openFileDialog1.FileName;
-            GlobalVars.Size = (int)new FileInfo(GlobalVars.FilePath1).Length;
-            GlobalVars.SideLength = (int)Math.Sqrt(GlobalVars.Size);
+            pictureBox1.Image = BitmapFunction.generateBitmap();
         }
 
 
-        private void buttonBitmap_Click(object sender, EventArgs e)
+        private void buttonReload_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = BitmapFunction.generateBitmap();
         }
 
         private void buttonPixelate_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = BitmapFunction.pixelateDrawing(pictureBox1.Image);
+            pictureBox1.Image = BitmapFunction.pixelateDrawing(pictureBox1.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
         }
     }
 }

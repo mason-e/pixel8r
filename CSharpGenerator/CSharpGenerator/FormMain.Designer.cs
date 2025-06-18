@@ -28,25 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            buttonFile1 = new Button();
+            buttonLoadFile = new Button();
             openFileDialog1 = new OpenFileDialog();
             pictureBox1 = new PictureBox();
-            textBoxSize = new TextBox();
-            textBoxDimension = new TextBox();
-            buttonBitmap = new Button();
+            buttonReload = new Button();
             buttonPixelate = new Button();
+            comboBoxPalette = new ComboBox();
+            labelPalette = new Label();
+            label1 = new Label();
+            comboBoxAlgorithm = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // buttonFile1
+            // buttonLoadFile
             // 
-            buttonFile1.Location = new Point(12, 12);
-            buttonFile1.Name = "buttonFile1";
-            buttonFile1.Size = new Size(75, 23);
-            buttonFile1.TabIndex = 0;
-            buttonFile1.Text = "File ...";
-            buttonFile1.UseVisualStyleBackColor = true;
-            buttonFile1.Click += buttonFile1_Click;
+            buttonLoadFile.Location = new Point(12, 12);
+            buttonLoadFile.Name = "buttonLoadFile";
+            buttonLoadFile.Size = new Size(84, 23);
+            buttonLoadFile.TabIndex = 0;
+            buttonLoadFile.Text = "Load File...";
+            buttonLoadFile.UseVisualStyleBackColor = true;
+            buttonLoadFile.Click += buttonLoadFile_Click;
             // 
             // openFileDialog1
             // 
@@ -61,53 +63,77 @@
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
-            // textBoxSize
+            // buttonReload
             // 
-            textBoxSize.Location = new Point(93, 738);
-            textBoxSize.Name = "textBoxSize";
-            textBoxSize.ReadOnly = true;
-            textBoxSize.Size = new Size(75, 23);
-            textBoxSize.TabIndex = 3;
-            // 
-            // textBoxDimension
-            // 
-            textBoxDimension.Location = new Point(174, 738);
-            textBoxDimension.Name = "textBoxDimension";
-            textBoxDimension.ReadOnly = true;
-            textBoxDimension.Size = new Size(75, 23);
-            textBoxDimension.TabIndex = 4;
-            // 
-            // buttonBitmap
-            // 
-            buttonBitmap.Location = new Point(12, 41);
-            buttonBitmap.Name = "buttonBitmap";
-            buttonBitmap.Size = new Size(75, 23);
-            buttonBitmap.TabIndex = 9;
-            buttonBitmap.Text = "Display!";
-            buttonBitmap.UseVisualStyleBackColor = true;
-            buttonBitmap.Click += buttonBitmap_Click;
+            buttonReload.Location = new Point(102, 12);
+            buttonReload.Name = "buttonReload";
+            buttonReload.Size = new Size(84, 23);
+            buttonReload.TabIndex = 9;
+            buttonReload.Text = "Reset Image";
+            buttonReload.UseVisualStyleBackColor = true;
+            buttonReload.Click += buttonReload_Click;
             // 
             // buttonPixelate
             // 
-            buttonPixelate.Location = new Point(12, 70);
+            buttonPixelate.Location = new Point(12, 214);
             buttonPixelate.Name = "buttonPixelate";
-            buttonPixelate.Size = new Size(75, 23);
+            buttonPixelate.Size = new Size(84, 23);
             buttonPixelate.TabIndex = 35;
             buttonPixelate.Text = "Pixelate!";
             buttonPixelate.UseVisualStyleBackColor = true;
             buttonPixelate.Click += buttonPixelate_Click;
+            // 
+            // comboBoxPalette
+            // 
+            comboBoxPalette.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxPalette.FormattingEnabled = true;
+            comboBoxPalette.Items.AddRange(new object[] { "Web Colors", "NES" });
+            comboBoxPalette.Location = new Point(12, 104);
+            comboBoxPalette.Name = "comboBoxPalette";
+            comboBoxPalette.Size = new Size(121, 23);
+            comboBoxPalette.TabIndex = 36;
+            // 
+            // labelPalette
+            // 
+            labelPalette.AutoSize = true;
+            labelPalette.Location = new Point(12, 86);
+            labelPalette.Name = "labelPalette";
+            labelPalette.Size = new Size(77, 15);
+            labelPalette.TabIndex = 37;
+            labelPalette.Text = "Select Palette";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 142);
+            label1.Name = "label1";
+            label1.Size = new Size(95, 15);
+            label1.TabIndex = 39;
+            label1.Text = "Select Algorithm";
+            // 
+            // comboBoxAlgorithm
+            // 
+            comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxAlgorithm.FormattingEnabled = true;
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Lowest Combined Diff", "HSV Lowest Combined Diff" });
+            comboBoxAlgorithm.Location = new Point(12, 160);
+            comboBoxAlgorithm.Name = "comboBoxAlgorithm";
+            comboBoxAlgorithm.Size = new Size(156, 23);
+            comboBoxAlgorithm.TabIndex = 38;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 766);
+            Controls.Add(label1);
+            Controls.Add(comboBoxAlgorithm);
+            Controls.Add(labelPalette);
+            Controls.Add(comboBoxPalette);
             Controls.Add(buttonPixelate);
-            Controls.Add(buttonBitmap);
-            Controls.Add(textBoxDimension);
-            Controls.Add(textBoxSize);
+            Controls.Add(buttonReload);
             Controls.Add(pictureBox1);
-            Controls.Add(buttonFile1);
+            Controls.Add(buttonLoadFile);
             Name = "FormMain";
             Text = "File to Image Generator";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -117,12 +143,14 @@
 
         #endregion
 
-        private Button buttonFile1;
+        private Button buttonLoadFile;
         private OpenFileDialog openFileDialog1;
         private PictureBox pictureBox1;
-        private TextBox textBoxSize;
-        private TextBox textBoxDimension;
-        private Button buttonBitmap;
+        private Button buttonReload;
         private Button buttonPixelate;
+        private ComboBox comboBoxPalette;
+        private Label labelPalette;
+        private Label label1;
+        private ComboBox comboBoxAlgorithm;
     }
 }
