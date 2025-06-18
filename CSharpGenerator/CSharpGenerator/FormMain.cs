@@ -7,7 +7,7 @@ namespace CSharpGenerator
             InitializeComponent();
         }
 
-        private void buttonLoadFile_Click(object sender, EventArgs e)
+        private void toolStripButtonOpen_Click(object sender, EventArgs e)
         {
             openFileDialog1 = new OpenFileDialog()
             {
@@ -20,8 +20,7 @@ namespace CSharpGenerator
             pictureBox1.Image = BitmapFunction.generateBitmap();
         }
 
-
-        private void buttonReload_Click(object sender, EventArgs e)
+        private void toolStripButtonReload_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = BitmapFunction.generateBitmap();
         }
