@@ -15,13 +15,17 @@ namespace CSharpGenerator
             }
             else
             {
+                GlobalVars.ImageSizeX = original.Width;
+                GlobalVars.ImageSizeY = original.Height;
                 return original;
             }
         }
 
         public static Bitmap resize(Bitmap original, float scaleFactor)
         {
-            return new Bitmap(original, new Size((int)(original.Width / scaleFactor), (int)(original.Height / scaleFactor)));
+            GlobalVars.ImageSizeX = (int)(original.Width / scaleFactor);
+            GlobalVars.ImageSizeY = (int)(original.Height / scaleFactor);
+            return new Bitmap(original, new Size(GlobalVars.ImageSizeX, GlobalVars.ImageSizeY));
         }
 
         public static Bitmap pixelateDrawing(Image image, string palette, string algorithm)
