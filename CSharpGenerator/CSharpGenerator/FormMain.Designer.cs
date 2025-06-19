@@ -43,6 +43,10 @@
             labelFilePath = new Label();
             pictureBoxPalette = new PictureBox();
             labelPalettePreview = new Label();
+            labelAspectRatio = new Label();
+            comboBoxAspectRatio = new ComboBox();
+            labelDimensions = new Label();
+            checkBoxCrop = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -58,11 +62,16 @@
             pictureBoxImage.Location = new Point(255, 12);
             pictureBoxImage.Name = "pictureBoxImage";
             pictureBoxImage.Size = new Size(1118, 720);
+            pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBoxImage.TabIndex = 2;
             pictureBoxImage.TabStop = false;
+            pictureBoxImage.Paint += pictureBoxImage_Paint;
+            pictureBoxImage.MouseLeave += pictureBoxImage_MouseLeave;
+            pictureBoxImage.MouseMove += pictureBoxImage_MouseMove;
             // 
             // buttonPixelate
             // 
+            buttonPixelate.Enabled = false;
             buttonPixelate.Location = new Point(12, 369);
             buttonPixelate.Name = "buttonPixelate";
             buttonPixelate.Size = new Size(84, 23);
@@ -109,6 +118,7 @@
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(156, 23);
             comboBoxAlgorithm.TabIndex = 38;
+            comboBoxAlgorithm.SelectedIndexChanged += comboBoxAlgorithm_SelectedIndexChanged;
             // 
             // toolStripMenu
             // 
@@ -155,8 +165,9 @@
             labelFilePath.AutoSize = true;
             labelFilePath.Location = new Point(255, 742);
             labelFilePath.Name = "labelFilePath";
-            labelFilePath.Size = new Size(0, 15);
+            labelFilePath.Size = new Size(433, 15);
             labelFilePath.TabIndex = 40;
+            labelFilePath.Text = "No file loaded. Select a file with the open button to enable more editing controls.";
             // 
             // pictureBoxPalette
             // 
@@ -176,11 +187,57 @@
             labelPalettePreview.TabIndex = 42;
             labelPalettePreview.Text = "Palette Preview";
             // 
+            // labelAspectRatio
+            // 
+            labelAspectRatio.AutoSize = true;
+            labelAspectRatio.Location = new Point(12, 436);
+            labelAspectRatio.Name = "labelAspectRatio";
+            labelAspectRatio.Size = new Size(116, 15);
+            labelAspectRatio.TabIndex = 44;
+            labelAspectRatio.Text = "Crop to Aspect Ratio";
+            // 
+            // comboBoxAspectRatio
+            // 
+            comboBoxAspectRatio.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxAspectRatio.FormattingEnabled = true;
+            comboBoxAspectRatio.Items.AddRange(new object[] { "16:9", "4:3", "16:15 (NES)", "8:7 (SNES)", "10:7 (Genesis)", "10:9 (GB, GG)", "3:2 (GBA)" });
+            comboBoxAspectRatio.Location = new Point(12, 454);
+            comboBoxAspectRatio.Name = "comboBoxAspectRatio";
+            comboBoxAspectRatio.Size = new Size(121, 23);
+            comboBoxAspectRatio.TabIndex = 43;
+            comboBoxAspectRatio.SelectedIndexChanged += comboBoxAspectRatio_SelectedIndexChanged;
+            // 
+            // labelDimensions
+            // 
+            labelDimensions.AutoSize = true;
+            labelDimensions.Location = new Point(1302, 742);
+            labelDimensions.Name = "labelDimensions";
+            labelDimensions.Size = new Size(71, 15);
+            labelDimensions.TabIndex = 46;
+            labelDimensions.Text = "0x0 - No file";
+            // 
+            // checkBoxCrop
+            // 
+            checkBoxCrop.Appearance = Appearance.Button;
+            checkBoxCrop.AutoSize = true;
+            checkBoxCrop.Enabled = false;
+            checkBoxCrop.Location = new Point(175, 454);
+            checkBoxCrop.Name = "checkBoxCrop";
+            checkBoxCrop.Size = new Size(74, 25);
+            checkBoxCrop.TabIndex = 47;
+            checkBoxCrop.Text = "Preview ->";
+            checkBoxCrop.UseVisualStyleBackColor = true;
+            checkBoxCrop.CheckedChanged += checkBoxCrop_CheckedChanged;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 766);
+            Controls.Add(checkBoxCrop);
+            Controls.Add(labelDimensions);
+            Controls.Add(labelAspectRatio);
+            Controls.Add(comboBoxAspectRatio);
             Controls.Add(labelPalettePreview);
             Controls.Add(pictureBoxPalette);
             Controls.Add(labelFilePath);
@@ -216,5 +273,9 @@
         private Label labelFilePath;
         private PictureBox pictureBoxPalette;
         private Label labelPalettePreview;
+        private Label labelAspectRatio;
+        private ComboBox comboBoxAspectRatio;
+        private Label labelDimensions;
+        private CheckBox checkBoxCrop;
     }
 }
