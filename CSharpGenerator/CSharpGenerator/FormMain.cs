@@ -18,9 +18,9 @@ namespace CSharpGenerator
             if (openFileDialog1.FileName != "")
             {
                 GlobalVars.FilePath = openFileDialog1.FileName;
-                labelFilePath.Text = $"Current file: {GlobalVars.FilePath}";
+                textBoxFilePath.Text = $"Current file: {GlobalVars.FilePath}";
                 pictureBoxImage.Image = BitmapFunction.generateBitmap();
-                labelDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+                textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPixelate.Enabled = true;
@@ -41,7 +41,8 @@ namespace CSharpGenerator
         private void toolStripButtonReload_Click(object sender, EventArgs e)
         {
             pictureBoxImage.Image = BitmapFunction.generateBitmap();
-            labelDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+            textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+            checkBoxCrop.Checked = false;
         }
 
         private void buttonPixelate_Click(object sender, EventArgs e)
@@ -71,6 +72,14 @@ namespace CSharpGenerator
             if (GlobalVars.FilePath != null)
             {
                 checkBoxCrop.Enabled = true;
+            }
+            if (checkBoxCrop.Checked)
+            {
+                string[] aspectVals = comboBoxAspectRatio.Text.Split(":");
+                int aspectWidth = Convert.ToInt32(aspectVals[0]);
+                int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
+                (cropWidth, cropHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
+                textBoxPendingEdit.Text = $"Crop will resize image to {cropWidth}x{cropHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
             }
         }
 
@@ -112,6 +121,21 @@ namespace CSharpGenerator
                 int aspectWidth = Convert.ToInt32(aspectVals[0]);
                 int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
                 (cropWidth, cropHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
+                textBoxPendingEdit.Text = $"Crop will resize image to {cropWidth}x{cropHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+            }
+            else
+            {
+                (cropWidth, cropHeight) = (0, 0);
+                textBoxPendingEdit.Text = "";
+            }
+        }
+
+        private void FormMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                checkBoxCrop.Checked = false;
+                pictureBoxImage.Invalidate();
             }
         }
     }

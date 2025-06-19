@@ -40,13 +40,14 @@
             toolStripButtonOpen = new ToolStripButton();
             toolStripButtonReload = new ToolStripButton();
             toolStripButtonSave = new ToolStripButton();
-            labelFilePath = new Label();
             pictureBoxPalette = new PictureBox();
             labelPalettePreview = new Label();
             labelAspectRatio = new Label();
             comboBoxAspectRatio = new ComboBox();
-            labelDimensions = new Label();
             checkBoxCrop = new CheckBox();
+            textBoxDimensions = new TextBox();
+            textBoxFilePath = new TextBox();
+            textBoxPendingEdit = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -59,7 +60,7 @@
             // pictureBoxImage
             // 
             pictureBoxImage.BorderStyle = BorderStyle.FixedSingle;
-            pictureBoxImage.Location = new Point(255, 12);
+            pictureBoxImage.Location = new Point(255, 33);
             pictureBoxImage.Name = "pictureBoxImage";
             pictureBoxImage.Size = new Size(1118, 720);
             pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -160,15 +161,6 @@
             toolStripButtonSave.Size = new Size(24, 22);
             toolStripButtonSave.Text = "Save Current Image As";
             // 
-            // labelFilePath
-            // 
-            labelFilePath.AutoSize = true;
-            labelFilePath.Location = new Point(255, 742);
-            labelFilePath.Name = "labelFilePath";
-            labelFilePath.Size = new Size(433, 15);
-            labelFilePath.TabIndex = 40;
-            labelFilePath.Text = "No file loaded. Select a file with the open button to enable more editing controls.";
-            // 
             // pictureBoxPalette
             // 
             pictureBoxPalette.BorderStyle = BorderStyle.FixedSingle;
@@ -207,15 +199,6 @@
             comboBoxAspectRatio.TabIndex = 43;
             comboBoxAspectRatio.SelectedIndexChanged += comboBoxAspectRatio_SelectedIndexChanged;
             // 
-            // labelDimensions
-            // 
-            labelDimensions.AutoSize = true;
-            labelDimensions.Location = new Point(1302, 742);
-            labelDimensions.Name = "labelDimensions";
-            labelDimensions.Size = new Size(71, 15);
-            labelDimensions.TabIndex = 46;
-            labelDimensions.Text = "0x0 - No file";
-            // 
             // checkBoxCrop
             // 
             checkBoxCrop.Appearance = Appearance.Button;
@@ -229,18 +212,52 @@
             checkBoxCrop.UseVisualStyleBackColor = true;
             checkBoxCrop.CheckedChanged += checkBoxCrop_CheckedChanged;
             // 
+            // textBoxDimensions
+            // 
+            textBoxDimensions.BackColor = SystemColors.Control;
+            textBoxDimensions.BorderStyle = BorderStyle.None;
+            textBoxDimensions.Location = new Point(1245, 11);
+            textBoxDimensions.Name = "textBoxDimensions";
+            textBoxDimensions.ReadOnly = true;
+            textBoxDimensions.Size = new Size(128, 16);
+            textBoxDimensions.TabIndex = 48;
+            textBoxDimensions.TextAlign = HorizontalAlignment.Right;
+            // 
+            // textBoxFilePath
+            // 
+            textBoxFilePath.BackColor = SystemColors.Control;
+            textBoxFilePath.BorderStyle = BorderStyle.None;
+            textBoxFilePath.Location = new Point(255, 12);
+            textBoxFilePath.Name = "textBoxFilePath";
+            textBoxFilePath.ReadOnly = true;
+            textBoxFilePath.Size = new Size(748, 16);
+            textBoxFilePath.TabIndex = 49;
+            textBoxFilePath.Text = "No file loaded. Select a file with the open button to enable more editing controls.";
+            // 
+            // textBoxPendingEdit
+            // 
+            textBoxPendingEdit.BackColor = SystemColors.Control;
+            textBoxPendingEdit.BorderStyle = BorderStyle.None;
+            textBoxPendingEdit.Location = new Point(255, 763);
+            textBoxPendingEdit.Name = "textBoxPendingEdit";
+            textBoxPendingEdit.ReadOnly = true;
+            textBoxPendingEdit.Size = new Size(1118, 16);
+            textBoxPendingEdit.TabIndex = 50;
+            textBoxPendingEdit.TextAlign = HorizontalAlignment.Center;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1404, 766);
+            ClientSize = new Size(1404, 791);
+            Controls.Add(textBoxPendingEdit);
+            Controls.Add(textBoxFilePath);
+            Controls.Add(textBoxDimensions);
             Controls.Add(checkBoxCrop);
-            Controls.Add(labelDimensions);
             Controls.Add(labelAspectRatio);
             Controls.Add(comboBoxAspectRatio);
             Controls.Add(labelPalettePreview);
             Controls.Add(pictureBoxPalette);
-            Controls.Add(labelFilePath);
             Controls.Add(toolStripMenu);
             Controls.Add(labelAlgorithm);
             Controls.Add(comboBoxAlgorithm);
@@ -248,8 +265,10 @@
             Controls.Add(comboBoxPalette);
             Controls.Add(buttonPixelate);
             Controls.Add(pictureBoxImage);
+            KeyPreview = true;
             Name = "FormMain";
             Text = "File to Image Generator";
+            KeyDown += FormMain_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).EndInit();
             toolStripMenu.ResumeLayout(false);
             toolStripMenu.PerformLayout();
@@ -270,12 +289,13 @@
         private ToolStripButton toolStripButtonOpen;
         private ToolStripButton toolStripButtonReload;
         private ToolStripButton toolStripButtonSave;
-        private Label labelFilePath;
         private PictureBox pictureBoxPalette;
         private Label labelPalettePreview;
         private Label labelAspectRatio;
         private ComboBox comboBoxAspectRatio;
-        private Label labelDimensions;
         private CheckBox checkBoxCrop;
+        private TextBox textBoxDimensions;
+        private TextBox textBoxFilePath;
+        private TextBox textBoxPendingEdit;
     }
 }
