@@ -48,9 +48,15 @@
             textBoxDimensions = new TextBox();
             textBoxFilePath = new TextBox();
             textBoxPendingEdit = new TextBox();
+            trackBarResizeDown = new TrackBar();
+            labelResizeDown = new Label();
+            buttonPreviewDownsize = new Button();
+            labelShrinkDimensions = new Label();
+            buttonSubmitDownsize = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarResizeDown).BeginInit();
             SuspendLayout();
             // 
             // openFileDialog1
@@ -245,11 +251,67 @@
             textBoxPendingEdit.TabIndex = 50;
             textBoxPendingEdit.TextAlign = HorizontalAlignment.Center;
             // 
+            // trackBarResizeDown
+            // 
+            trackBarResizeDown.Location = new Point(9, 539);
+            trackBarResizeDown.Maximum = 95;
+            trackBarResizeDown.Minimum = 5;
+            trackBarResizeDown.Name = "trackBarResizeDown";
+            trackBarResizeDown.Size = new Size(114, 45);
+            trackBarResizeDown.TabIndex = 51;
+            trackBarResizeDown.TickFrequency = 5;
+            trackBarResizeDown.Value = 95;
+            trackBarResizeDown.Scroll += trackBarResizeDown_Scroll;
+            // 
+            // labelResizeDown
+            // 
+            labelResizeDown.AutoSize = true;
+            labelResizeDown.Location = new Point(12, 521);
+            labelResizeDown.Name = "labelResizeDown";
+            labelResizeDown.Size = new Size(111, 15);
+            labelResizeDown.TabIndex = 52;
+            labelResizeDown.Text = "Resize down to 95%";
+            // 
+            // buttonPreviewDownsize
+            // 
+            buttonPreviewDownsize.Enabled = false;
+            buttonPreviewDownsize.Location = new Point(174, 521);
+            buttonPreviewDownsize.Name = "buttonPreviewDownsize";
+            buttonPreviewDownsize.Size = new Size(75, 23);
+            buttonPreviewDownsize.TabIndex = 53;
+            buttonPreviewDownsize.Text = "Preview ->";
+            buttonPreviewDownsize.UseVisualStyleBackColor = true;
+            buttonPreviewDownsize.Click += buttonPreviewDownsize_Click;
+            // 
+            // labelShrinkDimensions
+            // 
+            labelShrinkDimensions.AutoSize = true;
+            labelShrinkDimensions.Location = new Point(12, 569);
+            labelShrinkDimensions.Name = "labelShrinkDimensions";
+            labelShrinkDimensions.Size = new Size(0, 15);
+            labelShrinkDimensions.TabIndex = 54;
+            // 
+            // buttonSubmitDownsize
+            // 
+            buttonSubmitDownsize.Enabled = false;
+            buttonSubmitDownsize.Location = new Point(174, 550);
+            buttonSubmitDownsize.Name = "buttonSubmitDownsize";
+            buttonSubmitDownsize.Size = new Size(75, 23);
+            buttonSubmitDownsize.TabIndex = 55;
+            buttonSubmitDownsize.Text = "Resize!";
+            buttonSubmitDownsize.UseVisualStyleBackColor = true;
+            buttonSubmitDownsize.Click += buttonSubmitDownsize_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(buttonSubmitDownsize);
+            Controls.Add(labelShrinkDimensions);
+            Controls.Add(buttonPreviewDownsize);
+            Controls.Add(labelResizeDown);
+            Controls.Add(trackBarResizeDown);
             Controls.Add(textBoxPendingEdit);
             Controls.Add(textBoxFilePath);
             Controls.Add(textBoxDimensions);
@@ -273,6 +335,7 @@
             toolStripMenu.ResumeLayout(false);
             toolStripMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarResizeDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -297,5 +360,10 @@
         private TextBox textBoxDimensions;
         private TextBox textBoxFilePath;
         private TextBox textBoxPendingEdit;
+        private TrackBar trackBarResizeDown;
+        private Label labelResizeDown;
+        private Button buttonPreviewDownsize;
+        private Label labelShrinkDimensions;
+        private Button buttonSubmitDownsize;
     }
 }

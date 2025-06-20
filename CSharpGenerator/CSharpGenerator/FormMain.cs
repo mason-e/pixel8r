@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace CSharpGenerator
 {
     public partial class FormMain : Form
@@ -21,6 +23,10 @@ namespace CSharpGenerator
                 textBoxFilePath.Text = $"Current file: {GlobalVars.FilePath}";
                 pictureBoxImage.Image = BitmapFunction.generateBitmap();
                 textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+                buttonPreviewDownsize.Enabled = true;
+                buttonSubmitDownsize.Enabled = true;
+                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResizeDown.Value);
+                labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPixelate.Enabled = true;
@@ -78,15 +84,15 @@ namespace CSharpGenerator
                 string[] aspectVals = comboBoxAspectRatio.Text.Split(":");
                 int aspectWidth = Convert.ToInt32(aspectVals[0]);
                 int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
-                (cropWidth, cropHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
-                textBoxPendingEdit.Text = $"Crop will resize image to {cropWidth}x{cropHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                (resizeWidth, resizeHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
+                textBoxPendingEdit.Text = $"Crop will resize image to {resizeWidth}x{resizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
             }
         }
 
         int cursorX = -1;
         int cursorY = -1;
-        int cropWidth = 0;
-        int cropHeight = 0;
+        int resizeWidth = 0;
+        int resizeHeight = 0;
 
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
@@ -97,10 +103,10 @@ namespace CSharpGenerator
 
         private void pictureBoxImage_Paint(object sender, PaintEventArgs e)
         {
-            if (cursorX != -1 && cursorY != -1 && cropWidth != 0 && cropHeight != 0 && checkBoxCrop.Checked)
+            if (cursorX != -1 && cursorY != -1 && resizeWidth != 0 && resizeHeight != 0 && checkBoxCrop.Checked)
             {
                 Graphics graphics = e.Graphics;
-                Rectangle cursor = new Rectangle(cursorX, cursorY, cropWidth, cropHeight);
+                Rectangle cursor = new Rectangle(cursorX, cursorY, resizeWidth, resizeHeight);
                 graphics.DrawRectangle(new Pen(Color.LightBlue, 2), cursor);
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(127, 255, 255, 255)), cursor);
             }
@@ -120,13 +126,19 @@ namespace CSharpGenerator
                 string[] aspectVals = comboBoxAspectRatio.Text.Split(":");
                 int aspectWidth = Convert.ToInt32(aspectVals[0]);
                 int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
-                (cropWidth, cropHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
-                textBoxPendingEdit.Text = $"Crop will resize image to {cropWidth}x{cropHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                (resizeWidth, resizeHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
+                textBoxPendingEdit.Text = $"Crop will resize image to {resizeWidth}x{resizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                buttonPreviewDownsize.Enabled = false;
+                buttonSubmitDownsize.Enabled = false;
+                trackBarResizeDown.Enabled = false;
             }
             else
             {
-                (cropWidth, cropHeight) = (0, 0);
+                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResizeDown.Value);
                 textBoxPendingEdit.Text = "";
+                buttonPreviewDownsize.Enabled = true;
+                buttonSubmitDownsize.Enabled = true;
+                trackBarResizeDown.Enabled = true;
             }
         }
 
@@ -137,6 +149,35 @@ namespace CSharpGenerator
                 checkBoxCrop.Checked = false;
                 pictureBoxImage.Invalidate();
             }
+        }
+
+        private void trackBarResizeDown_Scroll(object sender, EventArgs e)
+        {
+            labelResizeDown.Text = $"Resize down to {trackBarResizeDown.Value}%";
+            if (GlobalVars.FilePath != null)
+            {
+                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResizeDown.Value);
+                labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
+            }
+        }
+
+        private void buttonPreviewDownsize_Click(object sender, EventArgs e)
+        {
+            // flash rectangle over image for about a second to show new size
+            Graphics graphics = pictureBoxImage.CreateGraphics();
+            for (int i = 0; i < 5; i++)
+            {
+                ResizeFunctions.drawCenterPointRectangle(graphics, resizeWidth, resizeHeight);
+                Thread.Sleep(100);
+                pictureBoxImage.Invalidate();
+                pictureBoxImage.Update();
+                Thread.Sleep(50);
+            }
+        }
+
+        private void buttonSubmitDownsize_Click(object sender, EventArgs e)
+        {
+            pictureBoxImage.Image = BitmapFunction.resize((Bitmap)pictureBoxImage.Image, 100 / (float)trackBarResizeDown.Value);
         }
     }
 }
