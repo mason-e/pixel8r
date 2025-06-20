@@ -23,9 +23,8 @@ namespace CSharpGenerator
                 textBoxFilePath.Text = $"Current file: {GlobalVars.FilePath}";
                 pictureBoxImage.Image = BitmapFunction.generateBitmap();
                 textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
-                buttonPreviewDownsize.Enabled = true;
-                buttonSubmitDownsize.Enabled = true;
-                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResizeDown.Value);
+                setResizeOptions();
+                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResize.Value);
                 labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
@@ -93,6 +92,8 @@ namespace CSharpGenerator
         int cursorY = -1;
         int resizeWidth = 0;
         int resizeHeight = 0;
+        int resizeLowerLimit = 0;
+        int resizeUpperLimit = 0;
 
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
@@ -128,17 +129,17 @@ namespace CSharpGenerator
                 int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
                 (resizeWidth, resizeHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
                 textBoxPendingEdit.Text = $"Crop will resize image to {resizeWidth}x{resizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
-                buttonPreviewDownsize.Enabled = false;
-                buttonSubmitDownsize.Enabled = false;
-                trackBarResizeDown.Enabled = false;
+                buttonPreviewResize.Enabled = false;
+                buttonSubmitResize.Enabled = false;
+                trackBarResize.Enabled = false;
             }
             else
             {
-                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResizeDown.Value);
+                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResize.Value);
                 textBoxPendingEdit.Text = "";
-                buttonPreviewDownsize.Enabled = true;
-                buttonSubmitDownsize.Enabled = true;
-                trackBarResizeDown.Enabled = true;
+                buttonPreviewResize.Enabled = true;
+                buttonSubmitResize.Enabled = true;
+                trackBarResize.Enabled = true;
             }
         }
 
@@ -151,17 +152,17 @@ namespace CSharpGenerator
             }
         }
 
-        private void trackBarResizeDown_Scroll(object sender, EventArgs e)
+        private void trackBarResize_Scroll(object sender, EventArgs e)
         {
-            labelResizeDown.Text = $"Resize down to {trackBarResizeDown.Value}%";
+            labelResize.Text = $"Resize to {trackBarResize.Value}%";
             if (GlobalVars.FilePath != null)
             {
-                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResizeDown.Value);
+                (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResize.Value);
                 labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
             }
         }
 
-        private void buttonPreviewDownsize_Click(object sender, EventArgs e)
+        private void buttonPreviewResize_Click(object sender, EventArgs e)
         {
             // flash rectangle over image for about a second to show new size
             Graphics graphics = pictureBoxImage.CreateGraphics();
@@ -175,9 +176,23 @@ namespace CSharpGenerator
             }
         }
 
-        private void buttonSubmitDownsize_Click(object sender, EventArgs e)
+        private void buttonSubmitResize_Click(object sender, EventArgs e)
         {
-            pictureBoxImage.Image = BitmapFunction.resize((Bitmap)pictureBoxImage.Image, 100 / (float)trackBarResizeDown.Value);
+            pictureBoxImage.Image = BitmapFunction.resize((Bitmap)pictureBoxImage.Image, 100 / (float)trackBarResize.Value);
+            setResizeOptions();
+        }
+
+        private void setResizeOptions()
+        {
+            (resizeLowerLimit, resizeUpperLimit) = ResizeFunctions.getResizeBounds();
+            trackBarResize.Maximum = resizeUpperLimit;
+            trackBarResize.Minimum = resizeLowerLimit;
+            buttonPreviewResize.Enabled = true;
+            buttonSubmitResize.Enabled = true;
+            trackBarResize.Enabled = true;
+            trackBarResize.Value = 100;
+            trackBarResize.LargeChange = (resizeUpperLimit - resizeLowerLimit) / 20;
+            labelResize.Text = $"Resize to {trackBarResize.Value}%";
         }
     }
 }
