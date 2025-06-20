@@ -32,6 +32,20 @@ namespace CSharpGenerator
             return ((int) (multiplier * GlobalVars.ImageSizeX), (int) (multiplier * GlobalVars.ImageSizeY));
         }
 
+        public static (int, int) getResizeBounds()
+        {
+            int minX = 20;
+            int minY = 20;
+            int maxX = 1118;
+            int maxY = 720;
+
+            // larger value of percent needed to reduce either dimension is the minimum percent
+            int reductionToMin = (int)(100 * Math.Max((float) minX / GlobalVars.ImageSizeX, (float) minY / GlobalVars.ImageSizeY));
+            // smaller value of percent needed to expand either dimension is the maximum percent
+            int expansionToMax = (int)(100 * Math.Max((float )(GlobalVars.ImageSizeX / maxX), (float) maxY / GlobalVars.ImageSizeY));
+            return (reductionToMin, expansionToMax);
+        }
+
         public static void drawCenterPointRectangle (Graphics graphics, int width, int height)
         {
             int centerX = 559;
