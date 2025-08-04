@@ -42,7 +42,7 @@ namespace CSharpGenerator
             // larger value of percent needed to reduce either dimension is the minimum percent
             int reductionToMin = (int)(100 * Math.Max((float) minX / GlobalVars.ImageSizeX, (float) minY / GlobalVars.ImageSizeY));
             // smaller value of percent needed to expand either dimension is the maximum percent
-            int expansionToMax = (int)(100 * Math.Max((float )(GlobalVars.ImageSizeX / maxX), (float) maxY / GlobalVars.ImageSizeY));
+            int expansionToMax = (int)(100 * Math.Min((float) maxX / GlobalVars.ImageSizeX, (float) maxY / GlobalVars.ImageSizeY));
             return (reductionToMin, expansionToMax);
         }
 
