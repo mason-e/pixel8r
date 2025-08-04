@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace CSharpGenerator
@@ -91,12 +92,6 @@ namespace CSharpGenerator
         int resizeHeight = 0;
         int resizeLowerLimit = 0;
         int resizeUpperLimit = 0;
-        const int pictureBoxOffsetX = 255;
-        const int pictureBoxOffsetY = 33;
-        const int pictureBoxWidth = 1118;
-        const int pictureBoxHeight = 720;
-        const int pictureBoxCenterX = pictureBoxOffsetX + pictureBoxWidth / 2;
-        const int pictureBoxCenterY = pictureBoxOffsetY + pictureBoxHeight / 2;
 
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
@@ -218,15 +213,35 @@ namespace CSharpGenerator
         private void buttonPreviewResize_Click(object sender, EventArgs e)
         {
             // flash rectangle over image for about a second to show new size
-            Graphics graphics = pictureBoxImage.CreateGraphics();
-            for (int i = 0; i < 5; i++)
+            // needs to draw on the form if it'll be bigger and on the PictureBox if smaller
+            //Graphics graphics = pictureBoxImage.CreateGraphics();
+            if (trackBarResize.Value <= 100)
             {
-                ResizeFunctions.drawCenterPointRectangle(graphics, resizeWidth, resizeHeight);
-                Thread.Sleep(100);
-                pictureBoxImage.Invalidate();
-                pictureBoxImage.Update();
-                Thread.Sleep(50);
+                Graphics graphics = pictureBoxImage.CreateGraphics();
+                for (int i = 0; i < 5; i++)
+                {
+                    // point to draw is based on 0,0 coordinate of the pictureBox
+                    ResizeFunctions.drawCenterPointRectangle(graphics, resizeWidth, resizeHeight, GlobalVars.ImageSizeX / 2, GlobalVars.ImageSizeY / 2);
+                    Thread.Sleep(100);
+                    pictureBoxImage.Invalidate();
+                    pictureBoxImage.Update();
+                    Thread.Sleep(50);
+                }
             }
+            else
+            {
+                Graphics graphics = this.CreateGraphics();
+                for (int i = 0; i < 5; i++)
+                {
+                    // point to draw is based on 0,0 coordinate of the form
+                    ResizeFunctions.drawCenterPointRectangle(graphics, resizeWidth, resizeHeight, GlobalVars.pictureBoxCenterX, GlobalVars.pictureBoxCenterY);
+                    Thread.Sleep(100);
+                    this.Invalidate();
+                    this.Update();
+                    Thread.Sleep(50);
+                }
+            }
+
         }
 
         private void buttonSubmitResize_Click(object sender, EventArgs e)
@@ -243,17 +258,14 @@ namespace CSharpGenerator
             buttonPreviewResize.Enabled = true;
             buttonSubmitResize.Enabled = true;
             trackBarResize.Enabled = true;
-            trackBarResize.Value = 100;
+            trackBarResize.Value = resizeLowerLimit > 100 ? resizeLowerLimit : 100;
             trackBarResize.LargeChange = (resizeUpperLimit - resizeLowerLimit) / 20;
             labelResize.Text = $"Resize to {trackBarResize.Value}%";
         }
 
         private void pictureBoxImage_Resize(object sender, EventArgs e)
         {
-            // starting location: 255, 33
-            // center: 255 + originalWidth / 2, 33 + originalHeight / 2
-            // new location: center - imageWidth / 2, center - imageHeight / 2
-            pictureBoxImage.Location = new Point(pictureBoxCenterX - GlobalVars.ImageSizeX / 2, pictureBoxCenterY - GlobalVars.ImageSizeY / 2);
+            pictureBoxImage.Location = new Point(GlobalVars.pictureBoxCenterX - GlobalVars.ImageSizeX / 2, GlobalVars.pictureBoxCenterY - GlobalVars.ImageSizeY / 2);
         }
 
         private void setParamsAfterImageLoad()

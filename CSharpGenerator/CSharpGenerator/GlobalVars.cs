@@ -237,5 +237,12 @@ namespace CSharpGenerator
         public static string FilePath { get; set; }
         public static int ImageSizeX { get; set; }
         public static int ImageSizeY { get; set; }
+
+        public const int pictureBoxOffsetX = 255;
+        public const int pictureBoxOffsetY = 33;
+        public const int pictureBoxWidth = 1118;
+        public const int pictureBoxHeight = 720;
+        public const int pictureBoxCenterX = pictureBoxOffsetX + pictureBoxWidth / 2;
+        public const int pictureBoxCenterY = pictureBoxOffsetY + pictureBoxHeight / 2;
     }
 }

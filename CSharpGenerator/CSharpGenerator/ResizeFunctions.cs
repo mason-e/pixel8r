@@ -46,10 +46,8 @@ namespace CSharpGenerator
             return (reductionToMin, expansionToMax);
         }
 
-        public static void drawCenterPointRectangle (Graphics graphics, int width, int height)
+        public static void drawCenterPointRectangle (Graphics graphics, int width, int height, int centerX, int centerY)
         {
-            int centerX = GlobalVars.ImageSizeX / 2;
-            int centerY = GlobalVars.ImageSizeY / 2;
             // recntangles are drawn from top left corner
             int startX = centerX - width / 2;
             int startY = centerY - height / 2;
