@@ -69,12 +69,14 @@
             pictureBoxImage.Location = new Point(255, 33);
             pictureBoxImage.Name = "pictureBoxImage";
             pictureBoxImage.Size = new Size(1118, 720);
-            pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBoxImage.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBoxImage.TabIndex = 2;
             pictureBoxImage.TabStop = false;
             pictureBoxImage.Paint += pictureBoxImage_Paint;
+            pictureBoxImage.MouseClick += pictureBoxImage_MouseClick;
             pictureBoxImage.MouseLeave += pictureBoxImage_MouseLeave;
             pictureBoxImage.MouseMove += pictureBoxImage_MouseMove;
+            pictureBoxImage.Resize += pictureBoxImage_Resize;
             // 
             // buttonPixelate
             // 

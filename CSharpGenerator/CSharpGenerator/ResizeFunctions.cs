@@ -48,14 +48,26 @@ namespace CSharpGenerator
 
         public static void drawCenterPointRectangle (Graphics graphics, int width, int height)
         {
-            int centerX = 559;
-            int centerY = 360;
+            int centerX = GlobalVars.ImageSizeX / 2;
+            int centerY = GlobalVars.ImageSizeY / 2;
             // recntangles are drawn from top left corner
             int startX = centerX - width / 2;
             int startY = centerY - height / 2;
             Rectangle cursor = new Rectangle(startX, startY, width, height);
             graphics.DrawRectangle(new Pen(Color.LightBlue, 2), cursor);
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(127, 255, 255, 255)), cursor);
+        }
+
+        public static Bitmap cropBitmap(Bitmap original, int xStart, int yStart, int resizeWidth, int resizeHeight)
+        {
+            // account for it displaying in center of image area
+            int actualXStart = xStart - (1118 - GlobalVars.ImageSizeX) / 2;
+            int actualYStart = yStart - (720 - GlobalVars.ImageSizeY) / 2;
+            Rectangle cropArea = new Rectangle(xStart, yStart, resizeWidth, resizeHeight);
+            Bitmap newImage = original.Clone(cropArea, original.PixelFormat);
+            GlobalVars.ImageSizeX = newImage.Width;
+            GlobalVars.ImageSizeY = newImage.Height;
+            return newImage;
         }
     }
 }

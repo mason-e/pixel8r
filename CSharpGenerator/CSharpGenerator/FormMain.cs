@@ -93,6 +93,12 @@ namespace CSharpGenerator
         int resizeHeight = 0;
         int resizeLowerLimit = 0;
         int resizeUpperLimit = 0;
+        const int pictureBoxOffsetX = 255;
+        const int pictureBoxOffsetY = 33;
+        const int pictureBoxWidth = 1118;
+        const int pictureBoxHeight = 720;
+        const int pictureBoxCenterX = pictureBoxOffsetX + pictureBoxWidth / 2;
+        const int pictureBoxCenterY = pictureBoxOffsetY + pictureBoxHeight / 2;
 
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
@@ -106,9 +112,53 @@ namespace CSharpGenerator
             if (cursorX != -1 && cursorY != -1 && resizeWidth != 0 && resizeHeight != 0 && checkBoxCrop.Checked)
             {
                 Graphics graphics = e.Graphics;
+                // only need to change the width or height - lock the dimension that doesn't need to change
+                if (resizeWidth == GlobalVars.ImageSizeX)
+                {
+                    cursorX = 0;
+
+                }
+                if (resizeHeight == GlobalVars.ImageSizeY)
+                {
+                    cursorY = 0;
+                }
                 Rectangle cursor = new Rectangle(cursorX, cursorY, resizeWidth, resizeHeight);
                 graphics.DrawRectangle(new Pen(Color.LightBlue, 2), cursor);
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(127, 255, 255, 255)), cursor);
+            }
+        }
+
+        private void pictureBoxImage_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (cursorX != -1 && cursorY != -1 && resizeWidth != 0 && resizeHeight != 0 && checkBoxCrop.Checked)
+            {
+                bool canCrop = false;
+                if (resizeWidth == GlobalVars.ImageSizeX)
+                {
+                    cursorX = 0;
+                    if (cursorY >= 0 && cursorY + resizeHeight <= GlobalVars.ImageSizeY)
+                    {
+                        canCrop = true;
+                    }
+                }
+                if (resizeHeight == GlobalVars.ImageSizeY)
+                {
+                    cursorY = 0;
+                    if (cursorX >= 0 && cursorX + resizeWidth <= GlobalVars.ImageSizeX)
+                    {
+                        canCrop = true;
+                    }
+                }
+                if (canCrop)
+                {
+                    pictureBoxImage.Image = ResizeFunctions.cropBitmap((Bitmap)pictureBoxImage.Image, cursorX, cursorY, resizeWidth, resizeHeight);
+                    checkBoxCrop.Checked = false;
+                    textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+                }
+                else
+                {
+                    textBoxPendingEdit.Text = "Crop attempt failed! Make sure that the crop boundary is not extending outside the image.";
+                }
             }
         }
 
@@ -127,7 +177,14 @@ namespace CSharpGenerator
                 int aspectWidth = Convert.ToInt32(aspectVals[0]);
                 int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
                 (resizeWidth, resizeHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
-                textBoxPendingEdit.Text = $"Crop will resize image to {resizeWidth}x{resizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                if (GlobalVars.ImageSizeX == resizeWidth && GlobalVars.ImageSizeY == resizeHeight)
+                {
+                    textBoxPendingEdit.Text = "Image is already in desired aspect ratio";
+                }
+                else
+                {
+                    textBoxPendingEdit.Text = $"Crop will resize image to {resizeWidth}x{resizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                }
                 buttonPreviewResize.Enabled = false;
                 buttonSubmitResize.Enabled = false;
                 trackBarResize.Enabled = false;
@@ -192,6 +249,14 @@ namespace CSharpGenerator
             trackBarResize.Value = 100;
             trackBarResize.LargeChange = (resizeUpperLimit - resizeLowerLimit) / 20;
             labelResize.Text = $"Resize to {trackBarResize.Value}%";
+        }
+
+        private void pictureBoxImage_Resize(object sender, EventArgs e)
+        {
+            // starting location: 255, 33
+            // center: 255 + originalWidth / 2, 33 + originalHeight / 2
+            // new location: center - imageWidth / 2, center - imageHeight / 2
+            pictureBoxImage.Location = new Point(pictureBoxCenterX - GlobalVars.ImageSizeX / 2, pictureBoxCenterY - GlobalVars.ImageSizeY / 2);
         }
     }
 }
