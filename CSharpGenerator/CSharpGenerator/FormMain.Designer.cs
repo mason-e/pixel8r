@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             openFileDialog1 = new OpenFileDialog();
             pictureBoxImage = new PictureBox();
-            buttonPixelate = new Button();
+            buttonPaletteSwap = new Button();
             comboBoxPalette = new ComboBox();
             labelPalette = new Label();
             labelAlgorithm = new Label();
@@ -78,16 +78,16 @@
             pictureBoxImage.MouseMove += pictureBoxImage_MouseMove;
             pictureBoxImage.Resize += pictureBoxImage_Resize;
             // 
-            // buttonPixelate
+            // buttonPaletteSwap
             // 
-            buttonPixelate.Enabled = false;
-            buttonPixelate.Location = new Point(12, 369);
-            buttonPixelate.Name = "buttonPixelate";
-            buttonPixelate.Size = new Size(84, 23);
-            buttonPixelate.TabIndex = 35;
-            buttonPixelate.Text = "Pixelate!";
-            buttonPixelate.UseVisualStyleBackColor = true;
-            buttonPixelate.Click += buttonPixelate_Click;
+            buttonPaletteSwap.Enabled = false;
+            buttonPaletteSwap.Location = new Point(12, 369);
+            buttonPaletteSwap.Name = "buttonPaletteSwap";
+            buttonPaletteSwap.Size = new Size(95, 23);
+            buttonPaletteSwap.TabIndex = 35;
+            buttonPaletteSwap.Text = "Palette Swap!";
+            buttonPaletteSwap.UseVisualStyleBackColor = true;
+            buttonPaletteSwap.Click += buttonPaletteSwap_Click;
             // 
             // comboBoxPalette
             // 
@@ -328,7 +328,7 @@
             Controls.Add(comboBoxAlgorithm);
             Controls.Add(labelPalette);
             Controls.Add(comboBoxPalette);
-            Controls.Add(buttonPixelate);
+            Controls.Add(buttonPaletteSwap);
             Controls.Add(pictureBoxImage);
             KeyPreview = true;
             Name = "FormMain";
@@ -346,7 +346,7 @@
         #endregion
         private OpenFileDialog openFileDialog1;
         private PictureBox pictureBoxImage;
-        private Button buttonPixelate;
+        private Button buttonPaletteSwap;
         private ComboBox comboBoxPalette;
         private Label labelPalette;
         private Label labelAlgorithm;

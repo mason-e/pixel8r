@@ -235,8 +235,8 @@ namespace CSharpGenerator
         public static ColorPalette mesenPalette = new ColorPalette(mesenColors);
 
         public static string FilePath { get; set; }
-        public static int ImageSizeX { get; set; }
-        public static int ImageSizeY { get; set; }
+        public static int ImageWidth { get; set; }
+        public static int ImageHeight { get; set; }
 
         public const int pictureBoxOffsetX = 255;
         public const int pictureBoxOffsetY = 33;

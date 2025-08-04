@@ -26,7 +26,7 @@ namespace CSharpGenerator
                 setParamsAfterImageLoad();
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
-                    buttonPixelate.Enabled = true;
+                    buttonPaletteSwap.Enabled = true;
                 }
                 if (comboBoxAspectRatio.SelectedIndex != -1)
                 {
@@ -47,7 +47,7 @@ namespace CSharpGenerator
             setParamsAfterImageLoad();
         }
 
-        private void buttonPixelate_Click(object sender, EventArgs e)
+        private void buttonPaletteSwap_Click(object sender, EventArgs e)
         {
             pictureBoxImage.Image = BitmapFunction.pixelateDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
             setParamsAfterImageLoad();
@@ -58,7 +58,7 @@ namespace CSharpGenerator
             pictureBoxPalette.Image = BitmapFunction.drawPalette(comboBoxPalette.Text);
             if (comboBoxAlgorithm.SelectedIndex != -1 && GlobalVars.FilePath != null)
             {
-                buttonPixelate.Enabled = true;
+                buttonPaletteSwap.Enabled = true;
             }
         }
 
@@ -66,7 +66,7 @@ namespace CSharpGenerator
         {
             if (comboBoxPalette.SelectedIndex != -1 && GlobalVars.FilePath != null)
             {
-                buttonPixelate.Enabled = true;
+                buttonPaletteSwap.Enabled = true;
             }
         }
 
@@ -106,12 +106,12 @@ namespace CSharpGenerator
             {
                 Graphics graphics = e.Graphics;
                 // only need to change the width or height - lock the dimension that doesn't need to change
-                if (resizeWidth == GlobalVars.ImageSizeX)
+                if (resizeWidth == GlobalVars.ImageWidth)
                 {
                     cursorX = 0;
 
                 }
-                if (resizeHeight == GlobalVars.ImageSizeY)
+                if (resizeHeight == GlobalVars.ImageHeight)
                 {
                     cursorY = 0;
                 }
@@ -126,18 +126,18 @@ namespace CSharpGenerator
             if (cursorX != -1 && cursorY != -1 && resizeWidth != 0 && resizeHeight != 0 && checkBoxCrop.Checked)
             {
                 bool canCrop = false;
-                if (resizeWidth == GlobalVars.ImageSizeX)
+                if (resizeWidth == GlobalVars.ImageWidth)
                 {
                     cursorX = 0;
-                    if (cursorY >= 0 && cursorY + resizeHeight <= GlobalVars.ImageSizeY)
+                    if (cursorY >= 0 && cursorY + resizeHeight <= GlobalVars.ImageHeight)
                     {
                         canCrop = true;
                     }
                 }
-                if (resizeHeight == GlobalVars.ImageSizeY)
+                if (resizeHeight == GlobalVars.ImageHeight)
                 {
                     cursorY = 0;
-                    if (cursorX >= 0 && cursorX + resizeWidth <= GlobalVars.ImageSizeX)
+                    if (cursorX >= 0 && cursorX + resizeWidth <= GlobalVars.ImageWidth)
                     {
                         canCrop = true;
                     }
@@ -169,7 +169,7 @@ namespace CSharpGenerator
                 int aspectWidth = Convert.ToInt32(aspectVals[0]);
                 int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
                 (resizeWidth, resizeHeight) = ResizeFunctions.getCropDimensions(aspectWidth, aspectHeight);
-                if (GlobalVars.ImageSizeX == resizeWidth && GlobalVars.ImageSizeY == resizeHeight)
+                if (GlobalVars.ImageWidth == resizeWidth && GlobalVars.ImageHeight == resizeHeight)
                 {
                     textBoxPendingEdit.Text = "Image is already in desired aspect ratio";
                 }
@@ -221,7 +221,7 @@ namespace CSharpGenerator
                 for (int i = 0; i < 5; i++)
                 {
                     // point to draw is based on 0,0 coordinate of the pictureBox
-                    ResizeFunctions.drawCenterPointRectangle(graphics, resizeWidth, resizeHeight, GlobalVars.ImageSizeX / 2, GlobalVars.ImageSizeY / 2);
+                    ResizeFunctions.drawCenterPointRectangle(graphics, resizeWidth, resizeHeight, GlobalVars.ImageWidth / 2, GlobalVars.ImageHeight / 2);
                     Thread.Sleep(100);
                     pictureBoxImage.Invalidate();
                     pictureBoxImage.Update();
@@ -265,12 +265,12 @@ namespace CSharpGenerator
 
         private void pictureBoxImage_Resize(object sender, EventArgs e)
         {
-            pictureBoxImage.Location = new Point(GlobalVars.pictureBoxCenterX - GlobalVars.ImageSizeX / 2, GlobalVars.pictureBoxCenterY - GlobalVars.ImageSizeY / 2);
+            pictureBoxImage.Location = new Point(GlobalVars.pictureBoxCenterX - GlobalVars.ImageWidth / 2, GlobalVars.pictureBoxCenterY - GlobalVars.ImageHeight / 2);
         }
 
         private void setParamsAfterImageLoad()
         {
-            textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+            textBoxDimensions.Text = $"{GlobalVars.ImageWidth}x{GlobalVars.ImageHeight}";
             setResizeOptions();
             (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResize.Value);
             labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
