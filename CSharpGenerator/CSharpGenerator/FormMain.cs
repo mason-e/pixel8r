@@ -24,6 +24,9 @@ namespace CSharpGenerator
                 textBoxFilePath.Text = $"Current file: {GlobalVars.FilePath}";
                 pictureBoxImage.Image = BitmapFunction.generateBitmap();
                 setParamsAfterImageLoad();
+                toolStripButtonUndo.Enabled = false;
+                toolStripButtonSave.Enabled = true;
+                toolStripButtonReload.Enabled = true;
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPaletteSwap.Enabled = true;
@@ -43,14 +46,18 @@ namespace CSharpGenerator
 
         private void toolStripButtonReload_Click(object sender, EventArgs e)
         {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
             pictureBoxImage.Image = BitmapFunction.generateBitmap();
             setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
         }
 
         private void buttonPaletteSwap_Click(object sender, EventArgs e)
         {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
             pictureBoxImage.Image = BitmapFunction.pixelateDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
             setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
         }
 
         private void comboBoxPalette_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,8 +151,10 @@ namespace CSharpGenerator
                 }
                 if (canCrop)
                 {
+                    GlobalVars.PreviousImage = pictureBoxImage.Image;
                     pictureBoxImage.Image = ResizeFunctions.cropBitmap((Bitmap)pictureBoxImage.Image, cursorX, cursorY, resizeWidth, resizeHeight);
                     setParamsAfterImageLoad();
+                    toolStripButtonUndo.Enabled = true;
                 }
                 else
                 {
@@ -246,8 +255,10 @@ namespace CSharpGenerator
 
         private void buttonSubmitResize_Click(object sender, EventArgs e)
         {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
             pictureBoxImage.Image = BitmapFunction.resize((Bitmap)pictureBoxImage.Image, 100 / (float)trackBarResize.Value);
             setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
         }
 
         private void setResizeOptions()
@@ -275,6 +286,15 @@ namespace CSharpGenerator
             (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResize.Value);
             labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
             checkBoxCrop.Checked = false;
+        }
+
+        private void toolStripButtonUndo_Click(object sender, EventArgs e)
+        {
+            GlobalVars.ImageWidth = GlobalVars.PreviousImage.Width;
+            GlobalVars.ImageHeight = GlobalVars.PreviousImage.Height;
+            pictureBoxImage.Image = GlobalVars.PreviousImage;
+            setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = false;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace CSharpGenerator
 
         public static Bitmap pixelateDrawing(Image image, string palette, string algorithm)
         {
-            Bitmap bitmap = (Bitmap)image;
+            Bitmap bitmap = new Bitmap(image);
             for (int y = 0; y < bitmap.Height; y++)
             {
                 for (int x = 0; x < bitmap.Width; x++)

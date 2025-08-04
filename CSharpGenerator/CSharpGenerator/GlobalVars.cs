@@ -238,6 +238,8 @@ namespace CSharpGenerator
         public static int ImageWidth { get; set; }
         public static int ImageHeight { get; set; }
 
+        public static Image PreviousImage { get; set; }
+
         public const int pictureBoxOffsetX = 255;
         public const int pictureBoxOffsetY = 33;
         public const int pictureBoxWidth = 1118;
