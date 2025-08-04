@@ -22,9 +22,7 @@ namespace CSharpGenerator
                 GlobalVars.FilePath = openFileDialog1.FileName;
                 textBoxFilePath.Text = $"Current file: {GlobalVars.FilePath}";
                 pictureBoxImage.Image = BitmapFunction.generateBitmap();
-                textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
-                setResizeOptions();
-                labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
+                setParamsAfterImageLoad();
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPixelate.Enabled = true;
@@ -45,13 +43,13 @@ namespace CSharpGenerator
         private void toolStripButtonReload_Click(object sender, EventArgs e)
         {
             pictureBoxImage.Image = BitmapFunction.generateBitmap();
-            textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
-            checkBoxCrop.Checked = false;
+            setParamsAfterImageLoad();
         }
 
         private void buttonPixelate_Click(object sender, EventArgs e)
         {
             pictureBoxImage.Image = BitmapFunction.pixelateDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
+            setParamsAfterImageLoad();
         }
 
         private void comboBoxPalette_SelectedIndexChanged(object sender, EventArgs e)
@@ -152,8 +150,7 @@ namespace CSharpGenerator
                 if (canCrop)
                 {
                     pictureBoxImage.Image = ResizeFunctions.cropBitmap((Bitmap)pictureBoxImage.Image, cursorX, cursorY, resizeWidth, resizeHeight);
-                    checkBoxCrop.Checked = false;
-                    textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+                    setParamsAfterImageLoad();
                 }
                 else
                 {
@@ -235,7 +232,7 @@ namespace CSharpGenerator
         private void buttonSubmitResize_Click(object sender, EventArgs e)
         {
             pictureBoxImage.Image = BitmapFunction.resize((Bitmap)pictureBoxImage.Image, 100 / (float)trackBarResize.Value);
-            setResizeOptions();
+            setParamsAfterImageLoad();
         }
 
         private void setResizeOptions()
@@ -257,6 +254,14 @@ namespace CSharpGenerator
             // center: 255 + originalWidth / 2, 33 + originalHeight / 2
             // new location: center - imageWidth / 2, center - imageHeight / 2
             pictureBoxImage.Location = new Point(pictureBoxCenterX - GlobalVars.ImageSizeX / 2, pictureBoxCenterY - GlobalVars.ImageSizeY / 2);
+        }
+
+        private void setParamsAfterImageLoad()
+        {
+            textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
+            setResizeOptions();
+            labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
+            checkBoxCrop.Checked = false;
         }
     }
 }
