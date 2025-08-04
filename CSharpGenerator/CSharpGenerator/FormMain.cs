@@ -272,6 +272,7 @@ namespace CSharpGenerator
         {
             textBoxDimensions.Text = $"{GlobalVars.ImageSizeX}x{GlobalVars.ImageSizeY}";
             setResizeOptions();
+            (resizeWidth, resizeHeight) = ResizeFunctions.getResizeDimensions(trackBarResize.Value);
             labelShrinkDimensions.Text = $"{resizeWidth}x{resizeHeight}";
             checkBoxCrop.Checked = false;
         }
