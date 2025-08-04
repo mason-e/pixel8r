@@ -40,6 +40,7 @@
             toolStripButtonOpen = new ToolStripButton();
             toolStripButtonReload = new ToolStripButton();
             toolStripButtonSave = new ToolStripButton();
+            toolStripButtonUndo = new ToolStripButton();
             pictureBoxPalette = new PictureBox();
             labelPalettePreview = new Label();
             labelAspectRatio = new Label();
@@ -134,7 +135,7 @@
             toolStripMenu.AutoSize = false;
             toolStripMenu.Dock = DockStyle.None;
             toolStripMenu.ImageScalingSize = new Size(20, 20);
-            toolStripMenu.Items.AddRange(new ToolStripItem[] { toolStripButtonOpen, toolStripButtonReload, toolStripButtonSave });
+            toolStripMenu.Items.AddRange(new ToolStripItem[] { toolStripButtonOpen, toolStripButtonReload, toolStripButtonSave, toolStripButtonUndo });
             toolStripMenu.Location = new Point(-1, 0);
             toolStripMenu.Name = "toolStripMenu";
             toolStripMenu.Size = new Size(253, 25);
@@ -153,6 +154,7 @@
             // toolStripButtonReload
             // 
             toolStripButtonReload.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonReload.Enabled = false;
             toolStripButtonReload.Image = (Image)resources.GetObject("toolStripButtonReload.Image");
             toolStripButtonReload.ImageTransparentColor = Color.Magenta;
             toolStripButtonReload.Name = "toolStripButtonReload";
@@ -163,11 +165,23 @@
             // toolStripButtonSave
             // 
             toolStripButtonSave.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonSave.Enabled = false;
             toolStripButtonSave.Image = (Image)resources.GetObject("toolStripButtonSave.Image");
             toolStripButtonSave.ImageTransparentColor = Color.Magenta;
             toolStripButtonSave.Name = "toolStripButtonSave";
             toolStripButtonSave.Size = new Size(24, 22);
             toolStripButtonSave.Text = "Save Current Image As";
+            // 
+            // toolStripButtonUndo
+            // 
+            toolStripButtonUndo.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonUndo.Enabled = false;
+            toolStripButtonUndo.Image = (Image)resources.GetObject("toolStripButtonUndo.Image");
+            toolStripButtonUndo.ImageTransparentColor = Color.Magenta;
+            toolStripButtonUndo.Name = "toolStripButtonUndo";
+            toolStripButtonUndo.Size = new Size(24, 22);
+            toolStripButtonUndo.Text = "Undo";
+            toolStripButtonUndo.Click += toolStripButtonUndo_Click;
             // 
             // pictureBoxPalette
             // 
@@ -368,5 +382,6 @@
         private Button buttonPreviewResize;
         private Label labelShrinkDimensions;
         private Button buttonSubmitResize;
+        private ToolStripButton toolStripButtonUndo;
     }
 }
