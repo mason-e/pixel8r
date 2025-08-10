@@ -28,7 +28,7 @@ namespace CSharpGenerator
             return new Bitmap(original, new Size(GlobalVars.ImageWidth, GlobalVars.ImageHeight));
         }
 
-        public static Bitmap pixelateDrawing(Image image, string palette, string algorithm)
+        public static Bitmap paletteSwapDrawing(Image image, string palette, string algorithm)
         {
             Bitmap bitmap = new Bitmap(image);
             for (int y = 0; y < bitmap.Height; y++)
@@ -40,6 +40,67 @@ namespace CSharpGenerator
                 }
             }
             return bitmap;
+        }
+
+        public static Bitmap dither(Image image)
+        {
+            Bitmap bitmap = new Bitmap(image);
+            int x = 1, y = 1;
+            while (x < bitmap.Width && y < bitmap.Height)
+            {
+                bitmap.SetPixel(x, y, Color.White);
+                if (x + 3 < bitmap.Width)
+                {
+                    x += 3;
+                }
+                else if (y + 3 < bitmap.Height)
+                {
+                    y += 3;
+                    x = 1;
+                }
+                else break;
+            }
+            return bitmap;
+        }
+
+        public static Bitmap pixelate(Image image)
+        {
+            Bitmap bitmap = new Bitmap(image);
+            int x = 1, y = 1;
+            Random r = new Random();
+            while (x < bitmap.Width && y < bitmap.Height)
+            {
+                // choose one color in the cluster of 3x3 at random, i.e. a pixel that is -1, 0 or 1 from current pixel
+                int colorX = x + r.Next(-1, 2);
+                int colorY = y + r.Next(-1, 2);
+                Color color = bitmap.GetPixel(colorX, colorY);
+                for (int i = -1; i <= 1; i++)
+                {
+                    for (int j = -1; j <= 1; j++)
+                    {
+                        try
+                        {
+                            bitmap.SetPixel(x + i, y + j, color);
+                        }
+                        catch (ArgumentOutOfRangeException e)
+                        {
+
+                        }
+                    }
+                }
+                if (x + 3 < bitmap.Width)
+                {
+                    x += 3;
+                }
+                else if (y + 3 < bitmap.Height)
+                {
+                    y += 3;
+                    x = 1;
+                }
+                else break;
+            }
+            
+                return bitmap;           
         }
 
         public static Color getNewColor(Color oldColor, string palette, string algorithm)
