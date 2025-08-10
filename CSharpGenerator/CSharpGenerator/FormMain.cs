@@ -32,6 +32,10 @@ namespace CSharpGenerator
                 {
                     buttonPaletteSwap.Enabled = true;
                 }
+                if (comboBoxProgPalette.SelectedIndex != -1)
+                {
+                    buttonProgPaletteSwap.Enabled = true;
+                }
                 if (comboBoxAspectRatio.SelectedIndex != -1)
                 {
                     checkBoxCrop.Enabled = true;
@@ -61,12 +65,28 @@ namespace CSharpGenerator
             toolStripButtonUndo.Enabled = true;
         }
 
+        private void buttonProgPaletteSwap_Click(object sender, EventArgs e)
+        {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
+            pictureBoxImage.Image = BitmapFunction.programaticallyPaletteSwap(pictureBoxImage.Image, comboBoxProgPalette.Text);
+            setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
+        }
+
         private void comboBoxPalette_SelectedIndexChanged(object sender, EventArgs e)
         {
             pictureBoxPalette.Image = BitmapFunction.drawPalette(comboBoxPalette.Text);
             if (comboBoxAlgorithm.SelectedIndex != -1 && GlobalVars.FilePath != null)
             {
                 buttonPaletteSwap.Enabled = true;
+            }
+        }
+
+        private void comboBoxProgPalette_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (GlobalVars.FilePath != null)
+            {
+                buttonProgPaletteSwap.Enabled = true;
             }
         }
 

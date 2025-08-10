@@ -39,6 +39,20 @@
             return bitmap;
         }
 
+        public static Bitmap programaticallyPaletteSwap(Image image, string palette)
+        {
+            Bitmap bitmap = new Bitmap(image);
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    Color newColor = getProgrammaticColor(bitmap.GetPixel(x, y), palette);
+                    bitmap.SetPixel(x, y, newColor);
+                }
+            }
+            return bitmap;
+        }
+
         public static Bitmap dither(Image image)
         {
             Bitmap bitmap = new Bitmap(image);
@@ -102,27 +116,114 @@
 
         public static Color getNewColor(Color oldColor, string palette, string algorithm)
         {
-            if (algorithm == "RGB Lowest Combined Linear Diff")
+            if (algorithm == "RGB Simple Sum of Diffs")
             {
-                return findNearestColorRGBSmallestCombinedLinearDiff(oldColor, palette);
+                return findNearestColorRGBSimpleSumDiffs(oldColor, palette);
             }
-            if (algorithm == "RGB Iterative Threshold of Diffs")
+            if (algorithm == "RGB Square Root of Summed Diff Squares")
             {
-                return findNearestColorRGBIterativeDiff(oldColor, palette);
-            }
-            if (algorithm == "RGB Lowest Square Root of Summed Diffs")
-            {
-                return findNearestColorRGBSqrtOfSummedDiffs(oldColor, palette);
+                return findNearestColorRGBSqrtOfSummedSquaredDiffs(oldColor, palette);
             }
             if (algorithm == "RGB Redmean")
             {
                 return findNearestColorRGBRedmean(oldColor, palette);
             }
+            if (algorithm == "RGB Iterative Threshold of Diffs")
+            {
+                return findNearestColorRGBIterativeDiff(oldColor, palette);
+            }
             else
             {
                 return grayScale(oldColor);
             }
-            
+        }
+
+        public static Color getProgrammaticColor(Color oldColor, string palette)
+        {
+            if (palette == "RGB Multiples of 3")
+            {
+                return findNearestRGBMultiple(oldColor, 3);
+            }
+            if (palette == "RGB Multiples of 5")
+            {
+                return findNearestRGBMultiple(oldColor, 5);
+            }
+            if (palette == "RGB Multiples of 15")
+            {
+                return findNearestRGBMultiple(oldColor, 15);
+            }
+            if (palette == "RGB Multiples of 17")
+            {
+                return findNearestRGBMultiple(oldColor, 17);
+            }
+            if (palette == "RGB Multiples of 51")
+            {
+                return findNearestRGBMultiple(oldColor, 51);
+            }
+            if (palette == "RGB Multiples of 85")
+            {
+                return findNearestRGBMultiple(oldColor, 85);
+            }
+            else
+            {
+                return grayScale(oldColor);
+            }
+        }
+
+        public static Color findNearestRGBMultiple(Color oldColor, int multiple)
+        {
+            double midPoint = (double)multiple / 2;
+            int rModulo = oldColor.R % multiple;
+            int gModulo = oldColor.G % multiple;
+            int bModulo = oldColor.B % multiple;
+            int newR, newG, newB;
+
+            if (rModulo != 0)
+            {
+                if (rModulo < midPoint)
+                {
+                    newR = oldColor.R - rModulo;
+                }
+                else
+                {
+                    newR = oldColor.R + (multiple - rModulo);
+                }
+            }
+            else
+            {
+                newR = oldColor.R;
+            }
+            if (gModulo != 0)
+            {
+                if (gModulo < midPoint)
+                {
+                    newG = oldColor.G - gModulo;
+                }
+                else
+                {
+                    newG = oldColor.G + (multiple - gModulo);
+                }
+            }
+            else
+            {
+                newG = oldColor.G;
+            }
+            if (bModulo != 0)
+            {
+                if (bModulo < midPoint)
+                {
+                    newB = oldColor.B - bModulo;
+                }
+                else
+                {
+                    newB = oldColor.B + (multiple - bModulo);
+                }
+            }
+            else
+            {
+                newB = oldColor.B;
+            }
+            return Color.FromArgb(newR, newG, newB);
         }
 
         public static Color findNearestColorRGBIterativeDiff(Color oldColor, string palette)
@@ -239,7 +340,7 @@
             return Math.Abs(color1.R - color2.R) <= difference && Math.Abs(color1.G - color2.G) <= difference && Math.Abs(color1.B - color2.B) <= difference;
         }
 
-        public static Color findNearestColorRGBSmallestCombinedLinearDiff(Color oldColor, string palette)
+        public static Color findNearestColorRGBSimpleSumDiffs(Color oldColor, string palette)
         {
             int largestDiff = 255 * 3;
             int colorIndex = 0;
@@ -266,7 +367,7 @@
             return targetPalette[colorIndex];
         }
 
-        public static Color findNearestColorRGBSqrtOfSummedDiffs(Color oldColor, string palette)
+        public static Color findNearestColorRGBSqrtOfSummedSquaredDiffs(Color oldColor, string palette)
         {
             // based on https://en.wikipedia.org/wiki/Color_difference#sRGB
             double largestDiff = 441.673; // this is the square root of the sum of 255 squared three times, maximum diff any RGB color could have
