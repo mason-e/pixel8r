@@ -114,6 +114,10 @@
             {
                 return findNearestColorRGBSqrtOfSummedDiffs(oldColor, palette);
             }
+            if (algorithm == "RGB Redmean")
+            {
+                return findNearestColorRGBRedmean(oldColor, palette);
+            }
             else
             {
                 return grayScale(oldColor);
@@ -239,9 +243,6 @@
         {
             int largestDiff = 255 * 3;
             int colorIndex = 0;
-            int red = oldColor.R;
-            int green = oldColor.G;
-            int blue = oldColor.B;
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -254,7 +255,7 @@
             for (int i = 0; i < targetPalette.Length; i++)
             {
                 Color compare = targetPalette[i];
-                int totalDiff = Math.Abs(compare.R - red) + Math.Abs(compare.G - green) + Math.Abs(compare.B - blue);
+                int totalDiff = Math.Abs(compare.R - oldColor.R) + Math.Abs(compare.G - oldColor.G) + Math.Abs(compare.B - oldColor.B);
                 if (totalDiff < largestDiff)
                 {
                     largestDiff = totalDiff;
@@ -270,9 +271,6 @@
             // based on https://en.wikipedia.org/wiki/Color_difference#sRGB
             double largestDiff = 441.673; // this is the square root of the sum of 255 squared three times, maximum diff any RGB color could have
             int colorIndex = 0;
-            int red = oldColor.R;
-            int green = oldColor.G;
-            int blue = oldColor.B;
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -286,6 +284,41 @@
             {
                 Color compare = targetPalette[i];
                 double totalDiff = Math.Sqrt(Math.Pow(compare.R - oldColor.R, 2) + Math.Pow(compare.G - oldColor.G, 2) + Math.Pow(compare.B - oldColor.B, 2));
+                if (totalDiff < largestDiff)
+                {
+                    largestDiff = totalDiff;
+                    colorIndex = i;
+                }
+            }
+
+            return targetPalette[colorIndex];
+        }
+
+        public static Color findNearestColorRGBRedmean(Color oldColor, string palette)
+        {
+            // based on https://en.wikipedia.org/wiki/Color_difference#sRGB - "redmean" formula
+            // delta G and delta B max = 255,
+            // I *think* delta R = 255 would produce the max, since it's a squared value, which makes r = 127.5
+            // so, put together: square root of 2.498 * 255^2 + 4 * 255^2 + 2.498 * 255^2 or we can simplify to sqrt(9 * 255^2) = 765
+            double largestDiff = 765;
+            int colorIndex = 0;
+            Color[] targetPalette = [];
+            if (palette == "NES")
+            {
+                targetPalette = GlobalVars.mesenColors;
+            }
+            if (palette == "Web Colors")
+            {
+                targetPalette = GlobalVars.webColors;
+            }
+            for (int i = 0; i < targetPalette.Length; i++)
+            {
+                Color compare = targetPalette[i];
+                double r = 0.5 * (compare.R + oldColor.R);
+                double weightedDeltaR = (2 + r / 256) * Math.Pow(compare.R - oldColor.R, 2);
+                double weightedDeltaG = 4 * Math.Pow(compare.G - oldColor.G, 2);
+                double weightedDeltaB = (2 + (255 - r) / 256) * Math.Pow(compare.B - oldColor.B, 2);
+                double totalDiff = Math.Sqrt(weightedDeltaR + weightedDeltaG + weightedDeltaB);
                 if (totalDiff < largestDiff)
                 {
                     largestDiff = totalDiff;
