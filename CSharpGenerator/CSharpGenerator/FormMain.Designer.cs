@@ -54,6 +54,7 @@
             buttonPreviewResize = new Button();
             labelShrinkDimensions = new Label();
             buttonSubmitResize = new Button();
+            buttonPixelate = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -319,11 +320,23 @@
             buttonSubmitResize.UseVisualStyleBackColor = true;
             buttonSubmitResize.Click += buttonSubmitResize_Click;
             // 
+            // buttonPixelate
+            // 
+            buttonPixelate.Enabled = false;
+            buttonPixelate.Location = new Point(12, 730);
+            buttonPixelate.Name = "buttonPixelate";
+            buttonPixelate.Size = new Size(75, 23);
+            buttonPixelate.TabIndex = 56;
+            buttonPixelate.Text = "Pixelate!";
+            buttonPixelate.UseVisualStyleBackColor = true;
+            buttonPixelate.Click += buttonPixelate_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(buttonPixelate);
             Controls.Add(buttonSubmitResize);
             Controls.Add(labelShrinkDimensions);
             Controls.Add(buttonPreviewResize);
@@ -383,5 +396,6 @@
         private Label labelShrinkDimensions;
         private Button buttonSubmitResize;
         private ToolStripButton toolStripButtonUndo;
+        private Button buttonPixelate;
     }
 }

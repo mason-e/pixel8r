@@ -27,6 +27,7 @@ namespace CSharpGenerator
                 toolStripButtonUndo.Enabled = false;
                 toolStripButtonSave.Enabled = true;
                 toolStripButtonReload.Enabled = true;
+                buttonPixelate.Enabled = true;
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPaletteSwap.Enabled = true;
@@ -55,7 +56,7 @@ namespace CSharpGenerator
         private void buttonPaletteSwap_Click(object sender, EventArgs e)
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
-            pictureBoxImage.Image = BitmapFunction.pixelateDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
+            pictureBoxImage.Image = BitmapFunction.paletteSwapDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }
@@ -295,6 +296,14 @@ namespace CSharpGenerator
             pictureBoxImage.Image = GlobalVars.PreviousImage;
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = false;
+        }
+
+        private void buttonPixelate_Click(object sender, EventArgs e)
+        {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
+            pictureBoxImage.Image = BitmapFunction.pixelate(pictureBoxImage.Image);
+            setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
         }
     }
 }
