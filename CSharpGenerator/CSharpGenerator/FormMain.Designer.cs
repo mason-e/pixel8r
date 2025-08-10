@@ -55,6 +55,9 @@
             labelShrinkDimensions = new Label();
             buttonSubmitResize = new Button();
             buttonPixelate = new Button();
+            labelProgPalette = new Label();
+            comboBoxProgPalette = new ComboBox();
+            buttonProgPaletteSwap = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -83,7 +86,7 @@
             // buttonPaletteSwap
             // 
             buttonPaletteSwap.Enabled = false;
-            buttonPaletteSwap.Location = new Point(12, 369);
+            buttonPaletteSwap.Location = new Point(12, 355);
             buttonPaletteSwap.Name = "buttonPaletteSwap";
             buttonPaletteSwap.Size = new Size(95, 23);
             buttonPaletteSwap.TabIndex = 35;
@@ -124,10 +127,10 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Lowest Combined Linear Diff", "RGB Iterative Threshold of Diffs", "RGB Lowest Square Root of Summed Diffs", "RGB Redmean" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Simple Sum of Diffs", "RGB Square Root of Summed Diff Squares", "RGB Redmean", "RGB Iterative Threshold of Diffs" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
-            comboBoxAlgorithm.Size = new Size(156, 23);
+            comboBoxAlgorithm.Size = new Size(236, 23);
             comboBoxAlgorithm.TabIndex = 38;
             comboBoxAlgorithm.SelectedIndexChanged += comboBoxAlgorithm_SelectedIndexChanged;
             // 
@@ -205,7 +208,7 @@
             // labelAspectRatio
             // 
             labelAspectRatio.AutoSize = true;
-            labelAspectRatio.Location = new Point(12, 436);
+            labelAspectRatio.Location = new Point(12, 554);
             labelAspectRatio.Name = "labelAspectRatio";
             labelAspectRatio.Size = new Size(116, 15);
             labelAspectRatio.TabIndex = 44;
@@ -216,7 +219,7 @@
             comboBoxAspectRatio.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAspectRatio.FormattingEnabled = true;
             comboBoxAspectRatio.Items.AddRange(new object[] { "16:9", "4:3", "16:15 (NES)", "8:7 (SNES)", "10:7 (Genesis)", "10:9 (GB, GG)", "3:2 (GBA)" });
-            comboBoxAspectRatio.Location = new Point(12, 454);
+            comboBoxAspectRatio.Location = new Point(12, 572);
             comboBoxAspectRatio.Name = "comboBoxAspectRatio";
             comboBoxAspectRatio.Size = new Size(121, 23);
             comboBoxAspectRatio.TabIndex = 43;
@@ -227,7 +230,7 @@
             checkBoxCrop.Appearance = Appearance.Button;
             checkBoxCrop.AutoSize = true;
             checkBoxCrop.Enabled = false;
-            checkBoxCrop.Location = new Point(175, 454);
+            checkBoxCrop.Location = new Point(174, 572);
             checkBoxCrop.Name = "checkBoxCrop";
             checkBoxCrop.Size = new Size(74, 25);
             checkBoxCrop.TabIndex = 47;
@@ -272,7 +275,7 @@
             // 
             trackBarResize.Enabled = false;
             trackBarResize.LargeChange = 1;
-            trackBarResize.Location = new Point(9, 539);
+            trackBarResize.Location = new Point(9, 631);
             trackBarResize.Maximum = 2;
             trackBarResize.Name = "trackBarResize";
             trackBarResize.Size = new Size(114, 45);
@@ -284,7 +287,7 @@
             // labelResize
             // 
             labelResize.AutoSize = true;
-            labelResize.Location = new Point(12, 521);
+            labelResize.Location = new Point(12, 613);
             labelResize.Name = "labelResize";
             labelResize.Size = new Size(39, 15);
             labelResize.TabIndex = 52;
@@ -293,7 +296,7 @@
             // buttonPreviewResize
             // 
             buttonPreviewResize.Enabled = false;
-            buttonPreviewResize.Location = new Point(174, 521);
+            buttonPreviewResize.Location = new Point(174, 613);
             buttonPreviewResize.Name = "buttonPreviewResize";
             buttonPreviewResize.Size = new Size(75, 23);
             buttonPreviewResize.TabIndex = 53;
@@ -304,7 +307,7 @@
             // labelShrinkDimensions
             // 
             labelShrinkDimensions.AutoSize = true;
-            labelShrinkDimensions.Location = new Point(12, 569);
+            labelShrinkDimensions.Location = new Point(12, 661);
             labelShrinkDimensions.Name = "labelShrinkDimensions";
             labelShrinkDimensions.Size = new Size(0, 15);
             labelShrinkDimensions.TabIndex = 54;
@@ -312,7 +315,7 @@
             // buttonSubmitResize
             // 
             buttonSubmitResize.Enabled = false;
-            buttonSubmitResize.Location = new Point(174, 550);
+            buttonSubmitResize.Location = new Point(174, 642);
             buttonSubmitResize.Name = "buttonSubmitResize";
             buttonSubmitResize.Size = new Size(75, 23);
             buttonSubmitResize.TabIndex = 55;
@@ -331,11 +334,45 @@
             buttonPixelate.UseVisualStyleBackColor = true;
             buttonPixelate.Click += buttonPixelate_Click;
             // 
+            // labelProgPalette
+            // 
+            labelProgPalette.AutoSize = true;
+            labelProgPalette.Location = new Point(12, 403);
+            labelProgPalette.Name = "labelProgPalette";
+            labelProgPalette.Size = new Size(77, 15);
+            labelProgPalette.TabIndex = 57;
+            labelProgPalette.Text = "Select Palette";
+            // 
+            // comboBoxProgPalette
+            // 
+            comboBoxProgPalette.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxProgPalette.FormattingEnabled = true;
+            comboBoxProgPalette.Items.AddRange(new object[] { "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
+            comboBoxProgPalette.Location = new Point(12, 421);
+            comboBoxProgPalette.Name = "comboBoxProgPalette";
+            comboBoxProgPalette.Size = new Size(121, 23);
+            comboBoxProgPalette.TabIndex = 58;
+            comboBoxProgPalette.SelectedIndexChanged += comboBoxProgPalette_SelectedIndexChanged;
+            // 
+            // buttonProgPaletteSwap
+            // 
+            buttonProgPaletteSwap.Enabled = false;
+            buttonProgPaletteSwap.Location = new Point(12, 450);
+            buttonProgPaletteSwap.Name = "buttonProgPaletteSwap";
+            buttonProgPaletteSwap.Size = new Size(95, 23);
+            buttonProgPaletteSwap.TabIndex = 59;
+            buttonProgPaletteSwap.Text = "Palette Swap!";
+            buttonProgPaletteSwap.UseVisualStyleBackColor = true;
+            buttonProgPaletteSwap.Click += buttonProgPaletteSwap_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(buttonProgPaletteSwap);
+            Controls.Add(comboBoxProgPalette);
+            Controls.Add(labelProgPalette);
             Controls.Add(buttonPixelate);
             Controls.Add(buttonSubmitResize);
             Controls.Add(labelShrinkDimensions);
@@ -397,5 +434,8 @@
         private Button buttonSubmitResize;
         private ToolStripButton toolStripButtonUndo;
         private Button buttonPixelate;
+        private Label labelProgPalette;
+        private ComboBox comboBoxProgPalette;
+        private Button buttonProgPaletteSwap;
     }
 }
