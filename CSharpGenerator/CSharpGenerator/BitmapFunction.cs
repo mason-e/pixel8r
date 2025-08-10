@@ -1,7 +1,4 @@
-﻿using System.Drawing.Imaging;
-using System.IO;
-
-namespace CSharpGenerator
+﻿namespace CSharpGenerator
 {
     internal class BitmapFunction
     {
@@ -105,13 +102,17 @@ namespace CSharpGenerator
 
         public static Color getNewColor(Color oldColor, string palette, string algorithm)
         {
-            if (algorithm == "RGB Lowest Combined Diff")
+            if (algorithm == "RGB Lowest Combined Linear Diff")
             {
-                return findNearestColorRGB(oldColor, palette);
+                return findNearestColorRGBSmallestCombinedLinearDiff(oldColor, palette);
             }
-            if (algorithm == "HSV Lowest Combined Diff")
+            if (algorithm == "RGB Iterative Threshold of Diffs")
             {
-                return findNearestColorHSV(oldColor, palette);
+                return findNearestColorRGBIterativeDiff(oldColor, palette);
+            }
+            if (algorithm == "RGB Lowest Square Root of Summed Diffs")
+            {
+                return findNearestColorRGBSqrtOfSummedDiffs(oldColor, palette);
             }
             else
             {
@@ -120,7 +121,121 @@ namespace CSharpGenerator
             
         }
 
-        public static Color findNearestColorRGB(Color oldColor, string palette)
+        public static Color findNearestColorRGBIterativeDiff(Color oldColor, string palette)
+        {
+            int acceptableDiff = 5;
+            List<int> possibleIndices = [];
+            int red = oldColor.R;
+            int green = oldColor.G;
+            int blue = oldColor.B;
+            int colorIndex = 0;
+            Color[] targetPalette = [];
+            if (palette == "NES")
+            {
+                targetPalette = GlobalVars.mesenColors;
+            }
+            if (palette == "Web Colors")
+            {
+                targetPalette = GlobalVars.webColors;
+            }
+            // first check if at least one value of RGB matches
+            for (int i = 0; i < targetPalette.Length; i++)
+            {
+                Color compare = targetPalette[i];
+                if (anyRGBMatch(compare, oldColor, acceptableDiff));
+                {
+                    possibleIndices.Add(i);
+                }
+                // if none found, increase the diff by 5 and loop again
+                if (i == targetPalette.Length - 1 && possibleIndices.Count == 0)
+                {
+                    acceptableDiff += 5;
+                    i = 0;
+                }
+            }
+            
+            // if above produced more than one result, check if at least two values of RGB match
+            if (possibleIndices.Count > 1)
+            {
+                acceptableDiff = 5;
+                possibleIndices.Clear();
+                for (int i = 0; i < targetPalette.Length; i++)
+                {
+                    Color compare = targetPalette[i];
+                    if (twoRGBMatch(compare, oldColor, acceptableDiff))
+                    {
+                        possibleIndices.Add(i);
+                    }
+                    // if none found, increase the diff by 5 and loop again
+                    if (i == targetPalette.Length - 1 && possibleIndices.Count == 0)
+                    {
+                        acceptableDiff += 5;
+                        i = 0;
+                    }
+                }
+            }
+
+            // if above produced more than one result, check if all three values of RGB match
+            if (possibleIndices.Count > 1)
+            {
+                acceptableDiff = 5;
+                possibleIndices.Clear();
+                for (int i = 0; i < targetPalette.Length; i++)
+                {
+                    Color compare = targetPalette[i];
+                    if (allRGBMatch(compare, oldColor, acceptableDiff))
+                    {
+                        possibleIndices.Add(i);
+                    }
+                    // if none found, increase the diff by 5 and loop again
+                    if (i == targetPalette.Length - 1 && possibleIndices.Count == 0)
+                    {
+                        acceptableDiff += 5;
+                        i = 0;
+                    }
+                }
+            }
+
+            // if we STILL have multiple results, get the result with the smallest total diff
+            if (possibleIndices.Count > 1)
+            {
+                int largestDiff = 255 * 3;
+                foreach (int index in possibleIndices) {
+                    Color compare = targetPalette[index];
+                    int totalDiff = Math.Abs(compare.R - red) + Math.Abs(compare.G - green) + Math.Abs(compare.B - blue);
+                    if (totalDiff < largestDiff)
+                    {
+                        largestDiff = totalDiff;
+                        colorIndex = index;
+                    }
+                }
+            }
+            else
+            {
+                colorIndex = possibleIndices[0];
+            }
+
+            return targetPalette[colorIndex];
+        }
+
+        private static bool anyRGBMatch(Color color1, Color color2, int difference)
+        {
+            return Math.Abs(color1.R - color2.R) <= difference || Math.Abs(color1.G - color2.G) <= difference || Math.Abs(color1.B - color2.B) <= difference;
+        }
+
+        private static bool twoRGBMatch(Color color1, Color color2, int difference)
+        {
+            return (Math.Abs(color1.R - color2.R) <= difference && Math.Abs(color1.G - color2.G) <= difference) ||
+                (Math.Abs(color1.R - color2.R) <= difference && Math.Abs(color1.B - color2.B) <= difference) ||
+                (Math.Abs(color1.G - color2.G) <= difference && Math.Abs(color1.B - color2.B) <= difference);
+        }
+
+        private static bool allRGBMatch(Color color1, Color color2, int difference)
+        {
+            return Math.Abs(color1.R - color2.R) <= difference && Math.Abs(color1.G - color2.G) <= difference && Math.Abs(color1.B - color2.B) <= difference;
+        }
+
+        public static Color findNearestColorRGBSmallestCombinedLinearDiff(Color oldColor, string palette)
         {
             int largestDiff = 255 * 3;
             int colorIndex = 0;
@@ -140,6 +255,37 @@ namespace CSharpGenerator
             {
                 Color compare = targetPalette[i];
                 int totalDiff = Math.Abs(compare.R - red) + Math.Abs(compare.G - green) + Math.Abs(compare.B - blue);
+                if (totalDiff < largestDiff)
+                {
+                    largestDiff = totalDiff;
+                    colorIndex = i;
+                }
+            }
+
+            return targetPalette[colorIndex];
+        }
+
+        public static Color findNearestColorRGBSqrtOfSummedDiffs(Color oldColor, string palette)
+        {
+            // based on https://en.wikipedia.org/wiki/Color_difference#sRGB
+            double largestDiff = 441.673; // this is the square root of the sum of 255 squared three times, maximum diff any RGB color could have
+            int colorIndex = 0;
+            int red = oldColor.R;
+            int green = oldColor.G;
+            int blue = oldColor.B;
+            Color[] targetPalette = [];
+            if (palette == "NES")
+            {
+                targetPalette = GlobalVars.mesenColors;
+            }
+            if (palette == "Web Colors")
+            {
+                targetPalette = GlobalVars.webColors;
+            }
+            for (int i = 0; i < targetPalette.Length; i++)
+            {
+                Color compare = targetPalette[i];
+                double totalDiff = Math.Sqrt(Math.Pow(compare.R - oldColor.R, 2) + Math.Pow(compare.G - oldColor.G, 2) + Math.Pow(compare.B - oldColor.B, 2));
                 if (totalDiff < largestDiff)
                 {
                     largestDiff = totalDiff;

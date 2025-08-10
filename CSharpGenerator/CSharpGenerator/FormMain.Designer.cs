@@ -124,7 +124,7 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Lowest Combined Diff", "HSV Lowest Combined Diff" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Lowest Combined Linear Diff", "RGB Iterative Threshold of Diffs", "RGB Lowest Square Root of Summed Diffs" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(156, 23);
