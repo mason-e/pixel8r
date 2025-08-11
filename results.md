@@ -17,9 +17,9 @@ Method 2: Similar to method 1, but each difference is squared before they are al
 Method 3: Uses the "redmean" detailed on the wiki page, which attempts to weigh the colors differently.
 
 ![](./screenshots/headshot-original.png)  
-![](./screenshots/headshot-rgb-euclidean-1.png)  
-![](./screenshots/headshot-rgb-euclidean-2.png)  
-![](./screenshots/headshot-rgb-euclidean-3.png)  
+![](./screenshots/headshot-nes-1.png)  
+![](./screenshots/headshot-nes-2.png)  
+![](./screenshots/headshot-nes-3.png)  
 
 It turns out, at least for this example, my original algorithm wasn't that far off from what the improved versions provide. The differences are subtle, but you can see them if you look closely - some purple in the sky for method 1, the neck changes, the decrease in that salmon color on the face.
 
@@ -33,3 +33,18 @@ It's worth noting that some examples proved more diverse. Here is a screenshot f
 
 Here we can see that there isn't one definitive standout, although 1 is clearly the worst with its dark pipes that lack shine. The only difference I can eyeball between 2 and 3 is in the dirt at the very bottom. I'd say 3 has a closer color, but if you look closely, 2 retains more textural color variation, so I'd call it even.
 
+It's at this point I decided I may as well just compare the whole color space to see if one method stood out. Or at least part of the color space. All 256^3 colors would require over 16 million pixels, or about two complete 4K displays worth. So instead I generated based off steps of 3, for a more manageable 85^3 or 614,125 pixels (plus an extra five 85x85 squares at the end to emphasize the grayscale):
+
+![](./screenshots/colorspace.png)
+
+Of course, seeing colors one pixel at a time makes it hard to get a comparison. But for posterity, here are the three methods with the NES palette:
+
+![](./screenshots/colorspace-nes-1.png)  
+![](./screenshots/colorspace-nes-2.png)  
+![](./screenshots/colorspace-nes-3.png)  
+
+These of course look pretty similar, so I compared them to the original in a software program, but it's not super illuminating either:
+
+![](./screenshots/color-diff-1.png)  
+![](./screenshots/color-diff-2.png)  
+![](./screenshots/color-diff-3.png)  
