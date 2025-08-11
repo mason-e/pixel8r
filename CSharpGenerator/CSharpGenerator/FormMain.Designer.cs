@@ -175,6 +175,7 @@
             toolStripButtonSave.Name = "toolStripButtonSave";
             toolStripButtonSave.Size = new Size(24, 22);
             toolStripButtonSave.Text = "Save Current Image As";
+            toolStripButtonSave.Click += toolStripButtonSave_Click;
             // 
             // toolStripButtonUndo
             // 
