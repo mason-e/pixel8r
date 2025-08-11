@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace CSharpGenerator
@@ -46,6 +47,20 @@ namespace CSharpGenerator
             else
             {
                 return;
+            }
+        }
+
+        private void toolStripButtonSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "Supported Image Files|*.jpg;*.png;*.gif;*.bmp",
+                Title = "Open image file"
+            };
+            saveFileDialog.ShowDialog(this);
+            if (saveFileDialog.FileName != "")
+            {
+                pictureBoxImage.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
 
