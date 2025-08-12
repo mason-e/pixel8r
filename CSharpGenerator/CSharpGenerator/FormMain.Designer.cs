@@ -127,7 +127,7 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Simple Sum of Diffs", "RGB Square Root of Summed Diff Squares", "RGB Redmean", "RGB Iterative Threshold of Diffs" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Simple Sum of Diffs", "RGB Square Root of Summed Diff Squares", "RGB Redmean", "HSL Difference", "Lab Value Difference" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(236, 23);
@@ -348,7 +348,7 @@
             // 
             comboBoxProgPalette.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProgPalette.FormattingEnabled = true;
-            comboBoxProgPalette.Items.AddRange(new object[] { "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
+            comboBoxProgPalette.Items.AddRange(new object[] { "Grayscale", "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
             comboBoxProgPalette.Location = new Point(12, 421);
             comboBoxProgPalette.Name = "comboBoxProgPalette";
             comboBoxProgPalette.Size = new Size(121, 23);
