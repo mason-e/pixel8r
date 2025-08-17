@@ -352,7 +352,7 @@
             // 
             comboBoxProgPalette.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProgPalette.FormattingEnabled = true;
-            comboBoxProgPalette.Items.AddRange(new object[] { "Grayscale", "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
+            comboBoxProgPalette.Items.AddRange(new object[] { "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
             comboBoxProgPalette.Location = new Point(12, 421);
             comboBoxProgPalette.Name = "comboBoxProgPalette";
             comboBoxProgPalette.Size = new Size(156, 23);
@@ -394,7 +394,7 @@
             // 
             comboBoxTint.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxTint.FormattingEnabled = true;
-            comboBoxTint.Items.AddRange(new object[] { "White (Brighten)", "Red (Soft)", "Red (Hard)", "Green (Soft)", "Green (Hard)", "Blue (Soft)", "Blue (Hard)", "Cyan (Soft)", "Cyan (Hard)", "Magenta (Soft)", "Magenta (Hard)", "Yellow (Soft)", "Yellow (Hard)", "Black (Darken)" });
+            comboBoxTint.Items.AddRange(new object[] { "White (Brighten)", "Black (Darken)", "Grayscale", "Red (Soft)", "Red (Hard)", "Redscale", "Green (Soft)", "Green (Hard)", "Greenscale", "Blue (Soft)", "Blue (Hard)", "Bluescale", "Cyan (Soft)", "Cyan (Hard)", "Cyanscale", "Magenta (Soft)", "Magenta (Hard)", "Magentascale", "Yellow (Soft)", "Yellow (Hard)", "Yellowscale" });
             comboBoxTint.Location = new Point(13, 510);
             comboBoxTint.Name = "comboBoxTint";
             comboBoxTint.Size = new Size(121, 23);
