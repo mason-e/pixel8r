@@ -80,7 +80,7 @@ namespace CSharpGenerator
         private void buttonPaletteSwap_Click(object sender, EventArgs e)
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
-            pictureBoxImage.Image = BitmapFunction.paletteSwapDrawing(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
+            pictureBoxImage.Image = BitmapFunction.paletteSwapPredefined(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }
@@ -88,7 +88,7 @@ namespace CSharpGenerator
         private void buttonProgPaletteSwap_Click(object sender, EventArgs e)
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
-            pictureBoxImage.Image = BitmapFunction.programaticallyPaletteSwap(pictureBoxImage.Image, comboBoxProgPalette.Text);
+            pictureBoxImage.Image = BitmapFunction.paletteSwapProgrammatic(pictureBoxImage.Image, comboBoxProgPalette.Text);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }
