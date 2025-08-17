@@ -58,6 +58,7 @@
             labelProgPalette = new Label();
             comboBoxProgPalette = new ComboBox();
             buttonProgPaletteSwap = new Button();
+            buttonDither = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -366,11 +367,23 @@
             buttonProgPaletteSwap.UseVisualStyleBackColor = true;
             buttonProgPaletteSwap.Click += buttonProgPaletteSwap_Click;
             // 
+            // buttonDither
+            // 
+            buttonDither.Enabled = false;
+            buttonDither.Location = new Point(93, 730);
+            buttonDither.Name = "buttonDither";
+            buttonDither.Size = new Size(75, 23);
+            buttonDither.TabIndex = 60;
+            buttonDither.Text = "Dither!";
+            buttonDither.UseVisualStyleBackColor = true;
+            buttonDither.Click += buttonDither_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(buttonDither);
             Controls.Add(buttonProgPaletteSwap);
             Controls.Add(comboBoxProgPalette);
             Controls.Add(labelProgPalette);
@@ -438,5 +451,6 @@
         private Label labelProgPalette;
         private ComboBox comboBoxProgPalette;
         private Button buttonProgPaletteSwap;
+        private Button buttonDither;
     }
 }
