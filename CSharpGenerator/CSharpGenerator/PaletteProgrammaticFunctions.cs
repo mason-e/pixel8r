@@ -2,44 +2,34 @@
 {
     internal class PaletteProgrammaticFunctions
     {
-        public static Color getProgrammaticColor(Color oldColor, string palette)
+        public static Color getProgrammaticColor(Color color, string palette)
         {
-            if (palette == "Grayscale")
-            {
-                return grayScale(oldColor);
-            }
             if (palette == "RGB Multiples of 3")
             {
-                return findNearestRGBMultiple(oldColor, 3);
+                return findNearestRGBMultiple(color, 3);
             }
             if (palette == "RGB Multiples of 5")
             {
-                return findNearestRGBMultiple(oldColor, 5);
+                return findNearestRGBMultiple(color, 5);
             }
             if (palette == "RGB Multiples of 15")
             {
-                return findNearestRGBMultiple(oldColor, 15);
+                return findNearestRGBMultiple(color, 15);
             }
             if (palette == "RGB Multiples of 17")
             {
-                return findNearestRGBMultiple(oldColor, 17);
+                return findNearestRGBMultiple(color, 17);
             }
             if (palette == "RGB Multiples of 51")
             {
-                return findNearestRGBMultiple(oldColor, 51);
+                return findNearestRGBMultiple(color, 51);
             }
             if (palette == "RGB Multiples of 85")
             {
-                return findNearestRGBMultiple(oldColor, 85);
+                return findNearestRGBMultiple(color, 85);
             }
             // default case, should not be reachable
-            return oldColor;
-        }
-
-        private static Color grayScale(Color oldColor)
-        {
-            int grayScale = (int)((oldColor.R * 0.3) + (oldColor.G * 0.59) + (oldColor.B * 0.11));
-            return Color.FromArgb(grayScale, grayScale, grayScale);
+            return color;
         }
 
         private static Color findNearestRGBMultiple(Color oldColor, int multiple)
