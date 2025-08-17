@@ -122,82 +122,82 @@
 
         private static Color tintWhite(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), addTintValue(color.G, tintDelta), addTintValue(color.B, tintDelta));
+            return Color.FromArgb(addTint(color.R, tintDelta), addTint(color.G, tintDelta), addTint(color.B, tintDelta));
         }
 
         private static Color tintBlack(Color color)
         {
-            return Color.FromArgb(subtractTintValue(color.R, tintDelta), subtractTintValue(color.G, tintDelta), subtractTintValue(color.B, tintDelta));
+            return Color.FromArgb(subtractTint(color.R, tintDelta), subtractTint(color.G, tintDelta), subtractTint(color.B, tintDelta));
         }
 
         private static Color tintRedSoft(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), color.G, color.B);
+            return Color.FromArgb(addTint(color.R, tintDelta), color.G, color.B);
         }
 
         private static Color tintRedHard(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), subtractTintValue(color.G, tintDelta), subtractTintValue(color.B, tintDelta));
+            return Color.FromArgb(addTint(color.R, tintDelta), subtractTint(color.G, tintDelta), subtractTint(color.B, tintDelta));
         }
 
         private static Color tintGreenSoft(Color color)
         {
-            return Color.FromArgb(color.R, addTintValue(color.G, tintDelta), color.B);
+            return Color.FromArgb(color.R, addTint(color.G, tintDelta), color.B);
         }
 
         private static Color tintGreenHard(Color color)
         {
-            return Color.FromArgb(subtractTintValue(color.R, tintDelta), addTintValue(color.G, 10), subtractTintValue(color.B, tintDelta));
+            return Color.FromArgb(subtractTint(color.R, tintDelta), addTint(color.G, 10), subtractTint(color.B, tintDelta));
         }
 
         private static Color tintBlueSoft(Color color)
         {
-            return Color.FromArgb(color.R, color.G, addTintValue(color.B, tintDelta));
+            return Color.FromArgb(color.R, color.G, addTint(color.B, tintDelta));
         }
 
         private static Color tintBlueHard(Color color)
         {
-            return Color.FromArgb(subtractTintValue(color.R, tintDelta), subtractTintValue(color.G, tintDelta), addTintValue(color.B, tintDelta));
+            return Color.FromArgb(subtractTint(color.R, tintDelta), subtractTint(color.G, tintDelta), addTint(color.B, tintDelta));
         }
 
         private static Color tintCyanSoft(Color color)
         {
-            return Color.FromArgb(color.R, addTintValue(color.G, tintDelta), addTintValue(color.B, tintDelta));
+            return Color.FromArgb(color.R, addTint(color.G, tintDelta), addTint(color.B, tintDelta));
         }
 
         private static Color tintCyanHard(Color color)
         {
-            return Color.FromArgb(subtractTintValue(color.R, tintDelta), addTintValue(color.G, tintDelta), addTintValue(color.B, tintDelta));
+            return Color.FromArgb(subtractTint(color.R, tintDelta), addTint(color.G, tintDelta), addTint(color.B, tintDelta));
         }
 
         private static Color tintMagentaSoft(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), color.G, addTintValue(color.B, tintDelta));
+            return Color.FromArgb(addTint(color.R, tintDelta), color.G, addTint(color.B, tintDelta));
         }
 
         private static Color tintMagentaHard(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), subtractTintValue(color.G, tintDelta), addTintValue(color.B, tintDelta));
+            return Color.FromArgb(addTint(color.R, tintDelta), subtractTint(color.G, tintDelta), addTint(color.B, tintDelta));
         }
 
         private static Color tintYellowSoft(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), addTintValue(color.G, tintDelta), color.B);
+            return Color.FromArgb(addTint(color.R, tintDelta), addTint(color.G, tintDelta), color.B);
         }
 
         private static Color tintYellowHard(Color color)
         {
-            return Color.FromArgb(addTintValue(color.R, tintDelta), addTintValue(color.G, tintDelta), subtractTintValue(color.B, tintDelta));
+            return Color.FromArgb(addTint(color.R, tintDelta), addTint(color.G, tintDelta), subtractTint(color.B, tintDelta));
         }
 
-        private static int addTintValue(int originalValue, int addition)
+        private static int addTint(int original, int value)
         {
-            return originalValue <= 255 - addition ? originalValue + addition : 255;
+            return original <= 255 - value ? original + value : 255;
         }
 
-        private static int subtractTintValue(int originalValue, int subtractition)
+        private static int subtractTint(int original, int value)
         {
-            return originalValue >= subtractition ? originalValue - subtractition : 0;
+            return original >= value ? original - value : 0;
         }
     }
 }
