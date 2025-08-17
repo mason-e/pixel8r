@@ -9,6 +9,27 @@ namespace CSharpGenerator
 {
     static class GlobalVars
     {
+        public static Color[] rgb18Color = [
+            Color.FromArgb(255, 0, 0),
+            Color.FromArgb(255, 85, 0),
+            Color.FromArgb(255, 170, 0),
+            Color.FromArgb(255, 255, 0),
+            Color.FromArgb(170, 255, 0),
+            Color.FromArgb(85, 255, 0),
+            Color.FromArgb(0, 255, 0),
+            Color.FromArgb(0, 255, 85),
+            Color.FromArgb(0, 255, 170),
+            Color.FromArgb(0, 255, 255),
+            Color.FromArgb(0, 170, 255),
+            Color.FromArgb(0, 85, 255),
+            Color.FromArgb(0, 0, 255),
+            Color.FromArgb(85, 0, 255),
+            Color.FromArgb(170, 0, 255),
+            Color.FromArgb(255, 0, 255),
+            Color.FromArgb(255, 0, 170),
+            Color.FromArgb(255, 0, 85),
+        ];
+
         public static Color[] mesenColors = [
             Color.FromArgb(102, 102, 102),
             Color.FromArgb(0, 42, 136),
@@ -67,69 +88,163 @@ namespace CSharpGenerator
             Color.FromArgb(184, 184, 184),
         ];
 
+        public static Color[] webColors = [
+            Color.AliceBlue,
+            Color.AntiqueWhite,
+            Color.Aqua,
+            Color.Aquamarine,
+            Color.Azure,
+            Color.Beige,
+            Color.Bisque,
+            Color.Black,
+            Color.BlanchedAlmond,
+            Color.Blue,
+            Color.BlueViolet,
+            Color.Brown,
+            Color.BurlyWood,
+            Color.CadetBlue,
+            Color.Chartreuse,
+            Color.Chocolate,
+            Color.Coral,
+            Color.CornflowerBlue,
+            Color.Cornsilk,
+            Color.Crimson,
+            Color.Cyan,
+            Color.DarkBlue,
+            Color.DarkCyan,
+            Color.DarkGoldenrod,
+            Color.DarkGray,
+            Color.DarkGreen,
+            Color.DarkKhaki,
+            Color.DarkMagenta,
+            Color.DarkOliveGreen,
+            Color.DarkOrange,
+            Color.DarkOrchid,
+            Color.DarkRed,
+            Color.DarkSalmon,
+            Color.DarkSeaGreen,
+            Color.DarkSlateBlue,
+            Color.DarkSlateGray,
+            Color.DarkTurquoise,
+            Color.DarkViolet,
+            Color.DeepPink,
+            Color.DeepSkyBlue,
+            Color.DimGray,
+            Color.DodgerBlue,
+            Color.Firebrick,
+            Color.FloralWhite,
+            Color.ForestGreen,
+            Color.Fuchsia,
+            Color.Gainsboro,
+            Color.GhostWhite,
+            Color.Gold,
+            Color.Goldenrod,
+            Color.Gray,
+            Color.Green,
+            Color.GreenYellow,
+            Color.Honeydew,
+            Color.HotPink,
+            Color.IndianRed,
+            Color.Indigo,
+            Color.Ivory,
+            Color.Khaki,
+            Color.Lavender,
+            Color.LavenderBlush,
+            Color.LawnGreen,
+            Color.LemonChiffon,
+            Color.LightBlue,
+            Color.LightCoral,
+            Color.LightCyan,
+            Color.LightGoldenrodYellow,
+            Color.LightGreen,
+            Color.LightGray,
+            Color.LightPink,
+            Color.LightSalmon,
+            Color.LightSeaGreen,
+            Color.LightSkyBlue,
+            Color.LightSlateGray,
+            Color.LightSteelBlue,
+            Color.LightYellow,
+            Color.Lime,
+            Color.LimeGreen,
+            Color.Linen,
+            Color.Magenta,
+            Color.Maroon,
+            Color.MediumAquamarine,
+            Color.MediumBlue,
+            Color.MediumOrchid,
+            Color.MediumPurple,
+            Color.MediumSeaGreen,
+            Color.MediumSlateBlue,
+            Color.MediumSpringGreen,
+            Color.MediumTurquoise,
+            Color.MediumVioletRed,
+            Color.MidnightBlue,
+            Color.MintCream,
+            Color.MistyRose,
+            Color.Moccasin,
+            Color.NavajoWhite,
+            Color.Navy,
+            Color.OldLace,
+            Color.Olive,
+            Color.OliveDrab,
+            Color.Orange,
+            Color.OrangeRed,
+            Color.Orchid,
+            Color.PaleGoldenrod,
+            Color.PaleGreen,
+            Color.PaleTurquoise,
+            Color.PaleVioletRed,
+            Color.PapayaWhip,
+            Color.PeachPuff,
+            Color.Peru,
+            Color.Pink,
+            Color.Plum,
+            Color.PowderBlue,
+            Color.Purple,
+            Color.RebeccaPurple,
+            Color.Red,
+            Color.RosyBrown,
+            Color.RoyalBlue,
+            Color.SaddleBrown,
+            Color.Salmon,
+            Color.SandyBrown,
+            Color.SeaGreen,
+            Color.SeaShell,
+            Color.Sienna,
+            Color.Silver,
+            Color.SkyBlue,
+            Color.SlateBlue,
+            Color.SlateGray,
+            Color.Snow,
+            Color.SpringGreen,
+            Color.SteelBlue,
+            Color.Tan,
+            Color.Teal,
+            Color.Thistle,
+            Color.Tomato,
+            Color.Turquoise,
+            Color.Violet,
+            Color.Wheat,
+            Color.White,
+            Color.WhiteSmoke,
+            Color.Yellow,
+            Color.YellowGreen
+];
+
         public static ColorPalette mesenPalette = new ColorPalette(mesenColors);
 
-        private static string filePath1;
-        public static string FilePath1
-        {
-            get { return filePath1; }
-            set { filePath1 = value; }
-        }
+        public static string FilePath { get; set; }
+        public static int ImageWidth { get; set; }
+        public static int ImageHeight { get; set; }
 
-        private static string filePath2;
-        public static string FilePath2
-        {
-            get { return filePath2; }
-            set { filePath2 = value; }
-        }
+        public static Image PreviousImage { get; set; }
 
-        private static string filePath3;
-        public static string FilePath3
-        {
-            get { return filePath3; }
-            set { filePath3 = value; }
-        }
-
-        private static int size;
-        public static int Size
-        {
-            get { return size; }
-            set { size = value; }
-        }
-
-        private static int sideLength;
-        public static int SideLength
-        {
-            get { return sideLength; }
-            set { sideLength = value; }
-        }
-
-        private static string tintColor1;
-        public static string TintColor1
-        {
-            get { return tintColor1; }
-            set { tintColor1 = value; }
-        }
-
-        private static string tintColor2;
-        public static string TintColor2
-        {
-            get { return tintColor2; }
-            set { tintColor2 = value; }
-        }
-
-        private static bool invert;
-        public static bool Invert
-        {
-            get { return invert; }
-            set { invert = value; }
-        }
-
-        private static int tintWeight;
-        public static int TintWeight
-        {
-            get { return tintWeight; }
-            set { tintWeight = value; }
-        }
+        public const int pictureBoxOffsetX = 255;
+        public const int pictureBoxOffsetY = 33;
+        public const int pictureBoxWidth = 1118;
+        public const int pictureBoxHeight = 720;
+        public const int pictureBoxCenterX = pictureBoxOffsetX + pictureBoxWidth / 2;
+        public const int pictureBoxCenterY = pictureBoxOffsetY + pictureBoxHeight / 2;
     }
 }
