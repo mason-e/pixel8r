@@ -59,6 +59,9 @@
             comboBoxProgPalette = new ComboBox();
             buttonProgPaletteSwap = new Button();
             buttonDither = new Button();
+            labelTint = new Label();
+            comboBoxTint = new ComboBox();
+            buttonTint = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -102,7 +105,7 @@
             comboBoxPalette.Items.AddRange(new object[] { "Web Colors", "NES" });
             comboBoxPalette.Location = new Point(12, 51);
             comboBoxPalette.Name = "comboBoxPalette";
-            comboBoxPalette.Size = new Size(121, 23);
+            comboBoxPalette.Size = new Size(137, 23);
             comboBoxPalette.TabIndex = 36;
             comboBoxPalette.SelectedIndexChanged += comboBoxPalette_SelectedIndexChanged;
             // 
@@ -111,9 +114,9 @@
             labelPalette.AutoSize = true;
             labelPalette.Location = new Point(12, 33);
             labelPalette.Name = "labelPalette";
-            labelPalette.Size = new Size(77, 15);
+            labelPalette.Size = new Size(137, 15);
             labelPalette.TabIndex = 37;
-            labelPalette.Text = "Select Palette";
+            labelPalette.Text = "Select Predefined Palette";
             // 
             // labelAlgorithm
             // 
@@ -210,7 +213,7 @@
             // labelAspectRatio
             // 
             labelAspectRatio.AutoSize = true;
-            labelAspectRatio.Location = new Point(12, 554);
+            labelAspectRatio.Location = new Point(9, 583);
             labelAspectRatio.Name = "labelAspectRatio";
             labelAspectRatio.Size = new Size(116, 15);
             labelAspectRatio.TabIndex = 44;
@@ -221,7 +224,7 @@
             comboBoxAspectRatio.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAspectRatio.FormattingEnabled = true;
             comboBoxAspectRatio.Items.AddRange(new object[] { "16:9", "4:3", "1:1 (Square)", "16:15 (NES)", "8:7 (SNES)", "10:7 (Genesis)", "10:9 (GB, GG)", "3:2 (GBA)" });
-            comboBoxAspectRatio.Location = new Point(12, 572);
+            comboBoxAspectRatio.Location = new Point(9, 601);
             comboBoxAspectRatio.Name = "comboBoxAspectRatio";
             comboBoxAspectRatio.Size = new Size(121, 23);
             comboBoxAspectRatio.TabIndex = 43;
@@ -232,7 +235,7 @@
             checkBoxCrop.Appearance = Appearance.Button;
             checkBoxCrop.AutoSize = true;
             checkBoxCrop.Enabled = false;
-            checkBoxCrop.Location = new Point(174, 572);
+            checkBoxCrop.Location = new Point(171, 601);
             checkBoxCrop.Name = "checkBoxCrop";
             checkBoxCrop.Size = new Size(74, 25);
             checkBoxCrop.TabIndex = 47;
@@ -277,7 +280,7 @@
             // 
             trackBarResize.Enabled = false;
             trackBarResize.LargeChange = 1;
-            trackBarResize.Location = new Point(9, 631);
+            trackBarResize.Location = new Point(6, 660);
             trackBarResize.Maximum = 2;
             trackBarResize.Name = "trackBarResize";
             trackBarResize.Size = new Size(114, 45);
@@ -289,7 +292,7 @@
             // labelResize
             // 
             labelResize.AutoSize = true;
-            labelResize.Location = new Point(12, 613);
+            labelResize.Location = new Point(9, 642);
             labelResize.Name = "labelResize";
             labelResize.Size = new Size(39, 15);
             labelResize.TabIndex = 52;
@@ -298,7 +301,7 @@
             // buttonPreviewResize
             // 
             buttonPreviewResize.Enabled = false;
-            buttonPreviewResize.Location = new Point(174, 613);
+            buttonPreviewResize.Location = new Point(171, 642);
             buttonPreviewResize.Name = "buttonPreviewResize";
             buttonPreviewResize.Size = new Size(75, 23);
             buttonPreviewResize.TabIndex = 53;
@@ -309,7 +312,7 @@
             // labelShrinkDimensions
             // 
             labelShrinkDimensions.AutoSize = true;
-            labelShrinkDimensions.Location = new Point(12, 661);
+            labelShrinkDimensions.Location = new Point(12, 690);
             labelShrinkDimensions.Name = "labelShrinkDimensions";
             labelShrinkDimensions.Size = new Size(0, 15);
             labelShrinkDimensions.TabIndex = 54;
@@ -317,7 +320,7 @@
             // buttonSubmitResize
             // 
             buttonSubmitResize.Enabled = false;
-            buttonSubmitResize.Location = new Point(174, 642);
+            buttonSubmitResize.Location = new Point(171, 671);
             buttonSubmitResize.Name = "buttonSubmitResize";
             buttonSubmitResize.Size = new Size(75, 23);
             buttonSubmitResize.TabIndex = 55;
@@ -341,9 +344,9 @@
             labelProgPalette.AutoSize = true;
             labelProgPalette.Location = new Point(12, 403);
             labelProgPalette.Name = "labelProgPalette";
-            labelProgPalette.Size = new Size(77, 15);
+            labelProgPalette.Size = new Size(156, 15);
             labelProgPalette.TabIndex = 57;
-            labelProgPalette.Text = "Select Palette";
+            labelProgPalette.Text = "Select Programmatic Palette";
             // 
             // comboBoxProgPalette
             // 
@@ -352,7 +355,7 @@
             comboBoxProgPalette.Items.AddRange(new object[] { "Grayscale", "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
             comboBoxProgPalette.Location = new Point(12, 421);
             comboBoxProgPalette.Name = "comboBoxProgPalette";
-            comboBoxProgPalette.Size = new Size(121, 23);
+            comboBoxProgPalette.Size = new Size(156, 23);
             comboBoxProgPalette.TabIndex = 58;
             comboBoxProgPalette.SelectedIndexChanged += comboBoxProgPalette_SelectedIndexChanged;
             // 
@@ -378,11 +381,45 @@
             buttonDither.UseVisualStyleBackColor = true;
             buttonDither.Click += buttonDither_Click;
             // 
+            // labelTint
+            // 
+            labelTint.AutoSize = true;
+            labelTint.Location = new Point(13, 492);
+            labelTint.Name = "labelTint";
+            labelTint.Size = new Size(62, 15);
+            labelTint.TabIndex = 61;
+            labelTint.Text = "Select Tint";
+            // 
+            // comboBoxTint
+            // 
+            comboBoxTint.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxTint.FormattingEnabled = true;
+            comboBoxTint.Items.AddRange(new object[] { "White (Brighten)", "Red (Soft)", "Red (Hard)", "Green (Soft)", "Green (Hard)", "Blue (Soft)", "Blue (Hard)", "Cyan (Soft)", "Cyan (Hard)", "Magenta (Soft)", "Magenta (Hard)", "Yellow (Soft)", "Yellow (Hard)", "Black (Darken)" });
+            comboBoxTint.Location = new Point(13, 510);
+            comboBoxTint.Name = "comboBoxTint";
+            comboBoxTint.Size = new Size(121, 23);
+            comboBoxTint.TabIndex = 62;
+            comboBoxTint.SelectedIndexChanged += comboBoxTint_SelectedIndexChanged;
+            // 
+            // buttonTint
+            // 
+            buttonTint.Enabled = false;
+            buttonTint.Location = new Point(12, 539);
+            buttonTint.Name = "buttonTint";
+            buttonTint.Size = new Size(75, 23);
+            buttonTint.TabIndex = 63;
+            buttonTint.Text = "Tint!";
+            buttonTint.UseVisualStyleBackColor = true;
+            buttonTint.Click += buttonTint_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(buttonTint);
+            Controls.Add(comboBoxTint);
+            Controls.Add(labelTint);
             Controls.Add(buttonDither);
             Controls.Add(buttonProgPaletteSwap);
             Controls.Add(comboBoxProgPalette);
@@ -452,5 +489,8 @@
         private ComboBox comboBoxProgPalette;
         private Button buttonProgPaletteSwap;
         private Button buttonDither;
+        private Label labelTint;
+        private ComboBox comboBoxTint;
+        private Button buttonTint;
     }
 }
