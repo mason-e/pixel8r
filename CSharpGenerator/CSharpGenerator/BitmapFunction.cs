@@ -53,6 +53,20 @@
             return bitmap;
         }
 
+        public static Bitmap tint(Image image, string palette)
+        {
+            Bitmap bitmap = new Bitmap(image);
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    Color newColor = getTintColor(bitmap.GetPixel(x, y), palette);
+                    bitmap.SetPixel(x, y, newColor);
+                }
+            }
+            return bitmap;
+        }
+
         public static Bitmap dither(Image image)
         {
             Bitmap bitmap = new Bitmap(image);
@@ -172,6 +186,71 @@
             if (palette == "RGB Multiples of 85")
             {
                 return findNearestRGBMultiple(oldColor, 85);
+            }
+            else
+            {
+                // essentially do nothing
+                return oldColor;
+            }
+        }
+
+        public static Color getTintColor(Color oldColor, string tint)
+        {
+            if (tint == "White (Brighten)")
+            {
+                return TintFunctions.tintWhite(oldColor);
+            }
+            if (tint == "Red (Soft)")
+            {
+                return TintFunctions.tintRedSoft(oldColor);
+            }
+            if (tint == "Red (Hard)")
+            {
+                return TintFunctions.tintRedHard(oldColor);
+            }
+            if (tint == "Green (Soft)")
+            {
+                return TintFunctions.tintGreenSoft(oldColor);
+            }
+            if (tint == "Green (Hard)")
+            {
+                return TintFunctions.tintGreenHard(oldColor);
+            }
+            if (tint == "Blue (Soft)")
+            {
+                return TintFunctions.tintBlueSoft(oldColor);
+            }
+            if (tint == "Blue (Hard)")
+            {
+                return TintFunctions.tintBlueHard(oldColor);
+            }
+            if (tint == "Cyan (Soft)")
+            {
+                return TintFunctions.tintCyanSoft(oldColor);
+            }
+            if (tint == "Cyan (Hard)")
+            {
+                return TintFunctions.tintCyanHard(oldColor);
+            }
+            if (tint == "Magenta (Soft)")
+            {
+                return TintFunctions.tintMagentaSoft(oldColor);
+            }
+            if (tint == "Magenta (Hard)")
+            {
+                return TintFunctions.tintMagentaHard(oldColor);
+            }
+            if (tint == "Yellow (Soft)")
+            {
+                return TintFunctions.tintYellowSoft(oldColor);
+            }
+            if (tint == "Yellow (Hard)")
+            {
+                return TintFunctions.tintYellowHard(oldColor);
+            }
+            if (tint == "Black (Darken)")
+            {
+                return TintFunctions.tintBlack(oldColor);
             }
             else
             {
