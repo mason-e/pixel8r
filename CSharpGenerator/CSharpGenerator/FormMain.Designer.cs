@@ -219,7 +219,7 @@
             // 
             comboBoxAspectRatio.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAspectRatio.FormattingEnabled = true;
-            comboBoxAspectRatio.Items.AddRange(new object[] { "16:9", "4:3", "16:15 (NES)", "8:7 (SNES)", "10:7 (Genesis)", "10:9 (GB, GG)", "3:2 (GBA)" });
+            comboBoxAspectRatio.Items.AddRange(new object[] { "16:9", "4:3", "1:1 (Square)", "16:15 (NES)", "8:7 (SNES)", "10:7 (Genesis)", "10:9 (GB, GG)", "3:2 (GBA)" });
             comboBoxAspectRatio.Location = new Point(12, 572);
             comboBoxAspectRatio.Name = "comboBoxAspectRatio";
             comboBoxAspectRatio.Size = new Size(121, 23);
