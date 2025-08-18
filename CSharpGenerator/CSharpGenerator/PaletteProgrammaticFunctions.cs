@@ -28,8 +28,54 @@
             {
                 return findNearestRGBMultiple(color, 85);
             }
+            if (palette == "Transpose - RBG")
+            {
+                return transposeRBG(color);
+            }
+            if (palette == "Transpose - GRB")
+            {
+                return transposeGRB(color);
+            }
+            if (palette == "Transpose - GBR")
+            {
+                return transposeGBR(color);
+            }
+            if (palette == "Transpose - BRG")
+            {
+                return transposeBRG(color);
+            }
+            if (palette == "Transpose - BGR")
+            {
+                return transposeBGR(color);
+            }
+
             // default case, should not be reachable
             return color;
+        }
+
+        private static Color transposeRBG(Color color)
+        {
+            return Color.FromArgb(color.R, color.B, color.G);
+        }
+
+        private static Color transposeGRB(Color color)
+        {
+            return Color.FromArgb(color.G, color.R, color.B);
+        }
+
+        private static Color transposeGBR(Color color)
+        {
+            return Color.FromArgb(color.G, color.B, color.R);
+        }
+
+        private static Color transposeBRG(Color color)
+        {
+            return Color.FromArgb(color.B, color.R, color.G);
+        }
+
+        private static Color transposeBGR(Color color)
+        {
+            return Color.FromArgb(color.B, color.G, color.R);
         }
 
         private static Color findNearestRGBMultiple(Color oldColor, int multiple)
