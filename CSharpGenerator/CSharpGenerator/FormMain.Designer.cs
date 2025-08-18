@@ -352,7 +352,7 @@
             // 
             comboBoxProgPalette.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProgPalette.FormattingEnabled = true;
-            comboBoxProgPalette.Items.AddRange(new object[] { "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
+            comboBoxProgPalette.Items.AddRange(new object[] { "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85", "Transpose - RBG", "Transpose - GRB", "Transpose - GBR", "Transpose - BRG", "Transpose - BGR" });
             comboBoxProgPalette.Location = new Point(12, 421);
             comboBoxProgPalette.Name = "comboBoxProgPalette";
             comboBoxProgPalette.Size = new Size(156, 23);
