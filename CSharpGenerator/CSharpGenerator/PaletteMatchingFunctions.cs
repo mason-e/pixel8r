@@ -1,4 +1,6 @@
-﻿namespace CSharpGenerator
+﻿using Wacton.Unicolour;
+
+namespace CSharpGenerator
 {
     internal class PaletteMatchingFunctions
     {
@@ -11,10 +13,6 @@
             if (algorithm == "RGB Redmean")
             {
                 return findNearestColorRGBRedmean(oldColor, palette);
-            }
-            if (algorithm == "HSL Difference")
-            {
-                return findNearestColorHSL(oldColor, palette);
             }
             if (algorithm == "Lab Value Difference")
             {
@@ -89,10 +87,9 @@
 
         private static Color findNearestColorLab(Color oldColor, string palette)
         {
-            (double, double, double) labColor = AsposeFunctions.getLabColor(oldColor.R, oldColor.G, oldColor.B);
-            // square root of 100^2 + 255^2 + 255^2
-            double lowestDiff = 374.23;
+            double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = 0;
+            Unicolour unicolor = ColorConversionFunctions.getUnicolorFromSystemColor(oldColor);
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -102,47 +99,13 @@
             {
                 targetPalette = GlobalVars.webColors;
             }
+            Unicolour[] comparisonPalette = ColorConversionFunctions.getUnicolorsFromSystemColors(targetPalette);
             for (int i = 0; i < targetPalette.Length; i++)
             {
-                Color compareColor = targetPalette[i];
-                (double, double, double) labCompare = AsposeFunctions.getLabColor(compareColor.R, compareColor.G, compareColor.B);
-                double totalDiff = Math.Sqrt(Math.Pow(labCompare.Item1 - labColor.Item1, 2) + Math.Pow(labCompare.Item2 - labColor.Item2, 2) + Math.Pow(labCompare.Item3 - labColor.Item3, 2));
-                if (totalDiff < lowestDiff)
+                double deltaE = unicolor.Difference(comparisonPalette[i], DeltaE.Cie76);
+                if (deltaE < deltaEMin)
                 {
-                    lowestDiff = totalDiff;
-                    colorIndex = i;
-                }
-            }
-
-            return targetPalette[colorIndex];
-        }
-
-        private static Color findNearestColorHSL(Color oldColor, string palette)
-        {
-            double hue = oldColor.GetHue();
-            double saturation = oldColor.GetSaturation();
-            double lightness = oldColor.GetBrightness();
-            double highestAverageDiff = Math.Sqrt(3);
-            int colorIndex = 0;
-            Color[] targetPalette = [];
-            if (palette == "NES")
-            {
-                targetPalette = GlobalVars.mesenColors;
-            }
-            if (palette == "Web Colors")
-            {
-                targetPalette = GlobalVars.webColors;
-            }
-            for (int i = 0; i < targetPalette.Length; i++)
-            {
-                Color compare = targetPalette[i];
-                double hueDiff = Math.Min(Math.Abs(compare.GetHue() - hue), 360 - Math.Abs(compare.GetHue() - hue)) / 180;
-                double satDiff = Math.Abs(compare.GetSaturation() - saturation);
-                double lightDiff = Math.Abs(compare.GetBrightness() - lightness);
-                double diffSum = Math.Sqrt(hueDiff * hueDiff + satDiff * satDiff + lightDiff * lightDiff);
-                if (diffSum < highestAverageDiff)
-                {
-                    highestAverageDiff = diffSum;
+                    deltaEMin = deltaE;
                     colorIndex = i;
                 }
             }
