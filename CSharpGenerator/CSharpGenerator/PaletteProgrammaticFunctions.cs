@@ -89,7 +89,7 @@
             {
                 saturation += 0.05f;
             }
-            return AsposeFunctions.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
+            return ColorConversionFunctions.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
         }
 
         private static Color findNearestRGBMultiple(Color oldColor, int multiple)
