@@ -4,13 +4,9 @@
     {
         public static Color getMatchedColor(Color oldColor, string palette, string algorithm)
         {
-            if (algorithm == "RGB Simple Sum of Diffs")
+            if (algorithm == "RGB Euclidean")
             {
-                return findNearestColorRGBSimpleSumDiffs(oldColor, palette);
-            }
-            if (algorithm == "RGB Square Root of Summed Diff Squares")
-            {
-                return findNearestColorRGBSqrtOfSummedSquaredDiffs(oldColor, palette);
+                return findNearestColorRGBEuclidean(oldColor, palette);
             }
             if (algorithm == "RGB Redmean")
             {
@@ -28,34 +24,7 @@
             return oldColor;
         }
 
-        private static Color findNearestColorRGBSimpleSumDiffs(Color oldColor, string palette)
-        {
-            int largestDiff = 255 * 3;
-            int colorIndex = 0;
-            Color[] targetPalette = [];
-            if (palette == "NES")
-            {
-                targetPalette = GlobalVars.mesenColors;
-            }
-            if (palette == "Web Colors")
-            {
-                targetPalette = GlobalVars.webColors;
-            }
-            for (int i = 0; i < targetPalette.Length; i++)
-            {
-                Color compare = targetPalette[i];
-                int totalDiff = Math.Abs(compare.R - oldColor.R) + Math.Abs(compare.G - oldColor.G) + Math.Abs(compare.B - oldColor.B);
-                if (totalDiff < largestDiff)
-                {
-                    largestDiff = totalDiff;
-                    colorIndex = i;
-                }
-            }
-
-            return targetPalette[colorIndex];
-        }
-
-        private static Color findNearestColorRGBSqrtOfSummedSquaredDiffs(Color oldColor, string palette)
+        private static Color findNearestColorRGBEuclidean(Color oldColor, string palette)
         {
             // based on https://en.wikipedia.org/wiki/Color_difference#sRGB
             double largestDiff = 441.673; // this is the square root of the sum of 255 squared three times, maximum diff any RGB color could have

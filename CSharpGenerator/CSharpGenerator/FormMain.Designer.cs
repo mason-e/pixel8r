@@ -131,7 +131,7 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Simple Sum of Diffs", "RGB Square Root of Summed Diff Squares", "RGB Redmean", "HSL Difference", "Lab Value Difference" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Euclidean", "RGB Redmean", "HSL Difference", "Lab Value Difference" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(236, 23);
