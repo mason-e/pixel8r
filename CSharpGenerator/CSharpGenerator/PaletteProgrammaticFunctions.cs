@@ -4,6 +4,10 @@
     {
         public static Color getProgrammaticColor(Color color, string palette)
         {
+            if (palette == "Saturate")
+            {
+                return saturate(color);
+            }
             if (palette == "RGB Multiples of 3")
             {
                 return findNearestRGBMultiple(color, 3);
@@ -76,6 +80,16 @@
         private static Color transposeBGR(Color color)
         {
             return Color.FromArgb(color.B, color.G, color.R);
+        }
+
+        private static Color saturate(Color color)
+        {
+            float saturation = color.GetSaturation();
+            if (saturation <= 0.95f)
+            {
+                saturation += 0.05f;
+            }
+            return AsposeFunctions.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
         }
 
         private static Color findNearestRGBMultiple(Color oldColor, int multiple)
