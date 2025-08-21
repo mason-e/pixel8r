@@ -5,17 +5,23 @@ namespace CSharpGenerator
     {
         public static Bitmap generateApproximateColorSpace()
         {
-            Bitmap bitmap = new Bitmap(850, 765);
+            const int squareSize = 86;
+            const int rows = 11;
+            const int cols = 8;
+            const int squareCount = rows * cols;
+            GlobalVars.ImageWidth = squareSize * rows;
+            GlobalVars.ImageHeight = squareSize * cols;
+            Bitmap bitmap = new Bitmap(GlobalVars.ImageWidth, GlobalVars.ImageHeight);
 
             int r = 0, g = 0, b = 0;
-            for (int z = 0; z < 85; z++)
+            for (int z = 0; z < squareSize; z++)
             {
-                int rowNumber = z / 10;
-                int colNumber = z % 10;
-                int xMin = colNumber * 85;
-                int yMin = rowNumber * 85;
-                int xMax = xMin + 85;
-                int yMax = yMin + 85;
+                int rowNumber = z / rows;
+                int colNumber = z % rows;
+                int xMin = colNumber * squareSize;
+                int yMin = rowNumber * squareSize;
+                int xMax = xMin + squareSize;
+                int yMax = yMin + squareSize;
                 r = 255 - 3 * z;
                 g = 0;
                 b = 0;
@@ -31,33 +37,35 @@ namespace CSharpGenerator
                 }
             }
 
-            // draw some grayscale in the remaining five squares for extra emphasis
-            for (int z = 85; z < 90; z++)
+            // draw some grayscale in the remaining squares for extra emphasis
+            if (squareCount > squareSize)
             {
-                int rowNumber = z / 10;
-                int colNumber = z % 10;
-                int xMin = colNumber * 85;
-                int yMin = rowNumber * 85;
-                int xMax = xMin + 85;
-                int yMax = yMin + 85;
-
-                for (int y = yMin; y < yMax; y++)
+                for (int z = squareSize; z < squareCount; z++)
                 {
-                    r = 255 - 42 * (z - 85);
-                    g = r; b = r;
-                    for (int x = xMin; x < xMax; x++)
+                    int rowNumber = z / rows;
+                    int colNumber = z % rows;
+                    int xMin = colNumber * squareSize;
+                    int yMin = rowNumber * squareSize;
+                    int xMax = xMin + squareSize;
+                    int yMax = yMin + squareSize;
+
+                    for (int y = yMin; y < yMax; y++)
                     {
-                        bitmap.SetPixel(x, y, Color.FromArgb(r, g, b));
-                        r--;
-                        g--;
-                        b--;
+                        // how much each row's starting values can step down to hit 0 by the end of all rows
+                        int stepSize = (255 - (squareSize - 1)) / (squareSize - 1);
+                        r = 255 - (y - yMin) * stepSize;
+                        g = r; b = r;
+                        for (int x = xMin; x < xMax; x++)
+                        {
+                            bitmap.SetPixel(x, y, Color.FromArgb(r, g, b));
+                            r--;
+                            g--;
+                            b--;
+                        }
                     }
                 }
             }
 
-
-            GlobalVars.ImageWidth = 850;
-            GlobalVars.ImageHeight = 765;
             return bitmap;
         }
     }
