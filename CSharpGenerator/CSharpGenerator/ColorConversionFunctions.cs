@@ -5,26 +5,26 @@ namespace CSharpGenerator
 {
     internal class ColorConversionFunctions
     {
-        public static Unicolour getUnicolorFromSystemColor(Color color)
+        public static Unicolour getUnicolourFromSystemColor(Color color)
         {
             return new Unicolour(ColourSpace.Rgb255, color.R, color.G, color.B);
         }
 
-        public static Unicolour[] getUnicolorsFromSystemColors(Color[] colors)
+        public static Unicolour[] getUnicoloursFromSystemColors(Color[] colors)
         {
-            List<Unicolour> unicolors = new List<Unicolour>();
+            List<Unicolour> unicolours = new List<Unicolour>();
             foreach(Color color in colors)
             {
-                unicolors.Add(getUnicolorFromSystemColor(color));
+                unicolours.Add(getUnicolourFromSystemColor(color));
             }
 
-            return unicolors.ToArray();
+            return unicolours.ToArray();
         }
 
         public static Color getSaturatedColor(float h, float s, float l)
         {
-            Unicolour unicolor = new Unicolour(ColourSpace.Hsl, h, s, l);
-            Rgb255 rgb = unicolor.Rgb.Byte255;
+            Unicolour unicolour = new Unicolour(ColourSpace.Hsl, h, s, l);
+            Rgb255 rgb = unicolour.Rgb.Byte255;
             return Color.FromArgb(rgb.R, rgb.G, rgb.B);
         }
     }
