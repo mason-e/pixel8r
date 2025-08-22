@@ -131,7 +131,7 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Euclidean", "RGB Redmean", "Lab Value Difference" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Euclidean", "RGB Redmean", "Lab CIE76", "Lab Hybrid", "Lab CIE94", "LCh CIEDE200", "CMC Acceptability", "CMC Perceptibility", "ITP", "Z", "OK", "CAM02", "CAM16" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(236, 23);
