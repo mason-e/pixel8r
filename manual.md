@@ -1,5 +1,23 @@
 # pixel8r Manual
 
+## General Tips/Cautions
+
+This program contains multiple options for image manipulation. Presently, most operations that change the color of the image do so on a pixel-by-pixel basis. This means some methods can be a bit slow. Additionally, operations on predefined palettes compare on each color, so these take more time the larger the palette is.
+
+If any crop is intended, it's recommended as the first step, in order to reduce the number of pixels needed in computation. This can also be true of resizing down, but keep in mind that a resize involves a loss in pixel fidelity by nature, so the order of resize/recolor steps is not idempotent. In other words, resizing and then changing palette won't always be 100% the same as changing the palette and then resizing.
+
+There are no failsafes against multiple operations that may not make sense together. For example, if you change the colors to a discrete palette, the image won't be "locked" to this palette. So if you then choose to tint it or saturate, the new colors won't actually be members of the palette anymore.
+
+pixel8r does not overwrite the original loaded image, so it is safe to mess around with as much as desired.
+
+## Example Image
+
+The example image in this document was generated to approximate the entire RGB color space. Since RGB is based on three values from 0-255, it would take 256^3 = 16,777,216 pixels to display every possible color at minimum - that's about two complete 4K monitors! 
+
+Instead, it goes every 3 values, for a more manageable 86^3 - 636,056 pixels (although the actual image is a bit larger since 86 squares don't easily make for a uniform rectangle):
+
+![](./screenshots/manual/colorspace.png)
+
 ## Basic Controls
 
 The menu strip on the top left has controls to open or save a file, undo and relod.
@@ -15,15 +33,36 @@ The first dropdown consists of palettes with a discrete set of colors. Upon sele
 
 ### Algorithm Details
 
-The color matching algorithms are based on the idea of measuring mathematical closeness of two colors in a different color space. For example, the RGB color space is probably familiar enough to not need an explanation. All of the RGB algorithms are variations of a formula that, for a "current" color C1 and a "candidate" color C2, each consisting of values R1, G1, B1 and R2, G2, B2, we want the lowest value of:
+Color matching is based on the idea of a mathematical measure of the smallest "distance" between colors. More details can be found on this [Wiki Page](https://en.wikipedia.org/wiki/Color_difference). 
 
-`abs(R1 - R2) + abs(G1 - G2) + abs(B1 - B2)`
+With the example image, we can see the differences in how different algorithms produce matches to an NES color palette:
 
-Some other color spaces are explored here, and it is a similar concept. The amount of color spaces used is not currently exhaustive.
+![](./screenshots/manual/color-distance/colorspace-nes-01-rgb-euclidean.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-02-rgb-redmean.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-03-lab-1976.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-04-lab-hybrid.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-05-lab-1994.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-06-lch-2000.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-07-cmc-a.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-08-cmc-p.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-09-itp.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-10-z.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-11-ok.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-12-cam02.png)  
+![](./screenshots/manual/color-distance/colorspace-nes-13-cam16.png)  
+
 
 ## Changing to a Programmatic Palette
 
 Programmatic palettes change the palette based on some kind of formula instead of a discretely defined set.
+
+#### Saturation
+
+Saturation is, in plain terms, roughly a measure of the "boldness" a color. On a scale of 0.0 to 1.0, or 0 to 100%, each application of the Saturate option increases it by +5%. Therefore, after at most 20 applications this won't change the image anymore. The benefit of saturation is that by making the colors "pop" a bit more, it tends to match better on a palette of simple colors. For example, on an unaltered photo it can have difficulty with skin tones or the subtle gray elements of a blue sky.
+
+The effect isn't super noticeable on the example image, so here is a lone example with the saturation at max. The affect on the grayscale squares shows a potential downside with too much saturation - the HSL/HSV model produces black/white/gray by saturation and lightness/value only, with red being the default 0 hue value.
+
+![](./screenshots/manual/programmatic/colorspace-01-saturated.png)
 
 #### RGB Multiples of X
 
@@ -38,9 +77,21 @@ Factor | Values | Total Colors |
 51 | 6 | 216 |
 85 | 4 | 64 |
 
+Some examples that don't show a big difference are skipped, but here are some noticeable ones:
+
+![](./screenshots/manual/programmatic/colorspace-02-factor-17.png)  
+![](./screenshots/manual/programmatic/colorspace-03-factor-51.png)  
+![](./screenshots/manual/programmatic/colorspace-04-factor-85.png)  
+
 #### Transpose
 
 These algorithms are more "just for fun" since the resultant colors don't really have any significance. These swap the bytes for each of R, G and B around. So for example, in the BRG one, the red comes from the original blue value; green comes from the original red value; and blue comes from the original red value.
+
+![](./screenshots/manual/programmatic/colorspace-05-rbg.png)  
+![](./screenshots/manual/programmatic/colorspace-06-grb.png)  
+![](./screenshots/manual/programmatic/colorspace-07-gbr.png)  
+![](./screenshots/manual/programmatic/colorspace-08-brg.png)  
+![](./screenshots/manual/programmatic/colorspace-09-bgr.png)  
 
 ## Tinting
 
