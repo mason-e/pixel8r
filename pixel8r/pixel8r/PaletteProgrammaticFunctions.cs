@@ -1,6 +1,6 @@
 ﻿namespace pixel8r
 {
-    internal class PaletteProgrammaticFunctions
+    public class PaletteProgrammaticFunctions
     {
         public static Color getProgrammaticColor(Color color, string palette)
         {

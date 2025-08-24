@@ -1,6 +1,6 @@
 ﻿namespace pixel8r
 {
-    internal class BitmapFunction
+    public class BitmapFunction
     {
         public static Bitmap generateBitmap()
         {

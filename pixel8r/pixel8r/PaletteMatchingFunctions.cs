@@ -2,7 +2,7 @@
 
 namespace pixel8r
 {
-    internal class PaletteMatchingFunctions
+    public class PaletteMatchingFunctions
     {
         public static Color getMatchedColor(Color oldColor, string palette, string algorithm, bool dither)
         {

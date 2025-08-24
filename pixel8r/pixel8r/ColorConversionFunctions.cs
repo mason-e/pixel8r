@@ -3,7 +3,7 @@ using Wacton.Unicolour;
 
 namespace pixel8r
 {
-    internal class ColorConversionFunctions
+    public class ColorConversionFunctions
     {
         public static Unicolour getUnicolourFromSystemColor(Color color)
         {
