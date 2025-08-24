@@ -96,10 +96,8 @@
             Random r = new Random();
             while (x < bitmap.Width && y < bitmap.Height)
             {
-                // choose one color in the cluster of 3x3 at random, i.e. a pixel that is -1, 0 or 1 from current pixel
-                int colorX = x + r.Next(-1, 2);
-                int colorY = y + r.Next(-1, 2);
-                Color color = bitmap.GetPixel(colorX, colorY);
+                // use color of current pixel as the "big" pixel color
+                Color color = bitmap.GetPixel(x, y);
                 for (int i = -1; i <= 1; i++)
                 {
                     for (int j = -1; j <= 1; j++)
@@ -108,9 +106,9 @@
                         {
                             bitmap.SetPixel(x + i, y + j, color);
                         }
-                        catch (ArgumentOutOfRangeException e)
+                        catch (ArgumentOutOfRangeException)
                         {
-
+                            // just handle the exception rather than try to account for the image not being divisible by 3
                         }
                     }
                 }
