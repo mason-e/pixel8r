@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.SVG" Version="25.7.0" />
+    <PackageReference Include="Wacton.Unicolour" Version="6.2.0" />
   </ItemGroup>
 
   <ItemGroup>
