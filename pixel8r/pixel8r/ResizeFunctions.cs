@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace pixel8r
 {
-    internal class ResizeFunctions
+    public class ResizeFunctions
     {
         public static (int, int) getCropDimensions (int desiredWidth, int desiredHeight)
         {
