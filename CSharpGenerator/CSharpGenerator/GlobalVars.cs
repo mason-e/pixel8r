@@ -1,35 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing.Imaging;
 
 namespace CSharpGenerator
 {
     static class GlobalVars
     {
-        public static Color[] rgb18Color = [
-            Color.FromArgb(255, 0, 0),
-            Color.FromArgb(255, 85, 0),
-            Color.FromArgb(255, 170, 0),
-            Color.FromArgb(255, 255, 0),
-            Color.FromArgb(170, 255, 0),
-            Color.FromArgb(85, 255, 0),
-            Color.FromArgb(0, 255, 0),
-            Color.FromArgb(0, 255, 85),
-            Color.FromArgb(0, 255, 170),
-            Color.FromArgb(0, 255, 255),
-            Color.FromArgb(0, 170, 255),
-            Color.FromArgb(0, 85, 255),
-            Color.FromArgb(0, 0, 255),
-            Color.FromArgb(85, 0, 255),
-            Color.FromArgb(170, 0, 255),
-            Color.FromArgb(255, 0, 255),
-            Color.FromArgb(255, 0, 170),
-            Color.FromArgb(255, 0, 85),
-        ];
-
         public static Color[] mesenColors = [
             Color.FromArgb(102, 102, 102),
             Color.FromArgb(0, 42, 136),
@@ -231,8 +205,6 @@ namespace CSharpGenerator
             Color.Yellow,
             Color.YellowGreen
 ];
-
-        public static ColorPalette mesenPalette = new ColorPalette(mesenColors);
 
         public static string FilePath { get; set; }
         public static int ImageWidth { get; set; }

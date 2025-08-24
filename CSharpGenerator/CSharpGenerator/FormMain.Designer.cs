@@ -58,10 +58,10 @@
             labelProgPalette = new Label();
             comboBoxProgPalette = new ComboBox();
             buttonProgPaletteSwap = new Button();
-            buttonDither = new Button();
             labelTint = new Label();
             comboBoxTint = new ComboBox();
             buttonTint = new Button();
+            checkBoxDither = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -131,7 +131,7 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Simple Sum of Diffs", "RGB Square Root of Summed Diff Squares", "RGB Redmean", "HSL Difference", "Lab Value Difference" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Euclidean", "RGB Redmean", "Lab CIE76", "Lab Hybrid", "Lab CIE94", "LCh CIEDE200", "CMC Acceptability", "CMC Perceptibility", "ITP", "Z", "OK", "CAM02", "CAM16" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(236, 23);
@@ -352,7 +352,7 @@
             // 
             comboBoxProgPalette.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProgPalette.FormattingEnabled = true;
-            comboBoxProgPalette.Items.AddRange(new object[] { "Grayscale", "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85" });
+            comboBoxProgPalette.Items.AddRange(new object[] { "Saturate", "RGB Multiples of 3", "RGB Multiples of 5", "RGB Multiples of 15", "RGB Multiples of 17", "RGB Multiples of 51", "RGB Multiples of 85", "Transpose - RBG", "Transpose - GRB", "Transpose - GBR", "Transpose - BRG", "Transpose - BGR" });
             comboBoxProgPalette.Location = new Point(12, 421);
             comboBoxProgPalette.Name = "comboBoxProgPalette";
             comboBoxProgPalette.Size = new Size(156, 23);
@@ -370,17 +370,6 @@
             buttonProgPaletteSwap.UseVisualStyleBackColor = true;
             buttonProgPaletteSwap.Click += buttonProgPaletteSwap_Click;
             // 
-            // buttonDither
-            // 
-            buttonDither.Enabled = false;
-            buttonDither.Location = new Point(93, 730);
-            buttonDither.Name = "buttonDither";
-            buttonDither.Size = new Size(75, 23);
-            buttonDither.TabIndex = 60;
-            buttonDither.Text = "Dither!";
-            buttonDither.UseVisualStyleBackColor = true;
-            buttonDither.Click += buttonDither_Click;
-            // 
             // labelTint
             // 
             labelTint.AutoSize = true;
@@ -394,7 +383,7 @@
             // 
             comboBoxTint.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxTint.FormattingEnabled = true;
-            comboBoxTint.Items.AddRange(new object[] { "White (Brighten)", "Red (Soft)", "Red (Hard)", "Green (Soft)", "Green (Hard)", "Blue (Soft)", "Blue (Hard)", "Cyan (Soft)", "Cyan (Hard)", "Magenta (Soft)", "Magenta (Hard)", "Yellow (Soft)", "Yellow (Hard)", "Black (Darken)" });
+            comboBoxTint.Items.AddRange(new object[] { "White (Brighten)", "Black (Darken)", "Grayscale", "Red (Soft)", "Red (Hard)", "Redscale", "Green (Soft)", "Green (Hard)", "Greenscale", "Blue (Soft)", "Blue (Hard)", "Bluescale", "Cyan (Soft)", "Cyan (Hard)", "Cyanscale", "Magenta (Soft)", "Magenta (Hard)", "Magentascale", "Yellow (Soft)", "Yellow (Hard)", "Yellowscale" });
             comboBoxTint.Location = new Point(13, 510);
             comboBoxTint.Name = "comboBoxTint";
             comboBoxTint.Size = new Size(121, 23);
@@ -412,15 +401,25 @@
             buttonTint.UseVisualStyleBackColor = true;
             buttonTint.Click += buttonTint_Click;
             // 
+            // checkBoxDither
+            // 
+            checkBoxDither.AutoSize = true;
+            checkBoxDither.Location = new Point(113, 355);
+            checkBoxDither.Name = "checkBoxDither";
+            checkBoxDither.Size = new Size(58, 19);
+            checkBoxDither.TabIndex = 64;
+            checkBoxDither.Text = "Dither";
+            checkBoxDither.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(checkBoxDither);
             Controls.Add(buttonTint);
             Controls.Add(comboBoxTint);
             Controls.Add(labelTint);
-            Controls.Add(buttonDither);
             Controls.Add(buttonProgPaletteSwap);
             Controls.Add(comboBoxProgPalette);
             Controls.Add(labelProgPalette);
@@ -488,9 +487,9 @@
         private Label labelProgPalette;
         private ComboBox comboBoxProgPalette;
         private Button buttonProgPaletteSwap;
-        private Button buttonDither;
         private Label labelTint;
         private ComboBox comboBoxTint;
         private Button buttonTint;
+        private CheckBox checkBoxDither;
     }
 }
