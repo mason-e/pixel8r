@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Wacton.Unicolour;
 
-namespace CSharpGenerator
+namespace pixel8r
 {
     internal class ColorConversionFunctions
     {

@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-namespace CSharpGenerator
+namespace pixel8r
 {
     public partial class FormMain : Form
     {
