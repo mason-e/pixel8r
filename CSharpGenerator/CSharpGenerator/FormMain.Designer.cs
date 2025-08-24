@@ -58,10 +58,10 @@
             labelProgPalette = new Label();
             comboBoxProgPalette = new ComboBox();
             buttonProgPaletteSwap = new Button();
-            buttonDither = new Button();
             labelTint = new Label();
             comboBoxTint = new ComboBox();
             buttonTint = new Button();
+            checkBoxDither = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -370,17 +370,6 @@
             buttonProgPaletteSwap.UseVisualStyleBackColor = true;
             buttonProgPaletteSwap.Click += buttonProgPaletteSwap_Click;
             // 
-            // buttonDither
-            // 
-            buttonDither.Enabled = false;
-            buttonDither.Location = new Point(93, 730);
-            buttonDither.Name = "buttonDither";
-            buttonDither.Size = new Size(75, 23);
-            buttonDither.TabIndex = 60;
-            buttonDither.Text = "Dither!";
-            buttonDither.UseVisualStyleBackColor = true;
-            buttonDither.Click += buttonDither_Click;
-            // 
             // labelTint
             // 
             labelTint.AutoSize = true;
@@ -412,15 +401,25 @@
             buttonTint.UseVisualStyleBackColor = true;
             buttonTint.Click += buttonTint_Click;
             // 
+            // checkBoxDither
+            // 
+            checkBoxDither.AutoSize = true;
+            checkBoxDither.Location = new Point(113, 355);
+            checkBoxDither.Name = "checkBoxDither";
+            checkBoxDither.Size = new Size(58, 19);
+            checkBoxDither.TabIndex = 64;
+            checkBoxDither.Text = "Dither";
+            checkBoxDither.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
+            Controls.Add(checkBoxDither);
             Controls.Add(buttonTint);
             Controls.Add(comboBoxTint);
             Controls.Add(labelTint);
-            Controls.Add(buttonDither);
             Controls.Add(buttonProgPaletteSwap);
             Controls.Add(comboBoxProgPalette);
             Controls.Add(labelProgPalette);
@@ -488,9 +487,9 @@
         private Label labelProgPalette;
         private ComboBox comboBoxProgPalette;
         private Button buttonProgPaletteSwap;
-        private Button buttonDither;
         private Label labelTint;
         private ComboBox comboBoxTint;
         private Button buttonTint;
+        private CheckBox checkBoxDither;
     }
 }
