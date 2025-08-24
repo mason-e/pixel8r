@@ -4,68 +4,72 @@ namespace CSharpGenerator
 {
     internal class PaletteMatchingFunctions
     {
-        public static Color getMatchedColor(Color oldColor, string palette, string algorithm)
+        public static Color getMatchedColor(Color oldColor, string palette, string algorithm, bool dither)
         {
             if (algorithm == "RGB Euclidean")
             {
-                return getNearestBySystemColorDelta(oldColor, palette, getRGBEuclideanDiff);
+                return getNearestBySystemColorDelta(oldColor, palette, getRGBEuclideanDiff, dither);
+
             }
             if (algorithm == "RGB Redmean")
             {
-                return getNearestBySystemColorDelta(oldColor, palette, getRGBRedmeanDiff);
+                return getNearestBySystemColorDelta(oldColor, palette, getRGBRedmeanDiff, dither);
+
             }
             if (algorithm == "Lab CIE76")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cie76);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cie76, dither);
             }
             if (algorithm == "Lab Hybrid")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Hyab);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Hyab, dither);
             }
             if (algorithm == "Lab CIE94")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cie94);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cie94, dither);
             }
             if (algorithm == "LCh CIEDE200")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Ciede2000);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Ciede2000, dither);
             }
             if (algorithm == "CMC Acceptability")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.CmcAcceptability);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.CmcAcceptability, dither);
             }
             if (algorithm == "CMC Perceptibility")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.CmcPerceptibility);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.CmcPerceptibility, dither);
             }
             if (algorithm == "ITP")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Itp);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Itp, dither);
             }
             if (algorithm == "Z")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Z);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Z, dither);
             }
             if (algorithm == "OK")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Ok);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Ok, dither);
             }
             if (algorithm == "CAM02")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cam02);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cam02, dither);
             }
             if (algorithm == "CAM16")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cam16);
+                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cam16, dither);
             }
             // default case, should not be reachable
             return oldColor;
         }
 
-        private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc)
+        private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc, bool dither)
         {
             double deltaEMin = 10000; // set to a very high number that any delta can beat
-            int colorIndex = 0;
+            double deltaEMin2 = 10000;
+            int closestIndex = -1;
+            int secondClosestIndex = -1;
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -81,17 +85,34 @@ namespace CSharpGenerator
                 if (deltaE < deltaEMin)
                 {
                     deltaEMin = deltaE;
-                    colorIndex = i;
+                    // if we have a new lowest, push over the previous to second lowest
+                    secondClosestIndex = closestIndex;
+                    closestIndex = i;
+                }
+                // get difference from lowest to second lowest - this accounts for the scenario where the true lowest is the first one found
+                else if (deltaE - deltaEMin < deltaEMin2)
+                {
+                    secondClosestIndex = i;
+                    deltaEMin2 = deltaE - deltaEMin;
                 }
             }
 
-            return targetPalette[colorIndex];
+            if (dither)
+            {
+                return targetPalette[secondClosestIndex];
+            }
+            else
+            {
+                return targetPalette[closestIndex];
+            }
         }
 
-        private static Color getNearestByUnicolourDelta(Color color, string palette, DeltaE deltaEnum)
+        private static Color getNearestByUnicolourDelta(Color color, string palette, DeltaE deltaEnum, bool dither)
         {
             double deltaEMin = 10000; // set to a very high number that any delta can beat
-            int colorIndex = 0;
+            double deltaEMin2 = 10000;
+            int closestIndex = -1;
+            int secondClosestIndex = -1;
             Unicolour unicolour = ColorConversionFunctions.getUnicolourFromSystemColor(color);
             Color[] targetPalette = [];
             if (palette == "NES")
@@ -109,11 +130,26 @@ namespace CSharpGenerator
                 if (deltaE < deltaEMin)
                 {
                     deltaEMin = deltaE;
-                    colorIndex = i;
+                    // if we have a new lowest, push over the previous to second lowest
+                    secondClosestIndex = closestIndex;
+                    closestIndex = i;
+                }
+                // get difference from lowest to second lowest - this accounts for the scenario where the true lowest is the first one found
+                else if (deltaE - deltaEMin < deltaEMin2)
+                {
+                    secondClosestIndex = i;
+                    deltaEMin2 = deltaE - deltaEMin;
                 }
             }
 
-            return targetPalette[colorIndex];
+            if (dither)
+            {
+                return targetPalette[secondClosestIndex];
+            }
+            else
+            {
+                return targetPalette[closestIndex];
+            }
         }
 
         private static double getRGBEuclideanDiff(Color color1, Color color2)

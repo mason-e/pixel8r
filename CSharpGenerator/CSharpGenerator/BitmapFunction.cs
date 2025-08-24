@@ -25,15 +25,23 @@
             return new Bitmap(original, new Size(GlobalVars.ImageWidth, GlobalVars.ImageHeight));
         }
 
-        public static Bitmap paletteSwapPredefined(Image image, string palette, string algorithm)
+        public static Bitmap paletteSwapPredefined(Image image, string palette, string algorithm, bool dither)
         {
             Bitmap bitmap = new Bitmap(image);
             for (int y = 0; y < bitmap.Height; y++)
             {
                 for (int x = 0; x < bitmap.Width; x++)
                 {
-                    Color newColor = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm);
-                    bitmap.SetPixel(x, y, newColor);
+                    Color color = new Color();
+                    if (dither && (x-1) % 3 == 0 && (y-1) % 3 == 0)
+                    {
+                        color = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm, true);
+                    }
+                    else
+                    {
+                        color = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm, false);
+                    }
+                    bitmap.SetPixel(x, y, color);
                 }
             }
             return bitmap;
@@ -67,28 +75,6 @@
             return bitmap;
         }
 
-        public static Bitmap dither(Image image)
-        {
-            Bitmap bitmap = new Bitmap(image);
-            int x = 1, y = 1;
-            while (x < bitmap.Width && y < bitmap.Height)
-            {
-                // TODO: more appropriate color selection
-                bitmap.SetPixel(x, y, Color.White);
-                if (x + 3 < bitmap.Width)
-                {
-                    x += 3;
-                }
-                else if (y + 3 < bitmap.Height)
-                {
-                    y += 3;
-                    x = 1;
-                }
-                else break;
-            }
-            return bitmap;
-        }
-
         public static Bitmap pixelate(Image image)
         {
             Bitmap bitmap = new Bitmap(image);
@@ -96,8 +82,8 @@
             Random r = new Random();
             while (x < bitmap.Width && y < bitmap.Height)
             {
-                // use color of current pixel as the "big" pixel color
-                Color color = bitmap.GetPixel(x, y);
+                // use color of pixel one to the left as new color - otherwise it could clash with dither pixel
+                Color color = bitmap.GetPixel(x - 1, y);
                 for (int i = -1; i <= 1; i++)
                 {
                     for (int j = -1; j <= 1; j++)
