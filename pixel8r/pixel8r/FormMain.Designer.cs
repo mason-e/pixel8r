@@ -1,4 +1,4 @@
-﻿namespace CSharpGenerator
+﻿namespace pixel8r
 {
     partial class FormMain
     {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing.Imaging;
 
-namespace CSharpGenerator
+namespace pixel8r
 {
     static class GlobalVars
     {
