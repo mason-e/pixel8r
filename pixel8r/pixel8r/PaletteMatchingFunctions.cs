@@ -9,12 +9,10 @@ namespace pixel8r
             if (algorithm == "RGB Euclidean")
             {
                 return getNearestBySystemColorDelta(oldColor, palette, getRGBEuclideanDiff, dither);
-
             }
             if (algorithm == "RGB Redmean")
             {
                 return getNearestBySystemColorDelta(oldColor, palette, getRGBRedmeanDiff, dither);
-
             }
             if (algorithm == "Lab CIE76")
             {
