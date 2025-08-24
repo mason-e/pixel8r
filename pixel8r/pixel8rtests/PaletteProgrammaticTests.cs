@@ -1,11 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using pixel8r;
-using System;
-using System.Collections.Generic;
+﻿using pixel8r;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace pixel8rtests
 {
