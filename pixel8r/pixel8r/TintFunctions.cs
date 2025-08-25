@@ -1,6 +1,6 @@
-﻿namespace CSharpGenerator
+﻿namespace pixel8r
 {
-    internal class TintFunctions
+    public class TintFunctions
     {
         // for now make the value universal to each function for easy experimentation, but not user-selectable
         private const int tintDelta = 10;

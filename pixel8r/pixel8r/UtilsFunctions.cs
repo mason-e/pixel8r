@@ -1,7 +1,7 @@
 ﻿// functions in here are for internal use and not actually part of the final program, hence they are uncalled
-namespace CSharpGenerator
+namespace pixel8r
 {
-    internal class UtilsFunctions
+    public class UtilsFunctions
     {
         public static Bitmap generateApproximateColorSpace()
         {

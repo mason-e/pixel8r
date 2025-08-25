@@ -1,8 +1,8 @@
 ﻿using System.Drawing.Imaging;
 
-namespace CSharpGenerator
+namespace pixel8r
 {
-    static class GlobalVars
+    public static class GlobalVars
     {
         public static Color[] mesenColors = [
             Color.FromArgb(102, 102, 102),
