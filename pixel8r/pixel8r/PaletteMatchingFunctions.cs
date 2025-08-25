@@ -1,20 +1,18 @@
 ﻿using Wacton.Unicolour;
 
-namespace CSharpGenerator
+namespace pixel8r
 {
-    internal class PaletteMatchingFunctions
+    public class PaletteMatchingFunctions
     {
         public static Color getMatchedColor(Color oldColor, string palette, string algorithm, bool dither)
         {
             if (algorithm == "RGB Euclidean")
             {
                 return getNearestBySystemColorDelta(oldColor, palette, getRGBEuclideanDiff, dither);
-
             }
             if (algorithm == "RGB Redmean")
             {
                 return getNearestBySystemColorDelta(oldColor, palette, getRGBRedmeanDiff, dither);
-
             }
             if (algorithm == "Lab CIE76")
             {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharpGenerator
+﻿namespace pixel8r
 {
-    internal class ResizeFunctions
+    public class ResizeFunctions
     {
         public static (int, int) getCropDimensions (int desiredWidth, int desiredHeight)
         {
