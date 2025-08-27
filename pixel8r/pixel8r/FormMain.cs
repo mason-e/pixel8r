@@ -29,6 +29,7 @@ namespace pixel8r
                 toolStripButtonSave.Enabled = true;
                 toolStripButtonReload.Enabled = true;
                 buttonPixelate.Enabled = true;
+                buttonScanlines.Enabled = true;
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPaletteSwap.Enabled = true;
@@ -357,6 +358,14 @@ namespace pixel8r
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
             pictureBoxImage.Image = BitmapFunction.pixelate(pictureBoxImage.Image);
+            setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
+        }
+
+        private void buttonScanlines_Click(object sender, EventArgs e)
+        {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
+            pictureBoxImage.Image = BitmapFunction.scanlines(pictureBoxImage.Image);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }

@@ -92,58 +92,58 @@
             return ColorConversionFunctions.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
         }
 
-        private static Color findNearestRGBMultiple(Color oldColor, int multiple)
+        private static Color findNearestRGBMultiple(Color color, int multiple)
         {
             double midPoint = (double)multiple / 2;
-            int rModulo = oldColor.R % multiple;
-            int gModulo = oldColor.G % multiple;
-            int bModulo = oldColor.B % multiple;
+            int rModulo = color.R % multiple;
+            int gModulo = color.G % multiple;
+            int bModulo = color.B % multiple;
             int newR, newG, newB;
 
             if (rModulo != 0)
             {
                 if (rModulo < midPoint)
                 {
-                    newR = oldColor.R - rModulo;
+                    newR = color.R - rModulo;
                 }
                 else
                 {
-                    newR = oldColor.R + (multiple - rModulo);
+                    newR = color.R + (multiple - rModulo);
                 }
             }
             else
             {
-                newR = oldColor.R;
+                newR = color.R;
             }
             if (gModulo != 0)
             {
                 if (gModulo < midPoint)
                 {
-                    newG = oldColor.G - gModulo;
+                    newG = color.G - gModulo;
                 }
                 else
                 {
-                    newG = oldColor.G + (multiple - gModulo);
+                    newG = color.G + (multiple - gModulo);
                 }
             }
             else
             {
-                newG = oldColor.G;
+                newG = color.G;
             }
             if (bModulo != 0)
             {
                 if (bModulo < midPoint)
                 {
-                    newB = oldColor.B - bModulo;
+                    newB = color.B - bModulo;
                 }
                 else
                 {
-                    newB = oldColor.B + (multiple - bModulo);
+                    newB = color.B + (multiple - bModulo);
                 }
             }
             else
             {
-                newB = oldColor.B;
+                newB = color.B;
             }
             return Color.FromArgb(newR, newG, newB);
         }
