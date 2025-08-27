@@ -15,7 +15,7 @@ namespace pixel8r
         {
             openFileDialog1 = new OpenFileDialog()
             {
-                Filter = "Supported Image Files|*.jpg;*.png;*.gif;*.bmp",
+                Filter = "Supported Image Files|*.png;*.jpg;*.gif;*.bmp",
                 Title = "Open image file"
             };
             openFileDialog1.ShowDialog(this);
@@ -59,7 +59,7 @@ namespace pixel8r
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
-                Filter = "Supported Image Files|*.jpg;*.png;*.gif;*.bmp",
+                Filter = "Supported Image Files|*.png;*.jpg;*.gif;*.bmp",
                 Title = "Open image file"
             };
             saveFileDialog.ShowDialog(this);
