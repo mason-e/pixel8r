@@ -26,7 +26,7 @@ namespace pixel8r
             {
                 return getNearestByUnicolourDelta(color, palette, DeltaE.Cie94, dither);
             }
-            if (algorithm == "LCh CIEDE200")
+            if (algorithm == "LCh CIEDE2000")
             {
                 return getNearestByUnicolourDelta(color, palette, DeltaE.Ciede2000, dither);
             }

@@ -79,7 +79,6 @@
         {
             Bitmap bitmap = new Bitmap(image);
             int x = 1, y = 1;
-            Random r = new Random();
             while (x < bitmap.Width && y < bitmap.Height)
             {
                 // use color of pixel one to the left as new color - otherwise it could clash with dither pixel
