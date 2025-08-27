@@ -32,14 +32,14 @@
             {
                 for (int x = 0; x < bitmap.Width; x++)
                 {
-                    Color color = new Color();
+                    Color color = bitmap.GetPixel(x, y);
                     if (dither && (x-1) % 3 == 0 && (y-1) % 3 == 0)
                     {
-                        color = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm, true);
+                        color = PaletteMatchingFunctions.getMatchedColor(color, palette, algorithm, true);
                     }
                     else
                     {
-                        color = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm, false);
+                        color = PaletteMatchingFunctions.getMatchedColor(color, palette, algorithm, false);
                     }
                     bitmap.SetPixel(x, y, color);
                 }
@@ -54,8 +54,8 @@
             {
                 for (int x = 0; x < bitmap.Width; x++)
                 {
-                    Color newColor = PaletteProgrammaticFunctions.getProgrammaticColor(bitmap.GetPixel(x, y), palette);
-                    bitmap.SetPixel(x, y, newColor);
+                    Color color = PaletteProgrammaticFunctions.getProgrammaticColor(bitmap.GetPixel(x, y), palette);
+                    bitmap.SetPixel(x, y, color);
                 }
             }
             return bitmap;
@@ -68,8 +68,8 @@
             {
                 for (int x = 0; x < bitmap.Width; x++)
                 {
-                    Color newColor = TintFunctions.getTintColor(bitmap.GetPixel(x, y), palette);
-                    bitmap.SetPixel(x, y, newColor);
+                    Color color = TintFunctions.getTintColor(bitmap.GetPixel(x, y), palette);
+                    bitmap.SetPixel(x, y, color);
                 }
             }
             return bitmap;
@@ -111,6 +111,28 @@
             }
             
                 return bitmap;           
+        }
+
+        public static Bitmap scanlines(Image image)
+        {
+            Bitmap bitmap = new Bitmap(image);
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    Color color = bitmap.GetPixel(x, y);
+                    if (y % 2 == 0)
+                    {
+                        color = TintFunctions.getTintColor(color, "White (Brighten)");
+                    }
+                    else
+                    {
+                        color = TintFunctions.getTintColor(color, "Black (Darken)");
+                    }
+                    bitmap.SetPixel(x, y, color);
+                }
+            }
+            return bitmap;
         }
 
         public static Bitmap drawPalette(string palette)

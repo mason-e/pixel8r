@@ -4,62 +4,62 @@ namespace pixel8r
 {
     public class PaletteMatchingFunctions
     {
-        public static Color getMatchedColor(Color oldColor, string palette, string algorithm, bool dither)
+        public static Color getMatchedColor(Color color, string palette, string algorithm, bool dither)
         {
             if (algorithm == "RGB Euclidean")
             {
-                return getNearestBySystemColorDelta(oldColor, palette, getRGBEuclideanDiff, dither);
+                return getNearestBySystemColorDelta(color, palette, getRGBEuclideanDiff, dither);
             }
             if (algorithm == "RGB Redmean")
             {
-                return getNearestBySystemColorDelta(oldColor, palette, getRGBRedmeanDiff, dither);
+                return getNearestBySystemColorDelta(color, palette, getRGBRedmeanDiff, dither);
             }
             if (algorithm == "Lab CIE76")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cie76, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie76, dither);
             }
             if (algorithm == "Lab Hybrid")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Hyab, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Hyab, dither);
             }
             if (algorithm == "Lab CIE94")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cie94, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie94, dither);
             }
             if (algorithm == "LCh CIEDE200")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Ciede2000, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Ciede2000, dither);
             }
             if (algorithm == "CMC Acceptability")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.CmcAcceptability, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcAcceptability, dither);
             }
             if (algorithm == "CMC Perceptibility")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.CmcPerceptibility, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcPerceptibility, dither);
             }
             if (algorithm == "ITP")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Itp, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Itp, dither);
             }
             if (algorithm == "Z")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Z, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Z, dither);
             }
             if (algorithm == "OK")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Ok, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Ok, dither);
             }
             if (algorithm == "CAM02")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cam02, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam02, dither);
             }
             if (algorithm == "CAM16")
             {
-                return getNearestByUnicolourDelta(oldColor, palette, DeltaE.Cam16, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam16, dither);
             }
             // default case, should not be reachable
-            return oldColor;
+            return color;
         }
 
         private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc, bool dither)
