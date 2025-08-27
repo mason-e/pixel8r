@@ -459,7 +459,7 @@
             Controls.Add(pictureBoxImage);
             KeyPreview = true;
             Name = "FormMain";
-            Text = "File to Image Generator";
+            Text = "pixel8r";
             KeyDown += FormMain_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).EndInit();
             toolStripMenu.ResumeLayout(false);
