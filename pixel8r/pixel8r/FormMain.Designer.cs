@@ -61,7 +61,7 @@
             labelTint = new Label();
             comboBoxTint = new ComboBox();
             buttonTint = new Button();
-            checkBoxDither = new CheckBox();
+            buttonScanlines = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPalette).BeginInit();
@@ -131,7 +131,7 @@
             // 
             comboBoxAlgorithm.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxAlgorithm.FormattingEnabled = true;
-            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Euclidean", "RGB Redmean", "Lab CIE76", "Lab Hybrid", "Lab CIE94", "LCh CIEDE200", "CMC Acceptability", "CMC Perceptibility", "ITP", "Z", "OK", "CAM02", "CAM16" });
+            comboBoxAlgorithm.Items.AddRange(new object[] { "RGB Euclidean", "RGB Redmean", "Lab CIE76", "Lab Hybrid", "Lab CIE94", "LCh CIEDE2000", "CMC Acceptability", "CMC Perceptibility", "ITP", "Z", "OK", "CAM02", "CAM16" });
             comboBoxAlgorithm.Location = new Point(12, 326);
             comboBoxAlgorithm.Name = "comboBoxAlgorithm";
             comboBoxAlgorithm.Size = new Size(236, 23);
@@ -401,22 +401,23 @@
             buttonTint.UseVisualStyleBackColor = true;
             buttonTint.Click += buttonTint_Click;
             // 
-            // checkBoxDither
+            // buttonScanlines
             // 
-            checkBoxDither.AutoSize = true;
-            checkBoxDither.Location = new Point(113, 355);
-            checkBoxDither.Name = "checkBoxDither";
-            checkBoxDither.Size = new Size(58, 19);
-            checkBoxDither.TabIndex = 64;
-            checkBoxDither.Text = "Dither";
-            checkBoxDither.UseVisualStyleBackColor = true;
+            buttonScanlines.Enabled = false;
+            buttonScanlines.Location = new Point(96, 730);
+            buttonScanlines.Name = "buttonScanlines";
+            buttonScanlines.Size = new Size(75, 23);
+            buttonScanlines.TabIndex = 65;
+            buttonScanlines.Text = "Scanlines!";
+            buttonScanlines.UseVisualStyleBackColor = true;
+            buttonScanlines.Click += buttonScanlines_Click;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
-            Controls.Add(checkBoxDither);
+            Controls.Add(buttonScanlines);
             Controls.Add(buttonTint);
             Controls.Add(comboBoxTint);
             Controls.Add(labelTint);
@@ -446,7 +447,7 @@
             Controls.Add(pictureBoxImage);
             KeyPreview = true;
             Name = "FormMain";
-            Text = "File to Image Generator";
+            Text = "pixel8r";
             KeyDown += FormMain_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).EndInit();
             toolStripMenu.ResumeLayout(false);
@@ -490,6 +491,6 @@
         private Label labelTint;
         private ComboBox comboBoxTint;
         private Button buttonTint;
-        private CheckBox checkBoxDither;
+        private Button buttonScanlines;
     }
 }

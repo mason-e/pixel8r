@@ -15,7 +15,7 @@ namespace pixel8r
         {
             openFileDialog1 = new OpenFileDialog()
             {
-                Filter = "Supported Image Files|*.jpg;*.png;*.gif;*.bmp",
+                Filter = "Supported Image Files|*.png;*.jpg;*.gif;*.bmp",
                 Title = "Open image file"
             };
             openFileDialog1.ShowDialog(this);
@@ -29,6 +29,7 @@ namespace pixel8r
                 toolStripButtonSave.Enabled = true;
                 toolStripButtonReload.Enabled = true;
                 buttonPixelate.Enabled = true;
+                buttonScanlines.Enabled = true;
                 if (comboBoxPalette.SelectedIndex != -1 && comboBoxAlgorithm.SelectedIndex != -1)
                 {
                     buttonPaletteSwap.Enabled = true;
@@ -58,7 +59,7 @@ namespace pixel8r
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
-                Filter = "Supported Image Files|*.jpg;*.png;*.gif;*.bmp",
+                Filter = "Supported Image Files|*.png;*.jpg;*.gif;*.bmp",
                 Title = "Open image file"
             };
             saveFileDialog.ShowDialog(this);
@@ -79,7 +80,7 @@ namespace pixel8r
         private void buttonPaletteSwap_Click(object sender, EventArgs e)
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
-            pictureBoxImage.Image = BitmapFunction.paletteSwapPredefined(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text, checkBoxDither.Checked);
+            pictureBoxImage.Image = BitmapFunction.paletteSwapPredefined(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }
@@ -357,6 +358,14 @@ namespace pixel8r
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
             pictureBoxImage.Image = BitmapFunction.pixelate(pictureBoxImage.Image);
+            setParamsAfterImageLoad();
+            toolStripButtonUndo.Enabled = true;
+        }
+
+        private void buttonScanlines_Click(object sender, EventArgs e)
+        {
+            GlobalVars.PreviousImage = pictureBoxImage.Image;
+            pictureBoxImage.Image = BitmapFunction.scanlines(pictureBoxImage.Image);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }
