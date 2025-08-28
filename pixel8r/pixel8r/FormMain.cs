@@ -80,7 +80,7 @@ namespace pixel8r
         private void buttonPaletteSwap_Click(object sender, EventArgs e)
         {
             GlobalVars.PreviousImage = pictureBoxImage.Image;
-            pictureBoxImage.Image = BitmapFunction.paletteSwapPredefined(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text, checkBoxDither.Checked);
+            pictureBoxImage.Image = BitmapFunction.paletteSwapPredefined(pictureBoxImage.Image, comboBoxPalette.Text, comboBoxAlgorithm.Text);
             setParamsAfterImageLoad();
             toolStripButtonUndo.Enabled = true;
         }

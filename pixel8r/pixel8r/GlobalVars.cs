@@ -206,6 +206,7 @@ namespace pixel8r
             Color.YellowGreen
 ];
 
+        public static Dictionary<Color, Color> colorMatches = new Dictionary<Color, Color>();
         public static string FilePath { get; set; }
         public static int ImageWidth { get; set; }
         public static int ImageHeight { get; set; }

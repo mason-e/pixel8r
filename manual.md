@@ -126,7 +126,3 @@ TBD - Operation not working how I want it currently
 ## Pixelate
 
 TBD - Operation not working how I want it currently
-
-## Dither
-
-TBD - Operation not working how I want it currently

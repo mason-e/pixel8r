@@ -61,7 +61,6 @@
             labelTint = new Label();
             comboBoxTint = new ComboBox();
             buttonTint = new Button();
-            checkBoxDither = new CheckBox();
             buttonScanlines = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxImage).BeginInit();
             toolStripMenu.SuspendLayout();
@@ -402,16 +401,6 @@
             buttonTint.UseVisualStyleBackColor = true;
             buttonTint.Click += buttonTint_Click;
             // 
-            // checkBoxDither
-            // 
-            checkBoxDither.AutoSize = true;
-            checkBoxDither.Location = new Point(113, 355);
-            checkBoxDither.Name = "checkBoxDither";
-            checkBoxDither.Size = new Size(58, 19);
-            checkBoxDither.TabIndex = 64;
-            checkBoxDither.Text = "Dither";
-            checkBoxDither.UseVisualStyleBackColor = true;
-            // 
             // buttonScanlines
             // 
             buttonScanlines.Enabled = false;
@@ -429,7 +418,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1404, 791);
             Controls.Add(buttonScanlines);
-            Controls.Add(checkBoxDither);
             Controls.Add(buttonTint);
             Controls.Add(comboBoxTint);
             Controls.Add(labelTint);
@@ -503,7 +491,6 @@
         private Label labelTint;
         private ComboBox comboBoxTint;
         private Button buttonTint;
-        private CheckBox checkBoxDither;
         private Button buttonScanlines;
     }
 }

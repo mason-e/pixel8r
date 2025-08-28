@@ -7,6 +7,7 @@ namespace pixel8rtests
     public class PaletteMatchingTests
     {
         [TestMethod()]
+        [DoNotParallelize]
         [DataRow("RGB Euclidean")]
         [DataRow("RGB Redmean")]
         [DataRow("Lab CIE76")]
@@ -31,11 +32,12 @@ namespace pixel8rtests
 
             // only asserting that a match is done, not what the color "should" be
             // if we knew what they should be, there wouldn't be so many color matching algorithms!
-            color = PaletteMatchingFunctions.getMatchedColor(color, "NES", algorithm, false);
+            color = PaletteMatchingFunctions.getMatchedColor(color, "NES", algorithm);
             CollectionAssert.Contains(GlobalVars.mesenColors, color);
         }
 
         [TestMethod()]
+        [DoNotParallelize]
         [DataRow("RGB Euclidean")]
         [DataRow("RGB Redmean")]
         [DataRow("Lab CIE76")]
@@ -60,7 +62,7 @@ namespace pixel8rtests
 
             // only asserting that a match is done, not what the color "should" be
             // if we knew what they should be, there wouldn't be so many color matching algorithms!
-            color = PaletteMatchingFunctions.getMatchedColor(color, "Web Colors", algorithm, false);
+            color = PaletteMatchingFunctions.getMatchedColor(color, "Web Colors", algorithm);
             CollectionAssert.Contains(GlobalVars.webColors, color);
         }
     }

@@ -25,25 +25,19 @@
             return new Bitmap(original, new Size(GlobalVars.ImageWidth, GlobalVars.ImageHeight));
         }
 
-        public static Bitmap paletteSwapPredefined(Image image, string palette, string algorithm, bool dither)
+        public static Bitmap paletteSwapPredefined(Image image, string palette, string algorithm)
         {
             Bitmap bitmap = new Bitmap(image);
             for (int y = 0; y < bitmap.Height; y++)
             {
                 for (int x = 0; x < bitmap.Width; x++)
                 {
-                    Color color = bitmap.GetPixel(x, y);
-                    if (dither && (x-1) % 3 == 0 && (y-1) % 3 == 0)
-                    {
-                        color = PaletteMatchingFunctions.getMatchedColor(color, palette, algorithm, true);
-                    }
-                    else
-                    {
-                        color = PaletteMatchingFunctions.getMatchedColor(color, palette, algorithm, false);
-                    }
+                    Color color = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm);
                     bitmap.SetPixel(x, y, color);
                 }
             }
+            // reset the color matching dictionary
+            GlobalVars.colorMatches.Clear();
             return bitmap;
         }
 
@@ -81,8 +75,7 @@
             int x = 1, y = 1;
             while (x < bitmap.Width && y < bitmap.Height)
             {
-                // use color of pixel one to the left as new color - otherwise it could clash with dither pixel
-                Color color = bitmap.GetPixel(x - 1, y);
+                Color color = bitmap.GetPixel(x, y);
                 for (int i = -1; i <= 1; i++)
                 {
                     for (int j = -1; j <= 1; j++)

@@ -4,70 +4,72 @@ namespace pixel8r
 {
     public class PaletteMatchingFunctions
     {
-        public static Color getMatchedColor(Color color, string palette, string algorithm, bool dither)
+        public static Color getMatchedColor(Color color, string palette, string algorithm)
         {
             if (algorithm == "RGB Euclidean")
             {
-                return getNearestBySystemColorDelta(color, palette, getRGBEuclideanDiff, dither);
+                return getNearestBySystemColorDelta(color, palette, getRGBEuclideanDiff);
             }
             if (algorithm == "RGB Redmean")
             {
-                return getNearestBySystemColorDelta(color, palette, getRGBRedmeanDiff, dither);
+                return getNearestBySystemColorDelta(color, palette, getRGBRedmeanDiff);
             }
             if (algorithm == "Lab CIE76")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie76, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie76);
             }
             if (algorithm == "Lab Hybrid")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Hyab, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Hyab);
             }
             if (algorithm == "Lab CIE94")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie94, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie94);
             }
             if (algorithm == "LCh CIEDE2000")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Ciede2000, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Ciede2000);
             }
             if (algorithm == "CMC Acceptability")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcAcceptability, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcAcceptability);
             }
             if (algorithm == "CMC Perceptibility")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcPerceptibility, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcPerceptibility);
             }
             if (algorithm == "ITP")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Itp, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Itp);
             }
             if (algorithm == "Z")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Z, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Z);
             }
             if (algorithm == "OK")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Ok, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Ok);
             }
             if (algorithm == "CAM02")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam02, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam02);
             }
             if (algorithm == "CAM16")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam16, dither);
+                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam16);
             }
             // default case, should not be reachable
             return color;
         }
 
-        private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc, bool dither)
+        private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc)
         {
+            if (GlobalVars.colorMatches.Keys.Contains(color))
+            {
+                return GlobalVars.colorMatches[color];
+            }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
-            double deltaEMin2 = 10000;
-            int closestIndex = -1;
-            int secondClosestIndex = -1;
+            int colorIndex = -1;
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -83,34 +85,21 @@ namespace pixel8r
                 if (deltaE < deltaEMin)
                 {
                     deltaEMin = deltaE;
-                    // if we have a new lowest, push over the previous to second lowest
-                    secondClosestIndex = closestIndex;
-                    closestIndex = i;
-                }
-                // get difference from lowest to second lowest - this accounts for the scenario where the true lowest is the first one found
-                else if (deltaE - deltaEMin < deltaEMin2)
-                {
-                    secondClosestIndex = i;
-                    deltaEMin2 = deltaE - deltaEMin;
+                    colorIndex = i;
                 }
             }
-
-            if (dither)
-            {
-                return targetPalette[secondClosestIndex];
-            }
-            else
-            {
-                return targetPalette[closestIndex];
-            }
+            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
+            return targetPalette[colorIndex];
         }
 
-        private static Color getNearestByUnicolourDelta(Color color, string palette, DeltaE deltaEnum, bool dither)
+        private static Color getNearestByUnicolourDelta(Color color, string palette, DeltaE deltaEnum)
         {
+            if (GlobalVars.colorMatches.Keys.Contains(color))
+            {
+                return GlobalVars.colorMatches[color];
+            }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
-            double deltaEMin2 = 10000;
-            int closestIndex = -1;
-            int secondClosestIndex = -1;
+            int colorIndex = -1;
             Unicolour unicolour = ColorConversionFunctions.getUnicolourFromSystemColor(color);
             Color[] targetPalette = [];
             if (palette == "NES")
@@ -128,26 +117,11 @@ namespace pixel8r
                 if (deltaE < deltaEMin)
                 {
                     deltaEMin = deltaE;
-                    // if we have a new lowest, push over the previous to second lowest
-                    secondClosestIndex = closestIndex;
-                    closestIndex = i;
-                }
-                // get difference from lowest to second lowest - this accounts for the scenario where the true lowest is the first one found
-                else if (deltaE - deltaEMin < deltaEMin2)
-                {
-                    secondClosestIndex = i;
-                    deltaEMin2 = deltaE - deltaEMin;
+                    colorIndex = i;
                 }
             }
-
-            if (dither)
-            {
-                return targetPalette[secondClosestIndex];
-            }
-            else
-            {
-                return targetPalette[closestIndex];
-            }
+            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
+            return targetPalette[colorIndex];
         }
 
         private static double getRGBEuclideanDiff(Color color1, Color color2)

@@ -8,6 +8,7 @@ namespace pixel8rtests
     public class PerformanceTests
     {
         [TestMethod()]
+        [DoNotParallelize]
         [Ignore("Manually enable when performance testing is desired")]
         [DataRow("RGB Euclidean")]
         [DataRow("RGB Redmean")]
@@ -30,7 +31,7 @@ namespace pixel8rtests
                 int r = random.Next(255);
                 int g = random.Next(255);
                 int b = random.Next(255);
-                PaletteMatchingFunctions.getMatchedColor(Color.FromArgb(r, g, b), "NES", algorithm, false);
+                PaletteMatchingFunctions.getMatchedColor(Color.FromArgb(r, g, b), "NES", algorithm);
             }
         }
     }
