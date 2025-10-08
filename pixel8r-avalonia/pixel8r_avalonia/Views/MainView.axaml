@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:pixel8r_avalonia.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1420" d:DesignHeight="830"
              x:Class="pixel8r_avalonia.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
@@ -12,5 +12,162 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<!-- UI Layout - Left Sidebar
+	Menu bar with open, save, undo, reload
+	Select predefined palette dropdown
+	Palette preview pane
+	Algorithm Selection dropdown - splitbutton?
+	Palette swap button - splitbutton?
+	Programmating palette dropdown
+	Palette swap button
+	Tint dropdown
+	Tint button
+	Crop dropdown, preview button to right
+	Resize slider, preview and resize buttons to right
+	Pixelate and scaline buttons
+	-->
+	<!-- UI Layout - Picture area
+	File path on top left
+	File dimensions on top right
+	Picture in middle
+	Resize/crop info on bottom
+	-->
+	<SplitView IsPaneOpen="True"
+			   DisplayMode="Inline"
+			   OpenPaneLength="250">
+		
+		<SplitView.Pane>
+			<StackPanel>
+				<!--Menu Strip-->
+				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="24, 24, 24, 24">
+					<Button Width="24" Height="24" Grid.Column="0">
+						<Image Width="16" Height="16" Source="/Assets/open.png" />
+					</Button>
+					<Button Width="24" Height="24" Grid.Column="1">
+						<Image Width="16" Height="16" Source="/Assets/save.png" />
+					</Button>
+					<Button Width="24" Height="24" Grid.Column="2">
+						<Image Width="16" Height="16" Source="/Assets/undo.png" />
+					</Button>
+					<Button Width="24" Height="24" Grid.Column="3">
+						<Image Width="16" Height="16" Source="/Assets/reload.png" />
+					</Button>
+				</Grid>
+				<!--Discrete Palette-->
+				<Label Margin="5,5,0,0">Select Discrete Palette</Label>
+				<ComboBox Margin="5,0,0,0" Width="175" SelectedIndex="0">
+					<ComboBoxItem>NES</ComboBoxItem>
+					<ComboBoxItem>Web Colors</ComboBoxItem>
+				</ComboBox>
+				<Label Margin="5,0,0,0">Palette Preview</Label>
+				<Border BorderBrush="Blue" Margin="5" BorderThickness="2">
+					<Image Width="240" Height="192" />
+				</Border>
+				<Label Margin="5,0,0,0">Select Algorithm:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
+						<ComboBoxItem>RGB Redmean</ComboBoxItem>
+						<ComboBoxItem>Lab CIE76</ComboBoxItem>
+						<ComboBoxItem>Lab Hybrid</ComboBoxItem>
+						<ComboBoxItem>Lab CIE94</ComboBoxItem>
+						<ComboBoxItem>LCh CIEDE2000</ComboBoxItem>
+						<ComboBoxItem>CMC Acceptability</ComboBoxItem>
+						<ComboBoxItem>CMC Perceptibility</ComboBoxItem>
+						<ComboBoxItem>ITP</ComboBoxItem>
+						<ComboBoxItem>Z</ComboBoxItem>
+						<ComboBoxItem>OK</ComboBoxItem>
+						<ComboBoxItem>CAM02</ComboBoxItem>
+						<ComboBoxItem>CAM16</ComboBoxItem>
+					</ComboBox>
+					<Button Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+				<!--Programmatic Palette-->
+				<Label Margin="5,10,0,0">Programmatic Palette Swap:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>RGB Multiples of 3</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 5</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 15</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 17</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 51</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 85</ComboBoxItem>
+						<ComboBoxItem>Transpose - RBG</ComboBoxItem>
+						<ComboBoxItem>Transpose - GRB</ComboBoxItem>
+						<ComboBoxItem>Transpose - GBR</ComboBoxItem>
+						<ComboBoxItem>Transpose - BRG</ComboBoxItem>
+						<ComboBoxItem>Transpose - BGR</ComboBoxItem>
+					</ComboBox>
+					<Button Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+
+				<!--Tint-->
+				<Label Margin="5,10,0,0">Tint:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>White (Brighten)</ComboBoxItem>
+						<ComboBoxItem>Black (Darken)</ComboBoxItem>
+						<ComboBoxItem>Grayscale</ComboBoxItem>
+						<ComboBoxItem>Red (Soft)</ComboBoxItem>
+						<ComboBoxItem>Red (Hard)</ComboBoxItem>
+						<ComboBoxItem>Redscale</ComboBoxItem>
+						<ComboBoxItem>Green (Soft)</ComboBoxItem>
+						<ComboBoxItem>Green (Hard)</ComboBoxItem>
+						<ComboBoxItem>Greenscale</ComboBoxItem>
+						<ComboBoxItem>Blue (Soft)</ComboBoxItem>
+						<ComboBoxItem>Blue (Hard)</ComboBoxItem>
+						<ComboBoxItem>Bluescale</ComboBoxItem>
+						<ComboBoxItem>Cyan (Soft)</ComboBoxItem>
+						<ComboBoxItem>Cyan (Hard)</ComboBoxItem>
+						<ComboBoxItem>Cyanscale</ComboBoxItem>
+						<ComboBoxItem>Yellow (Soft)</ComboBoxItem>
+						<ComboBoxItem>Yellow (Hard)</ComboBoxItem>
+						<ComboBoxItem>Yellowscale</ComboBoxItem>
+						<ComboBoxItem>Magenta (Soft)</ComboBoxItem>
+						<ComboBoxItem>Magenta (Hard)</ComboBoxItem>
+						<ComboBoxItem>Magentascale</ComboBoxItem>
+					</ComboBox>
+					<Button Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
+					<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
+					<ComboBox Margin="5,0,0,0" Width="135" SelectedIndex="0">
+						<ComboBoxItem>1:1 (Square)</ComboBoxItem>
+						<ComboBoxItem>16:9</ComboBoxItem>
+						<ComboBoxItem>4:3</ComboBoxItem>
+						<ComboBoxItem>16:15 (NES)</ComboBoxItem>
+						<ComboBoxItem>8:7 (SNES)</ComboBoxItem>
+						<ComboBoxItem>10:7 (Genesis)</ComboBoxItem>
+						<ComboBoxItem>10:9 (GB, GG)</ComboBoxItem>
+						<ComboBoxItem>3:2 (GBA)</ComboBoxItem>
+					</ComboBox>
+					<Button Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</Button>
+				</Grid>
+				<Label Margin="5,10,0,0">
+					<Label.Content>
+						<MultiBinding StringFormat="Resize to {0}%">
+							<Binding Path="#resize.Value"/>
+						</MultiBinding>
+					</Label.Content>
+				</Label>
+				<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
+					<Slider Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
+					<Button Grid.Column="1" HorizontalAlignment="Right" Grid.Row="0">Preview &gt;</Button>
+					<Label Margin="5,0,0,0" Grid.Column="0" Grid.Row="1">
+						XXXXxYYYY <!--Not implemented yet-->
+					</Label>
+					<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">Resize!</Button>
+				</Grid>
+				<Label Margin="5,10,0,0">Other Operations</Label>
+				<SplitButton Margin="5,0,0,0" Content="Select...">
+					<SplitButton.Flyout>
+						<MenuFlyout Placement="TopEdgeAlignedLeft">
+							<MenuItem Header="Pixelate" />
+							<MenuItem Header="Scanlines" />
+						</MenuFlyout>
+					</SplitButton.Flyout>
+				</SplitButton>
+			</StackPanel>
+		</SplitView.Pane>
+		<TextBlock Text="Picture Will Go Here"></TextBlock>
+	</SplitView>
 </UserControl>
