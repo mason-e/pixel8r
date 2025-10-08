@@ -12,20 +12,6 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-	<!-- UI Layout - Left Sidebar
-	Menu bar with open, save, undo, reload
-	Select predefined palette dropdown
-	Palette preview pane
-	Algorithm Selection dropdown - splitbutton?
-	Palette swap button - splitbutton?
-	Programmating palette dropdown
-	Palette swap button
-	Tint dropdown
-	Tint button
-	Crop dropdown, preview button to right
-	Resize slider, preview and resize buttons to right
-	Pixelate and scaline buttons
-	-->
 	<!-- UI Layout - Picture area
 	File path on top left
 	File dimensions on top right
@@ -129,7 +115,7 @@
 					<Button Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
-					<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
 					<ComboBox Margin="5,0,0,0" Width="135" SelectedIndex="0">
 						<ComboBoxItem>1:1 (Square)</ComboBoxItem>
 						<ComboBoxItem>16:9</ComboBoxItem>
@@ -168,6 +154,15 @@
 				</SplitButton>
 			</StackPanel>
 		</SplitView.Pane>
-		<TextBlock Text="Picture Will Go Here"></TextBlock>
+		<StackPanel>
+			<Grid ShowGridLines="False" Margin="5" ColumnDefinitions="66*, 33*">
+				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="No file loaded. Select a file with the open button to enable more editing controls."/>
+				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="0x0"/>
+			</Grid>
+			<Border MaxWidth="1280" MaxHeight="720" BorderBrush="Blue" Margin="5" BorderThickness="2">
+				<Image Width="1280" MaxWidth="1280" Height="720" MaxHeight="720" />
+			</Border>
+			<TextBlock HorizontalAlignment="Center" Text="Here is where pending edit info will go"/>
+		</StackPanel>
 	</SplitView>
 </UserControl>
