@@ -156,13 +156,13 @@
 		</SplitView.Pane>
 		<StackPanel>
 			<Grid ShowGridLines="False" Margin="5" ColumnDefinitions="66*, 33*">
-				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="No file loaded. Select a file with the open button to enable more editing controls."/>
-				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="0x0"/>
+				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding FilePath}"/>
+				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ImageDimensions}"/>
 			</Grid>
-			<Border MaxWidth="1280" MaxHeight="720" BorderBrush="Blue" Margin="5" BorderThickness="2">
-				<Image Width="1280" MaxWidth="1280" Height="720" MaxHeight="720" />
+			<Border MaxWidth="{Binding ImageWidth}" MaxHeight="{Binding ImageHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2">
+				<Image Width="{Binding ImageWidth}" MaxWidth="{Binding ImageWidth}" Height="{Binding ImageHeight}" MaxHeight="{Binding ImageHeight}" />
 			</Border>
-			<TextBlock HorizontalAlignment="Center" Text="Here is where pending edit info will go"/>
+			<TextBlock HorizontalAlignment="Center" Text="{Binding PendingEdit}"/>
 		</StackPanel>
 	</SplitView>
 </UserControl>
