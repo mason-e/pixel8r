@@ -12,12 +12,6 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-	<!-- UI Layout - Picture area
-	File path on top left
-	File dimensions on top right
-	Picture in middle
-	Resize/crop info on bottom
-	-->
 	<SplitView IsPaneOpen="True"
 			   DisplayMode="Inline"
 			   OpenPaneLength="250">
@@ -26,7 +20,7 @@
 			<StackPanel>
 				<!--Menu Strip-->
 				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="24, 24, 24, 24">
-					<Button Width="24" Height="24" Grid.Column="0">
+					<Button Command="{Binding OpenFileCommand}" Width="24" Height="24" Grid.Column="0">
 						<Image Width="16" Height="16" Source="/Assets/open.png" />
 					</Button>
 					<Button Width="24" Height="24" Grid.Column="1">
