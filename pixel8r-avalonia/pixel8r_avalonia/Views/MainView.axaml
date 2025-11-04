@@ -20,7 +20,7 @@
 			<StackPanel>
 				<!--Menu Strip-->
 				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="24, 24, 24, 24">
-					<Button Command="{Binding OpenFileCommand}" Width="24" Height="24" Grid.Column="0">
+					<Button Click="Open_Click" Width="24" Height="24" Grid.Column="0">
 						<Image Width="16" Height="16" Source="/Assets/open.png" />
 					</Button>
 					<Button Width="24" Height="24" Grid.Column="1">
@@ -153,8 +153,8 @@
 				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding FilePath}"/>
 				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ImageDimensions}"/>
 			</Grid>
-			<Border MaxWidth="{Binding ImageWidth}" MaxHeight="{Binding ImageHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2">
-				<Image Width="{Binding ImageWidth}" MaxWidth="{Binding ImageWidth}" Height="{Binding ImageHeight}" MaxHeight="{Binding ImageHeight}" />
+			<Border Name="ImagePreview" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" Height="{Binding ImageMaxHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2">
+				<Image Name="MainImage" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" />
 			</Border>
 			<TextBlock HorizontalAlignment="Center" Text="{Binding PendingEdit}"/>
 		</StackPanel>
