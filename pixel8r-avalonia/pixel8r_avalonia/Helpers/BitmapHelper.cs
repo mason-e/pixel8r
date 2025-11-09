@@ -1,5 +1,7 @@
 ﻿using System;
-using Avalonia.Media.Imaging;
+using System.Drawing;
+using Bitmap = Avalonia.Media.Imaging.Bitmap;
+using SysBitmap = System.Drawing.Bitmap;
 
 namespace pixel8r_avalonia.Helpers
 {
@@ -128,39 +130,49 @@ namespace pixel8r_avalonia.Helpers
         //    return bitmap;
         //}
 
-        //public static Bitmap drawPalette(string palette)
-        //{
-        //    Color[] targetPalette = [];
-        //    if (palette == "NES")
-        //    {
-        //        targetPalette = GlobalVars.mesenColors;
-        //    }
-        //    if (palette == "Web Colors")
-        //    {
-        //        targetPalette = GlobalVars.webColors;
-        //    }
-        //    Bitmap bitmap = new Bitmap(240, 192);
-        //    int x = 0;
-        //    int y = 0;
-        //    // attempts to fill the preview area as much as possible based on the size of the palette
-        //    // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
-        //    int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
-        //    int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
-        //    foreach (Color color in targetPalette)
-        //    {
-        //        // step down to next row if it would overflow the current row
-        //        if (x + tileSize > 240)
-        //        {
-        //            x = 0;
-        //            y += tileSize;
-        //        }
-        //        using (Graphics g = Graphics.FromImage(bitmap))
-        //        {
-        //            g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
-        //        }
-        //        x += tileSize;
-        //    }
-        //    return bitmap;
-        //}
+        public static Bitmap DrawPalette(string palette)
+        {
+            Color[] targetPalette = [];
+            if (palette == "NES")
+            {
+                targetPalette = Constants.mesenColors;
+            }
+            if (palette == "Web Colors")
+            {
+                targetPalette = Constants.webColors;
+            }
+            SysBitmap bitmap = new SysBitmap(240, 192);
+            int x = 0;
+            int y = 0;
+            // attempts to fill the preview area as much as possible based on the size of the palette
+            // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
+            int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
+            int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
+            foreach (Color color in targetPalette)
+            {
+                // step down to next row if it would overflow the current row
+                if (x + tileSize > 240)
+                {
+                    x = 0;
+                    y += tileSize;
+                }
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
+                }
+                x += tileSize;
+            }
+            return ConvertFromSysBitmap(bitmap);
+        }
+        
+        private static Bitmap ConvertFromSysBitmap(SysBitmap sysBitmap)
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                sysBitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+                return new Bitmap(memory);
+            }
+        }
     }
 }

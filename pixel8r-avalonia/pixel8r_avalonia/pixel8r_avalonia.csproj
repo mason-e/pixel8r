@@ -20,5 +20,6 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Avalonia.ReactiveUI" />
+    <PackageReference Include="System.Drawing.Common" />
   </ItemGroup>
 </Project>
