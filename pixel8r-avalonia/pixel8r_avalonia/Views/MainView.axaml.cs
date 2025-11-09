@@ -44,6 +44,18 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         SetImageFromFile(file);
     }
 
+    private void DiscretePalette_Selected(object? sender, SelectionChangedEventArgs e)
+    {
+        
+        if (DataContext is MainViewModel vm)
+        {
+            if (DiscretePalette.SelectedItem is ComboBoxItem selectedItem)
+            {
+                PalettePreviewImage.Source = BitmapHelper.DrawPalette(selectedItem.Content.ToString());
+            }
+        }
+    }
+
     private void SetImageFromFile(IStorageFile file)
     {
         Bitmap image = BitmapHelper.generateBitmap(file.TryGetLocalPath());
