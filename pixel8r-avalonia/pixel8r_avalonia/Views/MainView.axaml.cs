@@ -56,6 +56,25 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void SwapDiscrete_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (DiscretePalette.SelectedItem is ComboBoxItem palette)
+            {
+                if (SwapAlgorithm.SelectedItem is ComboBoxItem algorithm)
+                {
+                    MainImage.Source = BitmapHelper.paletteSwapPredefined(
+                        MainImage.Source as Bitmap,
+                        palette.Content.ToString(),
+                        algorithm.Content.ToString()
+                    );
+                }
+
+            }
+        }
+    }
+
     private void SetImageFromFile(IStorageFile file)
     {
         Bitmap image = BitmapHelper.generateBitmap(file.TryGetLocalPath());

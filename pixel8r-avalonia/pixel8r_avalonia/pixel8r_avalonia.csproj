@@ -21,5 +21,6 @@
     </PackageReference>
     <PackageReference Include="Avalonia.ReactiveUI" />
     <PackageReference Include="System.Drawing.Common" />
+    <PackageReference Include="Wacton.Unicolour" />
   </ItemGroup>
 </Project>
