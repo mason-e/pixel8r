@@ -97,6 +97,20 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void Tint_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (Tint.SelectedItem is ComboBoxItem tint)
+            {
+                MainImage.Source = BitmapHelper.tint(
+                    MainImage.Source as Bitmap,
+                    tint.Content.ToString()
+                );
+            }
+        }
+    }
+
     private void SetImageFromFile()
     {
         if (DataContext is MainViewModel vm)
