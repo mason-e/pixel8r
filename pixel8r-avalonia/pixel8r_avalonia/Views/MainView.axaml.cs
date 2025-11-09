@@ -111,6 +111,26 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void Pixelate_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            MainImage.Source = BitmapHelper.pixelate(
+                MainImage.Source as Bitmap
+            );
+        }
+    }
+
+    private void Scanlines_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            MainImage.Source = BitmapHelper.scanlines(
+                MainImage.Source as Bitmap
+            );
+        }
+    }
+
     private void SetImageFromFile()
     {
         if (DataContext is MainViewModel vm)
