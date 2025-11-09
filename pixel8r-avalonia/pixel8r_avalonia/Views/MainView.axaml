@@ -142,8 +142,8 @@
 				<SplitButton Margin="5,0,0,0" Content="Select...">
 					<SplitButton.Flyout>
 						<MenuFlyout Placement="TopEdgeAlignedLeft">
-							<MenuItem Header="Pixelate" />
-							<MenuItem Header="Scanlines" />
+							<MenuItem Click="Pixelate_Click" Header="Pixelate" />
+							<MenuItem Click="Scanlines_Click" Header="Scanlines" />
 						</MenuFlyout>
 					</SplitButton.Flyout>
 				</SplitButton>

@@ -72,63 +72,63 @@ namespace pixel8r_avalonia.Helpers
             return ConvertFromSysBitmap(sysBitmap);
         }
 
-        //public static Bitmap pixelate(Image image)
-        //{
-        //    Bitmap bitmap = new Bitmap(image);
-        //    int x = 1, y = 1;
-        //    while (x < bitmap.Width && y < bitmap.Height)
-        //    {
-        //        Color color = bitmap.GetPixel(x, y);
-        //        for (int i = -1; i <= 1; i++)
-        //        {
-        //            for (int j = -1; j <= 1; j++)
-        //            {
-        //                try
-        //                {
-        //                    bitmap.SetPixel(x + i, y + j, color);
-        //                }
-        //                catch (ArgumentOutOfRangeException)
-        //                {
-        //                    // just handle the exception rather than try to account for the image not being divisible by 3
-        //                }
-        //            }
-        //        }
-        //        if (x + 3 < bitmap.Width)
-        //        {
-        //            x += 3;
-        //        }
-        //        else if (y + 3 < bitmap.Height)
-        //        {
-        //            y += 3;
-        //            x = 1;
-        //        }
-        //        else break;
-        //    }
+        public static Bitmap pixelate(Bitmap bitmap)
+        {
+            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
+            int x = 1, y = 1;
+            while (x < sysBitmap.Width && y < sysBitmap.Height)
+            {
+                Color color = sysBitmap.GetPixel(x, y);
+                for (int i = -1; i <= 1; i++)
+                {
+                    for (int j = -1; j <= 1; j++)
+                    {
+                        try
+                        {
+                            sysBitmap.SetPixel(x + i, y + j, color);
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            // just handle the exception rather than try to account for the image not being divisible by 3
+                        }
+                    }
+                }
+                if (x + 3 < sysBitmap.Width)
+                {
+                    x += 3;
+                }
+                else if (y + 3 < sysBitmap.Height)
+                {
+                    y += 3;
+                    x = 1;
+                }
+                else break;
+            }
 
-        //    return bitmap;
-        //}
+            return ConvertFromSysBitmap(sysBitmap);
+        }
 
-        //public static Bitmap scanlines(Image image)
-        //{
-        //    Bitmap bitmap = new Bitmap(image);
-        //    for (int y = 0; y < bitmap.Height; y++)
-        //    {
-        //        for (int x = 0; x < bitmap.Width; x++)
-        //        {
-        //            Color color = bitmap.GetPixel(x, y);
-        //            if (y % 2 == 0)
-        //            {
-        //                color = TintFunctions.getTintColor(color, "White (Brighten)");
-        //            }
-        //            else
-        //            {
-        //                color = TintFunctions.getTintColor(color, "Black (Darken)");
-        //            }
-        //            bitmap.SetPixel(x, y, color);
-        //        }
-        //    }
-        //    return bitmap;
-        //}
+        public static Bitmap scanlines(Bitmap bitmap)
+        {
+            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
+            for (int y = 0; y < sysBitmap.Height; y++)
+            {
+                for (int x = 0; x < sysBitmap.Width; x++)
+                {
+                    Color color = sysBitmap.GetPixel(x, y);
+                    if (y % 2 == 0)
+                    {
+                        color = TintHelper.getTintColor(color, "White (Brighten)");
+                    }
+                    else
+                    {
+                        color = TintHelper.getTintColor(color, "Black (Darken)");
+                    }
+                    sysBitmap.SetPixel(x, y, color);
+                }
+            }
+            return ConvertFromSysBitmap(sysBitmap);
+        }
 
         public static Bitmap DrawPalette(string palette)
         {
