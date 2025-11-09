@@ -83,6 +83,20 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void SwapProgrammatic_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (ProgrammaticPalette.SelectedItem is ComboBoxItem palette)
+            {
+                MainImage.Source = BitmapHelper.paletteSwapProgrammatic(
+                    MainImage.Source as Bitmap,
+                    palette.Content.ToString()
+                );
+            }
+        }
+    }
+
     private void SetImageFromFile()
     {
         if (DataContext is MainViewModel vm)

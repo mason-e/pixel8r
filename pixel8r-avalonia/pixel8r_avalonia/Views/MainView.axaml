@@ -64,7 +64,8 @@
 				<!--Programmatic Palette-->
 				<Label Margin="5,10,0,0">Programmatic Palette Swap:</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Margin="5,0,0,0" Width="175" SelectedIndex="0">
+					<ComboBox Name="ProgrammaticPalette" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>Saturate</ComboBoxItem>
 						<ComboBoxItem>RGB Multiples of 3</ComboBoxItem>
 						<ComboBoxItem>RGB Multiples of 5</ComboBoxItem>
 						<ComboBoxItem>RGB Multiples of 15</ComboBoxItem>
@@ -77,7 +78,7 @@
 						<ComboBoxItem>Transpose - BRG</ComboBoxItem>
 						<ComboBoxItem>Transpose - BGR</ComboBoxItem>
 					</ComboBox>
-					<Button Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+					<Button Click="SwapProgrammatic_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 
 				<!--Tint-->

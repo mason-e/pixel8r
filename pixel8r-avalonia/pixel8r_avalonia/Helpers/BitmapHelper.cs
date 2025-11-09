@@ -44,19 +44,19 @@ namespace pixel8r_avalonia.Helpers
             return ConvertFromSysBitmap(sysBitmap);
         }
 
-        //public static Bitmap paletteSwapProgrammatic(Image image, string palette)
-        //{
-        //    Bitmap bitmap = new Bitmap(image);
-        //    for (int y = 0; y < bitmap.Height; y++)
-        //    {
-        //        for (int x = 0; x < bitmap.Width; x++)
-        //        {
-        //            Color color = PaletteProgrammaticFunctions.getProgrammaticColor(bitmap.GetPixel(x, y), palette);
-        //            bitmap.SetPixel(x, y, color);
-        //        }
-        //    }
-        //    return bitmap;
-        //}
+        public static Bitmap paletteSwapProgrammatic(Bitmap bitmap, string palette)
+        {
+            SysBitmap sysBitmap = CovertToSysBitmap(bitmap);
+            for (int y = 0; y < sysBitmap.Height; y++)
+            {
+                for (int x = 0; x < sysBitmap.Width; x++)
+                {
+                    Color color = PaletteProgrammaticHelper.getProgrammaticColor(sysBitmap.GetPixel(x, y), palette);
+                    sysBitmap.SetPixel(x, y, color);
+                }
+            }
+            return ConvertFromSysBitmap(sysBitmap);
+        }
 
         //public static Bitmap tint(Image image, string palette)
         //{
