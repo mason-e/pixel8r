@@ -30,7 +30,7 @@ namespace pixel8r_avalonia.Helpers
 
         public static Bitmap paletteSwapPredefined(Bitmap bitmap, string palette, string algorithm)
         {
-            SysBitmap sysBitmap = CovertToSysBitmap(bitmap);
+            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
             for (int y = 0; y < sysBitmap.Height; y++)
             {
                 for (int x = 0; x < sysBitmap.Width; x++)
@@ -46,7 +46,7 @@ namespace pixel8r_avalonia.Helpers
 
         public static Bitmap paletteSwapProgrammatic(Bitmap bitmap, string palette)
         {
-            SysBitmap sysBitmap = CovertToSysBitmap(bitmap);
+            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
             for (int y = 0; y < sysBitmap.Height; y++)
             {
                 for (int x = 0; x < sysBitmap.Width; x++)
@@ -58,19 +58,19 @@ namespace pixel8r_avalonia.Helpers
             return ConvertFromSysBitmap(sysBitmap);
         }
 
-        //public static Bitmap tint(Image image, string palette)
-        //{
-        //    Bitmap bitmap = new Bitmap(image);
-        //    for (int y = 0; y < bitmap.Height; y++)
-        //    {
-        //        for (int x = 0; x < bitmap.Width; x++)
-        //        {
-        //            Color color = TintFunctions.getTintColor(bitmap.GetPixel(x, y), palette);
-        //            bitmap.SetPixel(x, y, color);
-        //        }
-        //    }
-        //    return bitmap;
-        //}
+        public static Bitmap tint(Bitmap bitmap, string palette)
+        {
+            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
+            for (int y = 0; y < sysBitmap.Height; y++)
+            {
+                for (int x = 0; x < sysBitmap.Width; x++)
+                {
+                    Color color = TintHelper.getTintColor(sysBitmap.GetPixel(x, y), palette);
+                    sysBitmap.SetPixel(x, y, color);
+                }
+            }
+            return ConvertFromSysBitmap(sysBitmap);
+        }
 
         //public static Bitmap pixelate(Image image)
         //{
@@ -175,7 +175,7 @@ namespace pixel8r_avalonia.Helpers
             }
         }
 
-        private static SysBitmap CovertToSysBitmap(Bitmap bitmap)
+        private static SysBitmap ConvertToSysBitmap(Bitmap bitmap)
         {
             using (var memory = new System.IO.MemoryStream())
             {
