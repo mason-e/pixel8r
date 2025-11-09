@@ -45,7 +45,7 @@
 				</Border>
 				<Label Margin="5,0,0,0">Select Algorithm:</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
+					<ComboBox Name="SwapAlgorithm" Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
 						<ComboBoxItem>RGB Redmean</ComboBoxItem>
 						<ComboBoxItem>Lab CIE76</ComboBoxItem>
 						<ComboBoxItem>Lab Hybrid</ComboBoxItem>
@@ -59,7 +59,7 @@
 						<ComboBoxItem>CAM02</ComboBoxItem>
 						<ComboBoxItem>CAM16</ComboBoxItem>
 					</ComboBox>
-					<Button Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+					<Button Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<!--Programmatic Palette-->
 				<Label Margin="5,10,0,0">Programmatic Palette Swap:</Label>

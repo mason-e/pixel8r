@@ -28,21 +28,21 @@ namespace pixel8r_avalonia.Helpers
             return original.CreateScaledBitmap(new Avalonia.PixelSize(width, height));
         }
 
-        //public static Bitmap paletteSwapPredefined(Image image, string palette, string algorithm)
-        //{
-        //    Bitmap bitmap = new Bitmap(image);
-        //    for (int y = 0; y < bitmap.Height; y++)
-        //    {
-        //        for (int x = 0; x < bitmap.Width; x++)
-        //        {
-        //            Color color = PaletteMatchingFunctions.getMatchedColor(bitmap.GetPixel(x, y), palette, algorithm);
-        //            bitmap.SetPixel(x, y, color);
-        //        }
-        //    }
-        //    // reset the color matching dictionary
-        //    GlobalVars.colorMatches.Clear();
-        //    return bitmap;
-        //}
+        public static Bitmap paletteSwapPredefined(Bitmap bitmap, string palette, string algorithm)
+        {
+            SysBitmap sysBitmap = CovertToSysBitmap(bitmap);
+            for (int y = 0; y < sysBitmap.Height; y++)
+            {
+                for (int x = 0; x < sysBitmap.Width; x++)
+                {
+                    Color color = PaletteMatchingHelper.getMatchedColor(sysBitmap.GetPixel(x, y), palette, algorithm);
+                    sysBitmap.SetPixel(x, y, color);
+                }
+            }
+            // reset the color matching dictionary
+            Constants.colorMatches.Clear();
+            return ConvertFromSysBitmap(sysBitmap);
+        }
 
         //public static Bitmap paletteSwapProgrammatic(Image image, string palette)
         //{
@@ -172,6 +172,16 @@ namespace pixel8r_avalonia.Helpers
                 sysBitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
                 memory.Position = 0;
                 return new Bitmap(memory);
+            }
+        }
+
+        private static SysBitmap CovertToSysBitmap(Bitmap bitmap)
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                bitmap.Save(memory);
+                memory.Position = 0;
+                return new SysBitmap(memory);
             }
         }
     }

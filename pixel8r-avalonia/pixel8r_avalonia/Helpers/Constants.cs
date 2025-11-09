@@ -210,5 +210,8 @@ namespace pixel8r_avalonia.Helpers
             Color.Yellow,
             Color.YellowGreen
         ];
+
+        // not a constant, to fix later
+        public static Dictionary<Color, Color> colorMatches = new Dictionary<Color, Color>();
     }
 }
