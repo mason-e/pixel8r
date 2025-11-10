@@ -138,8 +138,10 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             Bitmap image = BitmapHelper.generateBitmap(vm.FilePath);
             vm.ImageWidth = (int)image.Size.Width;
             MainImage.Width = vm.ImageWidth;
+            GlobalVars.ImageWidth = vm.ImageWidth;
             vm.ImageHeight = (int)image.Size.Height;
             MainImage.Height = vm.ImageHeight;
+            GlobalVars.ImageHeight = vm.ImageHeight;
             vm.ImageDimensions = $"{vm.ImageWidth} x {vm.ImageHeight}";
             // make border disappear when an image is loaded
             ImagePreview.BorderThickness = new Thickness(0);
