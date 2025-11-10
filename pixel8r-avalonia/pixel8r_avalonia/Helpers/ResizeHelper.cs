@@ -52,17 +52,5 @@ namespace pixel8r_avalonia.Helpers
             graphics.DrawRectangle(new Pen(Color.LightBlue, 2), cursor);
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(127, 255, 255, 255)), cursor);
         }
-
-        public static Bitmap cropBitmap(Bitmap original, int xStart, int yStart, int resizeWidth, int resizeHeight)
-        {
-            // account for it displaying in center of image area
-            int actualXStart = xStart - (1280 - GlobalVars.ImageWidth) / 2;
-            int actualYStart = yStart - (720 - GlobalVars.ImageHeight) / 2;
-            Rectangle cropArea = new Rectangle(xStart, yStart, resizeWidth, resizeHeight);
-            Bitmap newImage = original.Clone(cropArea, original.PixelFormat);
-            GlobalVars.ImageWidth = newImage.Width;
-            GlobalVars.ImageHeight = newImage.Height;
-            return newImage;
-        }
     }
 }

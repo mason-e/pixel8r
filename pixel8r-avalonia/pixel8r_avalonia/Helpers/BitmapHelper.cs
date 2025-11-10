@@ -72,6 +72,14 @@ namespace pixel8r_avalonia.Helpers
             return ConvertFromSysBitmap(sysBitmap);
         }
 
+        public static Bitmap cropBitmap(Bitmap original, int xStart, int yStart, int resizeWidth, int resizeHeight)
+        {
+            SysBitmap sysBitmap = ConvertToSysBitmap(original);
+            Rectangle cropArea = new Rectangle(xStart, yStart, resizeWidth, resizeHeight);
+            SysBitmap newImage = sysBitmap.Clone(cropArea, sysBitmap.PixelFormat);
+            return ConvertFromSysBitmap(newImage);
+        }
+
         public static Bitmap pixelate(Bitmap bitmap)
         {
             SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);

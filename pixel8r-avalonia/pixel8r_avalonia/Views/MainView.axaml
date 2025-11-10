@@ -5,7 +5,8 @@
              xmlns:vm="clr-namespace:pixel8r_avalonia.ViewModels"
              mc:Ignorable="d" d:DesignWidth="1420" d:DesignHeight="830"
              x:Class="pixel8r_avalonia.Views.MainView"
-             x:DataType="vm:MainViewModel">
+             x:DataType="vm:MainViewModel"
+			 KeyDown="KeyDownHandler">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -111,7 +112,7 @@
 				</Grid>
 				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
-					<ComboBox Margin="5,0,0,0" Width="135" SelectedIndex="0">
+					<ComboBox Name="Crop" SelectionChanged="Crop_Selected" Margin="5,0,0,0" Width="135" SelectedIndex="0">
 						<ComboBoxItem>1:1 (Square)</ComboBoxItem>
 						<ComboBoxItem>16:9</ComboBoxItem>
 						<ComboBoxItem>4:3</ComboBoxItem>
@@ -121,7 +122,7 @@
 						<ComboBoxItem>10:9 (GB, GG)</ComboBoxItem>
 						<ComboBoxItem>3:2 (GBA)</ComboBoxItem>
 					</ComboBox>
-					<Button Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</Button>
+					<CheckBox Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
 				</Grid>
 				<Label Margin="5,10,0,0">
 					<Label.Content>
@@ -154,9 +155,11 @@
 				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding FilePath}"/>
 				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ImageDimensions}"/>
 			</Grid>
-			<Border Name="ImagePreview" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" Height="{Binding ImageMaxHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2">
-				<Image Name="MainImage" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" />
-			</Border>
+			<Canvas Name="ImageCanvas" Width="{Binding ImageMaxWidth}" Height="{Binding ImageMaxHeight}">
+				<Border Width="{Binding ImageMaxWidth}" Height="{Binding ImageMaxHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2"/>
+				<Image Canvas.Left="{Binding ImageLeft}" Canvas.Top="{Binding ImageTop}" PointerMoved="MainImage_Mouseover" PointerExited="MainImage_Mouseleave" Name="MainImage" PointerPressed="MainImage_Click" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" />
+				<Border Name="ResizePreview" IsVisible="{Binding ResizeShow}" Canvas.Left="{Binding ResizeLeft}" Canvas.Top="{Binding ResizeTop}" Height="{Binding ResizeHeight}" Width="{Binding ResizeWidth}" BorderBrush="Black" BorderThickness="2"></Border>
+			</Canvas>
 			<TextBlock HorizontalAlignment="Center" Text="{Binding PendingEdit}"/>
 		</StackPanel>
 	</SplitView>

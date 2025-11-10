@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
@@ -111,6 +113,120 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void Crop_Selected(object? sender, SelectionChangedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (CropPreview.IsChecked ?? false)
+            {
+                if (Crop.SelectedItem is ComboBoxItem crop)
+                {
+                    string[] aspectVals = crop.Content.ToString().Split(':');
+                    int aspectWidth = Convert.ToInt32(aspectVals[0]);
+                    int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
+                    (vm.ResizeWidth, vm.ResizeHeight) = ResizeHelper.getCropDimensions(aspectWidth, aspectHeight);
+                    if (!(vm.ResizeWidth == vm.ImageWidth && vm.ResizeHeight == vm.ImageHeight))
+                    {
+                        vm.PendingEdit = $"Crop will resize image to {vm.ResizeWidth}x{vm.ResizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                    }
+                    else
+                    {
+                        vm.PendingEdit = "Image is already in desired aspect ratio.";
+                    }
+                }
+            }
+        }
+    }
+
+    private void CropPreview_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (CropPreview.IsChecked ?? false)
+            {
+                // @TODO disable editing controls
+                if (Crop.SelectedItem is ComboBoxItem crop)
+                {
+                    string[] aspectVals = crop.Content.ToString().Split(':');
+                    int aspectWidth = Convert.ToInt32(aspectVals[0]);
+                    int aspectHeight = Convert.ToInt32(aspectVals[1].Split(" ")[0]);
+                    (vm.ResizeWidth, vm.ResizeHeight) = ResizeHelper.getCropDimensions(aspectWidth, aspectHeight);
+                    if (!(vm.ResizeWidth == vm.ImageWidth && vm.ResizeHeight == vm.ImageHeight))
+                    {
+                        vm.PendingEdit = $"Crop will resize image to {vm.ResizeWidth}x{vm.ResizeHeight}. Click on image to crop. Click preview button or press ESC to cancel.";
+                    }
+                    else
+                    {
+                        vm.PendingEdit = "Image is already in desired aspect ratio.";
+                    }
+                }
+            }
+            else
+            {
+                // @TODO enable editing controls
+                vm.PendingEdit = "";
+                vm.ResizeShow = false;
+            }
+        }
+    }
+
+    private void MainImage_Mouseover(object? sender, Avalonia.Input.PointerEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (CropPreview.IsChecked ?? false)
+            {
+                if (vm.ResizeWidth == vm.ImageWidth)
+                {
+                    vm.ResizeLeft = vm.ImageLeft;
+                    vm.ResizeTop = vm.ImageTop + (int)e.GetPosition(MainImage).Y - vm.ResizeHeight / 2;
+                }
+                if (vm.ResizeHeight == vm.ImageHeight)
+                {
+                    vm.ResizeTop = vm.ImageTop;
+                    vm.ResizeLeft = vm.ImageLeft + (int)e.GetPosition(MainImage).X - vm.ResizeWidth / 2;
+                }
+                vm.ResizeShow = true;
+            }
+        }
+    }
+
+    private void MainImage_Mouseleave(object? sender, PointerEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            vm.ResizeShow = false;
+        }
+    }
+
+    private void MainImage_Click(object? sender, PointerPressedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (CropPreview.IsChecked ?? false)
+            {
+                try
+                {
+                    Bitmap cropped = BitmapHelper.cropBitmap(
+                        MainImage.Source as Bitmap,
+                        vm.ResizeLeft - vm.ImageLeft,
+                        vm.ResizeTop - vm.ImageTop,
+                        vm.ResizeWidth,
+                        vm.ResizeHeight
+                    );
+                    SetImageProperties(cropped);
+                    CropPreview.IsChecked = false;
+                    vm.ResizeShow = false;
+                    vm.PendingEdit = "";
+                }
+                catch (OutOfMemoryException ex)
+                {
+                    vm.PendingEdit = "Crop attempt failed! Make sure that the crop boundary is not extending outside the image.";
+                }
+            }
+        }
+    }
+
     private void Pixelate_Click(object? sender, RoutedEventArgs e)
     {
         if (DataContext is MainViewModel vm)
@@ -131,11 +247,35 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void KeyDownHandler(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape)
+        {
+            if (DataContext is MainViewModel vm)
+            {
+                if (CropPreview.IsChecked ?? false)
+                {
+                    CropPreview.IsChecked = false;
+                    vm.PendingEdit = "";
+                    vm.ResizeShow = false;
+                }
+            }
+        }
+    }
+
     private void SetImageFromFile()
     {
         if (DataContext is MainViewModel vm)
         {
             Bitmap image = BitmapHelper.generateBitmap(vm.FilePath);
+            SetImageProperties(image);
+        }
+    }
+
+    private void SetImageProperties(Bitmap image)
+    {
+        if (DataContext is MainViewModel vm)
+        {
             vm.ImageWidth = (int)image.Size.Width;
             MainImage.Width = vm.ImageWidth;
             GlobalVars.ImageWidth = vm.ImageWidth;
@@ -143,8 +283,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             MainImage.Height = vm.ImageHeight;
             GlobalVars.ImageHeight = vm.ImageHeight;
             vm.ImageDimensions = $"{vm.ImageWidth} x {vm.ImageHeight}";
-            // make border disappear when an image is loaded
-            ImagePreview.BorderThickness = new Thickness(0);
+            vm.ImageLeft = (vm.ImageMaxWidth - vm.ImageWidth) / 2;
+            vm.ImageTop = (vm.ImageMaxHeight - vm.ImageHeight) / 2;
             MainImage.Source = image;
         }
     }

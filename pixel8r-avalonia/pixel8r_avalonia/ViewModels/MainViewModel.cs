@@ -51,4 +51,53 @@ public class MainViewModel : ViewModelBase
         get => _imageHeight;
         set => this.RaiseAndSetIfChanged(ref _imageHeight, value); 
     }
+
+    private int _imageLeft;
+    public int ImageLeft
+    {
+        get => _imageLeft;
+        set => this.RaiseAndSetIfChanged(ref _imageLeft, value);
+    }
+
+    private int _imageTop;
+    public int ImageTop
+    {
+        get => _imageTop;
+        set => this.RaiseAndSetIfChanged(ref _imageTop, value);
+    }
+
+    private int _resizeWidth;
+    public int ResizeWidth
+    {
+        get => _resizeWidth;
+        set => this.RaiseAndSetIfChanged(ref _resizeWidth, value);
+    }
+
+    private int _resizeHeight;
+    public int ResizeHeight
+    {
+        get => _resizeHeight;
+        set => this.RaiseAndSetIfChanged(ref _resizeHeight, value);
+    }
+
+    private int _resizeLeft;
+    public int ResizeLeft
+    {
+        get => _resizeLeft;
+        set => this.RaiseAndSetIfChanged(ref _resizeLeft, value);
+    }
+
+    private int _resizeTop;
+    public int ResizeTop
+    {
+        get => _resizeTop;
+        set => this.RaiseAndSetIfChanged(ref _resizeTop, value);
+    }
+
+    private bool _resizeShow = false;
+    public bool ResizeShow
+    {
+        get => _resizeShow;
+        set => this.RaiseAndSetIfChanged(ref _resizeShow, value);
+    }
 }
