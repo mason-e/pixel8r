@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace pixel8r_avalonia.Helpers
 {
@@ -41,16 +40,6 @@ namespace pixel8r_avalonia.Helpers
             // smaller value of percent needed to expand either dimension is the maximum percent
             int expansionToMax = (int)(100 * Math.Min((float)maxX / GlobalVars.ImageWidth, (float)maxY / GlobalVars.ImageHeight));
             return (reductionToMin, expansionToMax);
-        }
-
-        public static void drawCenterPointRectangle(Graphics graphics, int width, int height, int centerX, int centerY)
-        {
-            // recntangles are drawn from top left corner
-            int startX = centerX - width / 2;
-            int startY = centerY - height / 2;
-            Rectangle cursor = new Rectangle(startX, startY, width, height);
-            graphics.DrawRectangle(new Pen(Color.LightBlue, 2), cursor);
-            graphics.FillRectangle(new SolidBrush(Color.FromArgb(127, 255, 255, 255)), cursor);
         }
     }
 }
