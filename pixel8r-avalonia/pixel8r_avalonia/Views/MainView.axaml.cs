@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
@@ -227,6 +227,47 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void ResizeSlider_Change(object? sender, RangeBaseValueChangedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (ResizeSlider.Value is double sliderValue)
+            {
+                (vm.ResizeWidth, vm.ResizeHeight) = ResizeHelper.getResizeDimensions(
+                    (int)sliderValue
+                );
+                ResizeTarget.Content = $"{vm.ResizeWidth} x {vm.ResizeHeight}";
+                vm.ResizeLeft = (vm.ImageMaxWidth - vm.ResizeWidth) / 2;
+                vm.ResizeTop = (vm.ImageMaxHeight - vm.ResizeHeight) / 2;
+                vm.ResizeShow = true;
+            }
+        }
+    }
+
+    private void ResizeSlider_Release(object? sender, PointerCaptureLostEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            vm.ResizeShow = false;
+        }
+    }
+
+    private void Resize_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (ResizeSlider.Value is double sliderValue)
+            {
+                Bitmap resized = BitmapHelper.resize(
+                    MainImage.Source as Bitmap,
+                    100 / (float)sliderValue
+                );
+                SetImageProperties(resized);
+                vm.ResizeShow = false;
+            }
+        }
+    }
+
     private void Pixelate_Click(object? sender, RoutedEventArgs e)
     {
         if (DataContext is MainViewModel vm)
@@ -263,6 +304,15 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void SetResizeOptions()
+    {
+        (int resizeLowerLimit, int resizeUpperLimit) = ResizeHelper.getResizeBounds();
+        ResizeSlider.Minimum = resizeLowerLimit;
+        ResizeSlider.Maximum = resizeUpperLimit;
+        ResizeSlider.Value = resizeLowerLimit > 100 ? resizeLowerLimit : 100;
+        ResizeSlider.LargeChange = (resizeUpperLimit - resizeLowerLimit) / 20;
+    }
+
     private void SetImageFromFile()
     {
         if (DataContext is MainViewModel vm)
@@ -285,6 +335,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             vm.ImageDimensions = $"{vm.ImageWidth} x {vm.ImageHeight}";
             vm.ImageLeft = (vm.ImageMaxWidth - vm.ImageWidth) / 2;
             vm.ImageTop = (vm.ImageMaxHeight - vm.ImageHeight) / 2;
+            SetResizeOptions();
             MainImage.Source = image;
         }
     }

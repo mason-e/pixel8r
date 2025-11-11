@@ -132,12 +132,9 @@
 					</Label.Content>
 				</Label>
 				<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
-					<Slider Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
-					<Button Grid.Column="1" HorizontalAlignment="Right" Grid.Row="0">Preview &gt;</Button>
-					<Label Margin="5,0,0,0" Grid.Column="0" Grid.Row="1">
-						XXXXxYYYY <!--Not implemented yet-->
-					</Label>
-					<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">Resize!</Button>
+					<Slider Name="ResizeSlider" PointerCaptureLost="ResizeSlider_Release" ValueChanged="ResizeSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
+					<Label Name="ResizeTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
+					<Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
 				</Grid>
 				<Label Margin="5,10,0,0">Other Operations</Label>
 				<SplitButton Margin="5,0,0,0" Content="Select...">
@@ -158,7 +155,7 @@
 			<Canvas Name="ImageCanvas" Width="{Binding ImageMaxWidth}" Height="{Binding ImageMaxHeight}">
 				<Border Width="{Binding ImageMaxWidth}" Height="{Binding ImageMaxHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2"/>
 				<Image Canvas.Left="{Binding ImageLeft}" Canvas.Top="{Binding ImageTop}" PointerMoved="MainImage_Mouseover" PointerExited="MainImage_Mouseleave" Name="MainImage" PointerPressed="MainImage_Click" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" />
-				<Border Name="ResizePreview" IsVisible="{Binding ResizeShow}" Canvas.Left="{Binding ResizeLeft}" Canvas.Top="{Binding ResizeTop}" Height="{Binding ResizeHeight}" Width="{Binding ResizeWidth}" BorderBrush="Black" BorderThickness="2"></Border>
+				<Border Name="ResizePreview" IsVisible="{Binding ResizeShow}" Canvas.Left="{Binding ResizeLeft}" Canvas.Top="{Binding ResizeTop}" Height="{Binding ResizeHeight}" Width="{Binding ResizeWidth}" BorderBrush="Orange" BorderThickness="2"></Border>
 			</Canvas>
 			<TextBlock HorizontalAlignment="Center" Text="{Binding PendingEdit}"/>
 		</StackPanel>
