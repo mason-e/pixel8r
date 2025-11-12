@@ -7,8 +7,10 @@ using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.ReactiveUI;
+using Avalonia.Skia.Helpers;
 using pixel8r_avalonia.Helpers;
 using pixel8r_avalonia.ViewModels;
+using SkiaSharp;
 
 namespace pixel8r_avalonia.Views;
 
@@ -58,6 +60,37 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             vm.FilePath = result[0].TryGetLocalPath();
         }
         SetImageFromFile();
+    }
+
+    private async void Save_Click(object? sender, RoutedEventArgs e)
+    {
+        var window = this.VisualRoot as Window;
+        if (window == null)
+            return;
+
+        var options = new FilePickerSaveOptions
+        {
+            Title = "Save image",
+            FileTypeChoices = new List<FilePickerFileType>
+            {
+                new FilePickerFileType("Image")
+                {
+                    Patterns = new[] { "*.png", "*.jpg", "*.jpeg", "*.bmp", "*.gif" }
+                }
+            }
+        };
+
+        var result = await window.StorageProvider.SaveFilePickerAsync(options);
+        if (result == null)
+            return;
+        using (var memory = new System.IO.MemoryStream())
+        {
+            Bitmap bmp = MainImage.Source as Bitmap;
+            bmp.Save(memory);
+            memory.Position = 0;
+            SKImage saveBmp = SKImage.FromEncodedData(memory);
+            ImageSavingHelper.SaveImage(saveBmp, result.TryGetLocalPath());
+        }
     }
 
     private void Undo_Click(object? sender, RoutedEventArgs e)

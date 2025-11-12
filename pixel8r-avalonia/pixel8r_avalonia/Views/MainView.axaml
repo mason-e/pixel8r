@@ -25,7 +25,7 @@
 					<Button Click="Open_Click" Width="24" Height="24" Grid.Column="0">
 						<Image Width="16" Height="16" Source="/Assets/open.png" />
 					</Button>
-					<Button IsEnabled="{Binding AllowEdit}" Width="24" Height="24" Grid.Column="1">
+					<Button IsEnabled="{Binding AllowEdit}" Click="Save_Click" Width="24" Height="24" Grid.Column="1">
 						<Image Width="16" Height="16" Source="/Assets/save.png" />
 					</Button>
 					<Button IsEnabled="{Binding AllowUndo}" Click="Undo_Click" Width="24" Height="24" Grid.Column="2">
