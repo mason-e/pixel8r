@@ -7,6 +7,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="pixel8r.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="pixel8r">
+        Title="pixel8r"
+        Width="1600"
+        Height="800">
         <views:MainView />
 </Window>
