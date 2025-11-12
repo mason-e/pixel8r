@@ -79,12 +79,11 @@ namespace pixel8r.Helpers
 
         public static Bitmap cropBitmap(Bitmap bitmap, int xStart, int yStart, int resizeWidth, int resizeHeight)
         {
-            // @TODO fix this
-            //SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
-            //Rectangle cropArea = new Rectangle(xStart, yStart, resizeWidth, resizeHeight);
-            //SKBitmap newImage = skBitmap.Clone(cropArea, skBitmap.PixelFormat);
-            //return ConvertFromSkBitmap(newImage);
-            return bitmap;
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            SKRectI cropArea = new SKRectI(xStart, yStart, xStart + resizeWidth, yStart + resizeHeight);
+            SKBitmap newImage = new SKBitmap(resizeWidth, resizeHeight);
+            skBitmap.ExtractSubset(newImage, cropArea);
+            return ConvertFromSkBitmap(newImage);
         }
 
         public static Bitmap pixelate(Bitmap bitmap)
@@ -147,7 +146,6 @@ namespace pixel8r.Helpers
 
         public static Bitmap DrawPalette(string palette)
         {
-            // @TODO fix this
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -164,20 +162,24 @@ namespace pixel8r.Helpers
             // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
             int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
             int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
-            //foreach (Color color in targetPalette)
-            //{
-            //    // step down to next row if it would overflow the current row
-            //    if (x + tileSize > 240)
-            //    {
-            //        x = 0;
-            //        y += tileSize;
-            //    }
-            //    using (Graphics g = Graphics.FromImage(bitmap))
-            //    {
-            //        g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
-            //    }
-            //    x += tileSize;
-            //}
+            foreach (Color color in targetPalette)
+            {
+                // step down to next row if it would overflow the current row
+                if (x + tileSize > 240)
+                {
+                    x = 0;
+                    y += tileSize;
+                }
+                using (var canvas = new SKCanvas(bitmap))
+                {
+                    var skColor = new SKColor(color.R, color.G, color.B);
+                    using (var paint = new SKPaint { Color = skColor, Style = SKPaintStyle.Fill })
+                    {
+                        canvas.DrawRect(new SKRect(x, y, x + tileSize, y + tileSize), paint);
+                    }
+                }
+                x += tileSize;
+            }
             return ConvertFromSkBitmap(bitmap);
         }
 
