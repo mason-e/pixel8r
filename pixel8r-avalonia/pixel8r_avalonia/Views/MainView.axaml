@@ -24,13 +24,13 @@
 					<Button Click="Open_Click" Width="24" Height="24" Grid.Column="0">
 						<Image Width="16" Height="16" Source="/Assets/open.png" />
 					</Button>
-					<Button Width="24" Height="24" Grid.Column="1">
+					<Button IsEnabled="{Binding AllowEdit}" Width="24" Height="24" Grid.Column="1">
 						<Image Width="16" Height="16" Source="/Assets/save.png" />
 					</Button>
-					<Button Width="24" Height="24" Grid.Column="2">
+					<Button IsEnabled="{Binding AllowUndo}" Click="Undo_Click" Width="24" Height="24" Grid.Column="2">
 						<Image Width="16" Height="16" Source="/Assets/undo.png" />
 					</Button>
-					<Button Click="Reload_Click" Width="24" Height="24" Grid.Column="3">
+					<Button IsEnabled="{Binding AllowEdit}" Click="Reload_Click" Width="24" Height="24" Grid.Column="3">
 						<Image Width="16" Height="16" Source="/Assets/reload.png" />
 					</Button>
 				</Grid>
@@ -60,7 +60,7 @@
 						<ComboBoxItem>CAM02</ComboBoxItem>
 						<ComboBoxItem>CAM16</ComboBoxItem>
 					</ComboBox>
-					<Button Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<!--Programmatic Palette-->
 				<Label Margin="5,10,0,0">Programmatic Palette Swap:</Label>
@@ -79,7 +79,7 @@
 						<ComboBoxItem>Transpose - BRG</ComboBoxItem>
 						<ComboBoxItem>Transpose - BGR</ComboBoxItem>
 					</ComboBox>
-					<Button Click="SwapProgrammatic_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Click="SwapProgrammatic_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 
 				<!--Tint-->
@@ -108,7 +108,7 @@
 						<ComboBoxItem>Magenta (Hard)</ComboBoxItem>
 						<ComboBoxItem>Magentascale</ComboBoxItem>
 					</ComboBox>
-					<Button Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
@@ -122,7 +122,7 @@
 						<ComboBoxItem>10:9 (GB, GG)</ComboBoxItem>
 						<ComboBoxItem>3:2 (GBA)</ComboBoxItem>
 					</ComboBox>
-					<CheckBox Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
+					<CheckBox IsEnabled="False" Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
 				</Grid>
 				<Label Margin="5,10,0,0">
 					<Label.Content>
@@ -132,12 +132,12 @@
 					</Label.Content>
 				</Label>
 				<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
-					<Slider Name="ResizeSlider" PointerCaptureLost="ResizeSlider_Release" ValueChanged="ResizeSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
+					<Slider IsEnabled="{Binding AllowEdit}" Name="ResizeSlider" PointerCaptureLost="ResizeSlider_Release" ValueChanged="ResizeSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
 					<Label Name="ResizeTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
-					<Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
 				</Grid>
 				<Label Margin="5,10,0,0">Other Operations</Label>
-				<SplitButton Margin="5,0,0,0" Content="Select...">
+				<SplitButton IsEnabled="{Binding AllowEdit}" Margin="5,0,0,0" Content="Select...">
 					<SplitButton.Flyout>
 						<MenuFlyout Placement="TopEdgeAlignedLeft">
 							<MenuItem Click="Pixelate_Click" Header="Pixelate" />

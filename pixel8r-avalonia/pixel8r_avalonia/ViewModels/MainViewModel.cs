@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Media.Imaging;
 using ReactiveUI;
 
 namespace pixel8r_avalonia.ViewModels;
@@ -99,5 +100,26 @@ public class MainViewModel : ViewModelBase
     {
         get => _resizeShow;
         set => this.RaiseAndSetIfChanged(ref _resizeShow, value);
+    }
+
+    private bool _allowEdit = false;
+    public bool AllowEdit
+    {
+        get => _allowEdit;
+        set => this.RaiseAndSetIfChanged(ref _allowEdit, value);
+    }
+
+    private bool _allowUndo = false;
+    public bool AllowUndo
+    {
+        get => _allowUndo;
+        set => this.RaiseAndSetIfChanged(ref _allowUndo, value);
+    }
+
+    private Bitmap _previousImage;
+    public Bitmap PreviousImage
+    {
+        get => _previousImage;
+        set => this.RaiseAndSetIfChanged(ref _previousImage, value);
     }
 }

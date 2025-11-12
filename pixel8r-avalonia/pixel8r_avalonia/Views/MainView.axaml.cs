@@ -49,6 +49,18 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         SetImageFromFile();
     }
 
+    private void Undo_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (vm.PreviousImage != null)
+            {
+                MainImage.Source = vm.PreviousImage;
+                vm.AllowUndo = false;
+            }
+        }
+    }
+
     private void Reload_Click(object? sender, RoutedEventArgs e)
     {
         SetImageFromFile();
@@ -74,6 +86,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             {
                 if (SwapAlgorithm.SelectedItem is ComboBoxItem algorithm)
                 {
+                    vm.PreviousImage = MainImage.Source as Bitmap;
+                    vm.AllowUndo = true;
                     MainImage.Source = BitmapHelper.paletteSwapPredefined(
                         MainImage.Source as Bitmap,
                         palette.Content.ToString(),
@@ -91,6 +105,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (ProgrammaticPalette.SelectedItem is ComboBoxItem palette)
             {
+                vm.PreviousImage = MainImage.Source as Bitmap;
+                vm.AllowUndo = true;
                 MainImage.Source = BitmapHelper.paletteSwapProgrammatic(
                     MainImage.Source as Bitmap,
                     palette.Content.ToString()
@@ -105,6 +121,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (Tint.SelectedItem is ComboBoxItem tint)
             {
+                vm.PreviousImage = MainImage.Source as Bitmap;
+                vm.AllowUndo = true;
                 MainImage.Source = BitmapHelper.tint(
                     MainImage.Source as Bitmap,
                     tint.Content.ToString()
@@ -144,7 +162,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (CropPreview.IsChecked ?? false)
             {
-                // @TODO disable editing controls
+                vm.AllowEdit = false;
+                vm.AllowUndo = false;
                 if (Crop.SelectedItem is ComboBoxItem crop)
                 {
                     string[] aspectVals = crop.Content.ToString().Split(':');
@@ -163,7 +182,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             }
             else
             {
-                // @TODO enable editing controls
+                vm.AllowEdit = true;
+                vm.AllowUndo = (vm.PreviousImage != null);
                 vm.PendingEdit = "";
                 vm.ResizeShow = false;
             }
@@ -205,6 +225,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (CropPreview.IsChecked ?? false)
             {
+                Bitmap originalPreviousImage = vm.PreviousImage;
                 try
                 {
                     Bitmap cropped = BitmapHelper.cropBitmap(
@@ -216,8 +237,14 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
                     );
                     SetImageProperties(cropped);
                     CropPreview.IsChecked = false;
+                    vm.AllowEdit = true;
                     vm.ResizeShow = false;
                     vm.PendingEdit = "";
+                    if (originalPreviousImage != null)
+                    {
+                        vm.PreviousImage = originalPreviousImage;
+                        vm.AllowUndo = true;
+                    }
                 }
                 catch (OutOfMemoryException ex)
                 {
@@ -258,6 +285,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (ResizeSlider.Value is double sliderValue)
             {
+                vm.PreviousImage = MainImage.Source as Bitmap;
+                vm.AllowUndo = true;
                 Bitmap resized = BitmapHelper.resize(
                     MainImage.Source as Bitmap,
                     100 / (float)sliderValue
@@ -272,6 +301,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     {
         if (DataContext is MainViewModel vm)
         {
+            vm.PreviousImage = MainImage.Source as Bitmap;
+            vm.AllowUndo = true;
             MainImage.Source = BitmapHelper.pixelate(
                 MainImage.Source as Bitmap
             );
@@ -282,6 +313,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     {
         if (DataContext is MainViewModel vm)
         {
+            vm.PreviousImage = MainImage.Source as Bitmap;
+            vm.AllowUndo = true;
             MainImage.Source = BitmapHelper.scanlines(
                 MainImage.Source as Bitmap
             );
@@ -297,6 +330,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
                 if (CropPreview.IsChecked ?? false)
                 {
                     CropPreview.IsChecked = false;
+                    vm.AllowEdit = true;
+                    vm.AllowUndo = (vm.PreviousImage != null);
                     vm.PendingEdit = "";
                     vm.ResizeShow = false;
                 }
@@ -319,6 +354,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             Bitmap image = BitmapHelper.generateBitmap(vm.FilePath);
             SetImageProperties(image);
+            vm.AllowEdit = true;
+            CropPreview.IsEnabled = true;
         }
     }
 
