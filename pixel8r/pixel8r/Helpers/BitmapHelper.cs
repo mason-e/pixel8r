@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using Avalonia.Media.Imaging;
+using SkiaSharp;
 using Bitmap = Avalonia.Media.Imaging.Bitmap;
 using SysBitmap = System.Drawing.Bitmap;
 
@@ -30,70 +32,75 @@ namespace pixel8r.Helpers
 
         public static Bitmap paletteSwapPredefined(Bitmap bitmap, string palette, string algorithm)
         {
-            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
-            for (int y = 0; y < sysBitmap.Height; y++)
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
             {
-                for (int x = 0; x < sysBitmap.Width; x++)
+                for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    Color color = PaletteMatchingHelper.getMatchedColor(sysBitmap.GetPixel(x, y), palette, algorithm);
-                    sysBitmap.SetPixel(x, y, color);
+                    Color temp = ConvertFromSKColor(skBitmap.GetPixel(x, y));
+                    Color color = PaletteMatchingHelper.getMatchedColor(temp, palette, algorithm);
+                    skBitmap.SetPixel(x, y, ConvertToSKColor(color));
                 }
             }
             // reset the color matching dictionary
             Constants.colorMatches.Clear();
-            return ConvertFromSysBitmap(sysBitmap);
+            return ConvertFromSkBitmap(skBitmap);
         }
 
         public static Bitmap paletteSwapProgrammatic(Bitmap bitmap, string palette)
         {
-            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
-            for (int y = 0; y < sysBitmap.Height; y++)
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
             {
-                for (int x = 0; x < sysBitmap.Width; x++)
+                for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    Color color = PaletteProgrammaticHelper.getProgrammaticColor(sysBitmap.GetPixel(x, y), palette);
-                    sysBitmap.SetPixel(x, y, color);
+                    Color temp = ConvertFromSKColor(skBitmap.GetPixel(x, y));
+                    Color color = PaletteProgrammaticHelper.getProgrammaticColor(temp, palette);
+                    skBitmap.SetPixel(x, y, ConvertToSKColor(color));
                 }
             }
-            return ConvertFromSysBitmap(sysBitmap);
+            return ConvertFromSkBitmap(skBitmap);
         }
 
         public static Bitmap tint(Bitmap bitmap, string palette)
         {
-            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
-            for (int y = 0; y < sysBitmap.Height; y++)
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
             {
-                for (int x = 0; x < sysBitmap.Width; x++)
+                for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    Color color = TintHelper.getTintColor(sysBitmap.GetPixel(x, y), palette);
-                    sysBitmap.SetPixel(x, y, color);
+                    Color temp = ConvertFromSKColor(skBitmap.GetPixel(x, y));
+                    Color color = TintHelper.getTintColor(temp, palette);
+                    skBitmap.SetPixel(x, y, ConvertToSKColor(color));
                 }
             }
-            return ConvertFromSysBitmap(sysBitmap);
+            return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap cropBitmap(Bitmap original, int xStart, int yStart, int resizeWidth, int resizeHeight)
+        public static Bitmap cropBitmap(Bitmap bitmap, int xStart, int yStart, int resizeWidth, int resizeHeight)
         {
-            SysBitmap sysBitmap = ConvertToSysBitmap(original);
-            Rectangle cropArea = new Rectangle(xStart, yStart, resizeWidth, resizeHeight);
-            SysBitmap newImage = sysBitmap.Clone(cropArea, sysBitmap.PixelFormat);
-            return ConvertFromSysBitmap(newImage);
+            // @TODO fix this
+            //SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            //Rectangle cropArea = new Rectangle(xStart, yStart, resizeWidth, resizeHeight);
+            //SKBitmap newImage = skBitmap.Clone(cropArea, skBitmap.PixelFormat);
+            //return ConvertFromSkBitmap(newImage);
+            return bitmap;
         }
 
         public static Bitmap pixelate(Bitmap bitmap)
         {
-            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             int x = 1, y = 1;
-            while (x < sysBitmap.Width && y < sysBitmap.Height)
+            while (x < skBitmap.Width && y < skBitmap.Height)
             {
-                Color color = sysBitmap.GetPixel(x, y);
+                SKColor color = skBitmap.GetPixel(x, y);
                 for (int i = -1; i <= 1; i++)
                 {
                     for (int j = -1; j <= 1; j++)
                     {
                         try
                         {
-                            sysBitmap.SetPixel(x + i, y + j, color);
+                            skBitmap.SetPixel(x + i, y + j, color);
                         }
                         catch (ArgumentOutOfRangeException)
                         {
@@ -101,11 +108,11 @@ namespace pixel8r.Helpers
                         }
                     }
                 }
-                if (x + 3 < sysBitmap.Width)
+                if (x + 3 < skBitmap.Width)
                 {
                     x += 3;
                 }
-                else if (y + 3 < sysBitmap.Height)
+                else if (y + 3 < skBitmap.Height)
                 {
                     y += 3;
                     x = 1;
@@ -113,17 +120,17 @@ namespace pixel8r.Helpers
                 else break;
             }
 
-            return ConvertFromSysBitmap(sysBitmap);
+            return ConvertFromSkBitmap(skBitmap);
         }
 
         public static Bitmap scanlines(Bitmap bitmap)
         {
-            SysBitmap sysBitmap = ConvertToSysBitmap(bitmap);
-            for (int y = 0; y < sysBitmap.Height; y++)
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
             {
-                for (int x = 0; x < sysBitmap.Width; x++)
+                for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    Color color = sysBitmap.GetPixel(x, y);
+                    Color color = ConvertFromSKColor(skBitmap.GetPixel(x, y));
                     if (y % 2 == 0)
                     {
                         color = TintHelper.getTintColor(color, "White (Brighten)");
@@ -132,14 +139,15 @@ namespace pixel8r.Helpers
                     {
                         color = TintHelper.getTintColor(color, "Black (Darken)");
                     }
-                    sysBitmap.SetPixel(x, y, color);
+                    skBitmap.SetPixel(x, y, ConvertToSKColor(color));
                 }
             }
-            return ConvertFromSysBitmap(sysBitmap);
+            return ConvertFromSkBitmap(skBitmap);
         }
 
         public static Bitmap DrawPalette(string palette)
         {
+            // @TODO fix this
             Color[] targetPalette = [];
             if (palette == "NES")
             {
@@ -149,48 +157,61 @@ namespace pixel8r.Helpers
             {
                 targetPalette = Constants.webColors;
             }
-            SysBitmap bitmap = new SysBitmap(240, 192);
+            SKBitmap bitmap = new SKBitmap(240, 192);
             int x = 0;
             int y = 0;
             // attempts to fill the preview area as much as possible based on the size of the palette
             // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
             int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
             int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
-            foreach (Color color in targetPalette)
-            {
-                // step down to next row if it would overflow the current row
-                if (x + tileSize > 240)
-                {
-                    x = 0;
-                    y += tileSize;
-                }
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
-                }
-                x += tileSize;
-            }
-            return ConvertFromSysBitmap(bitmap);
+            //foreach (Color color in targetPalette)
+            //{
+            //    // step down to next row if it would overflow the current row
+            //    if (x + tileSize > 240)
+            //    {
+            //        x = 0;
+            //        y += tileSize;
+            //    }
+            //    using (Graphics g = Graphics.FromImage(bitmap))
+            //    {
+            //        g.FillRectangle(new SolidBrush(color), x, y, tileSize, tileSize);
+            //    }
+            //    x += tileSize;
+            //}
+            return ConvertFromSkBitmap(bitmap);
         }
-        
-        private static Bitmap ConvertFromSysBitmap(SysBitmap sysBitmap)
+
+        private static Bitmap ConvertFromSkBitmap(SKBitmap skBitmap)
         {
             using (var memory = new System.IO.MemoryStream())
             {
-                sysBitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                using (var data = skBitmap.Encode(SKEncodedImageFormat.Png, 100))
+                {
+                    data.SaveTo(memory);
+                }
                 memory.Position = 0;
                 return new Bitmap(memory);
             }
         }
 
-        private static SysBitmap ConvertToSysBitmap(Bitmap bitmap)
+        private static SKBitmap ConvertToSKBitmap(Bitmap bitmap)
         {
             using (var memory = new System.IO.MemoryStream())
             {
                 bitmap.Save(memory);
                 memory.Position = 0;
-                return new SysBitmap(memory);
+                return SKBitmap.Decode(memory);
             }
+        }
+
+        private static Color ConvertFromSKColor(SKColor color)
+        {
+            return Color.FromArgb(color.Red, color.Green, color.Blue);
+        }
+
+        private static SKColor ConvertToSKColor(Color color)
+        {
+            return new SKColor(color.R, color.G, color.B);
         }
     }
 }
