@@ -1,10 +1,15 @@
-﻿using System.Drawing.Imaging;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace pixel8r
+namespace pixel8r.Helpers
 {
-    public static class GlobalVars
+    public static class Constants
     {
-        public static Color[] mesenColors = [
+        public static readonly Color[] mesenColors = [
             Color.FromArgb(102, 102, 102),
             Color.FromArgb(0, 42, 136),
             Color.FromArgb(20, 18, 167),
@@ -204,20 +209,9 @@ namespace pixel8r
             Color.WhiteSmoke,
             Color.Yellow,
             Color.YellowGreen
-];
+        ];
 
+        // not a constant, to fix later
         public static Dictionary<Color, Color> colorMatches = new Dictionary<Color, Color>();
-        public static string FilePath { get; set; }
-        public static int ImageWidth { get; set; }
-        public static int ImageHeight { get; set; }
-
-        public static Image PreviousImage { get; set; }
-
-        public const int pictureBoxOffsetX = 255;
-        public const int pictureBoxOffsetY = 33;
-        public const int pictureBoxWidth = 1118;
-        public const int pictureBoxHeight = 720;
-        public const int pictureBoxCenterX = pictureBoxOffsetX + pictureBoxWidth / 2;
-        public const int pictureBoxCenterY = pictureBoxOffsetY + pictureBoxHeight / 2;
     }
 }

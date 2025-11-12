@@ -1,9 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using Wacton.Unicolour;
 
-namespace pixel8r
+namespace pixel8r.Helpers
 {
-    public class ColorConversionFunctions
+    public class ColorConversionHelper
     {
         public static Unicolour getUnicolourFromSystemColor(Color color)
         {
@@ -13,7 +14,7 @@ namespace pixel8r
         public static Unicolour[] getUnicoloursFromSystemColors(Color[] colors)
         {
             List<Unicolour> unicolours = new List<Unicolour>();
-            foreach(Color color in colors)
+            foreach (Color color in colors)
             {
                 unicolours.Add(getUnicolourFromSystemColor(color));
             }

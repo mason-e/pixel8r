@@ -1,6 +1,8 @@
-﻿namespace pixel8r
+﻿using System.Drawing;
+
+namespace pixel8r.Helpers
 {
-    public class PaletteProgrammaticFunctions
+    public class PaletteProgrammaticHelper
     {
         public static Color getProgrammaticColor(Color color, string palette)
         {
@@ -89,7 +91,7 @@
             {
                 saturation += 0.05f;
             }
-            return ColorConversionFunctions.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
+            return ColorConversionHelper.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
         }
 
         private static Color findNearestRGBMultiple(Color color, int multiple)
