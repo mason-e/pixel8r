@@ -19,6 +19,17 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         InitializeComponent();
     }
 
+    public void MainView_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (DiscretePalette.SelectedItem is ComboBoxItem selectedItem)
+            {
+                PalettePreviewImage.Source = BitmapHelper.DrawPalette(selectedItem.Content.ToString());
+            }
+        }
+    }
+
     private async void Open_Click(object? sender, RoutedEventArgs e)
     {
         var window = this.VisualRoot as Window;
@@ -55,7 +66,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (vm.PreviousImage != null)
             {
-                MainImage.Source = vm.PreviousImage;
+                SetImageProperties(vm.PreviousImage);
                 vm.AllowUndo = false;
             }
         }
@@ -68,7 +79,6 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
 
     private void DiscretePalette_Selected(object? sender, SelectionChangedEventArgs e)
     {
-        
         if (DataContext is MainViewModel vm)
         {
             if (DiscretePalette.SelectedItem is ComboBoxItem selectedItem)
@@ -225,7 +235,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (CropPreview.IsChecked ?? false)
             {
-                Bitmap originalPreviousImage = vm.PreviousImage;
+                Bitmap previous = MainImage.Source as Bitmap;
                 try
                 {
                     Bitmap cropped = BitmapHelper.cropBitmap(
@@ -240,11 +250,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
                     vm.AllowEdit = true;
                     vm.ResizeShow = false;
                     vm.PendingEdit = "";
-                    if (originalPreviousImage != null)
-                    {
-                        vm.PreviousImage = originalPreviousImage;
-                        vm.AllowUndo = true;
-                    }
+                    vm.PreviousImage = previous;
+                    vm.AllowUndo = true;
                 }
                 catch (OutOfMemoryException ex)
                 {
