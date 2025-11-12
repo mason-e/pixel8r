@@ -48,6 +48,7 @@
 				<Label Margin="5,0,0,0">Select Algorithm:</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
 					<ComboBox Name="SwapAlgorithm" Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
+						<ComboBoxItem>RGB Euclidean</ComboBoxItem>
 						<ComboBoxItem>RGB Redmean</ComboBoxItem>
 						<ComboBoxItem>Lab CIE76</ComboBoxItem>
 						<ComboBoxItem>Lab Hybrid</ComboBoxItem>
