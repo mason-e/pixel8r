@@ -1,6 +1,8 @@
-﻿namespace pixel8r
+﻿using System.Drawing;
+
+namespace pixel8r.Helpers
 {
-    public class TintFunctions
+    public class TintHelper
     {
         // for now make the value universal to each function for easy experimentation, but not user-selectable
         private const int tintDelta = 10;
@@ -86,7 +88,7 @@
                 weightG = 0.05;
                 weightB = 0.05;
             }
-            if (tint == "Greenscale") 
+            if (tint == "Greenscale")
             {
                 weightR = 0.1;
                 weightG = 0.8;

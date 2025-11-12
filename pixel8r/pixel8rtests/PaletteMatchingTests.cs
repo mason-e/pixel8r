@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using pixel8r;
+using pixel8r.Helpers;
 
 namespace pixel8rtests
 {
@@ -32,8 +33,8 @@ namespace pixel8rtests
 
             // only asserting that a match is done, not what the color "should" be
             // if we knew what they should be, there wouldn't be so many color matching algorithms!
-            color = PaletteMatchingFunctions.getMatchedColor(color, "NES", algorithm);
-            CollectionAssert.Contains(GlobalVars.mesenColors, color);
+            color = PaletteMatchingHelper.getMatchedColor(color, "NES", algorithm);
+            CollectionAssert.Contains(Constants.mesenColors, color);
         }
 
         [TestMethod()]
@@ -62,8 +63,8 @@ namespace pixel8rtests
 
             // only asserting that a match is done, not what the color "should" be
             // if we knew what they should be, there wouldn't be so many color matching algorithms!
-            color = PaletteMatchingFunctions.getMatchedColor(color, "Web Colors", algorithm);
-            CollectionAssert.Contains(GlobalVars.webColors, color);
+            color = PaletteMatchingHelper.getMatchedColor(color, "Web Colors", algorithm);
+            CollectionAssert.Contains(Constants.webColors, color);
         }
     }
 }

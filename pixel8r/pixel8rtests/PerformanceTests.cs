@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using pixel8r;
+using pixel8r.Helpers;
 
 namespace pixel8rtests
 {
@@ -31,7 +32,7 @@ namespace pixel8rtests
                 int r = random.Next(255);
                 int g = random.Next(255);
                 int b = random.Next(255);
-                PaletteMatchingFunctions.getMatchedColor(Color.FromArgb(r, g, b), "NES", algorithm);
+                PaletteMatchingHelper.getMatchedColor(Color.FromArgb(r, g, b), "NES", algorithm);
             }
         }
     }

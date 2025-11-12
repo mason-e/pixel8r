@@ -1,4 +1,5 @@
 ﻿using pixel8r;
+using pixel8r.Helpers;
 
 namespace pixel8rtests
 {
@@ -12,21 +13,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(16, 9);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(16, 9);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(281, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(16, 9);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(16, 9);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(112, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(16, 9);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(16, 9);
             Assert.AreEqual(355, cropX);
             Assert.AreEqual(200, cropY);
         }
@@ -38,21 +39,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(4, 3);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(4, 3);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(375, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(4, 3);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(4, 3);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(150, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(4, 3);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(4, 3);
             Assert.AreEqual(266, cropX);
             Assert.AreEqual(200, cropY  );
         }
@@ -64,21 +65,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(1, 1);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(1, 1);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(500, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(1, 1);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(1, 1);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(200, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(1, 1);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(1, 1);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(200, cropY);
         }
@@ -90,21 +91,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(16, 15);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(16, 15);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(468, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(16, 15);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(16, 15);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(187, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(16, 15);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(16, 15);
             Assert.AreEqual(213, cropX);
             Assert.AreEqual(200, cropY);
         }
@@ -116,21 +117,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(8, 7);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(8, 7);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(437, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(8, 7);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(8, 7);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(175, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(8, 7);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(8, 7);
             Assert.AreEqual(228, cropX);
             Assert.AreEqual(200, cropY);
         }
@@ -142,21 +143,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(10, 7);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(10, 7);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(350, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(10, 7);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(10, 7);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(140, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(10, 7);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(10, 7);
             Assert.AreEqual(285, cropX);
             Assert.AreEqual(200, cropY);
         }
@@ -168,21 +169,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(10, 9);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(10, 9);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(450, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(10, 9);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(10, 9);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(180, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(10, 9);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(10, 9);
             Assert.AreEqual(222, cropX);
             Assert.AreEqual(200, cropY);
         }
@@ -194,21 +195,21 @@ namespace pixel8rtests
             // square image
             GlobalVars.ImageWidth = 500;
             GlobalVars.ImageHeight = 500;
-            (int cropX, int cropY) = ResizeFunctions.getCropDimensions(3, 2);
+            (int cropX, int cropY) = ResizeHelper.getCropDimensions(3, 2);
             Assert.AreEqual(500, cropX);
             Assert.AreEqual(333, cropY);
 
             // tall image
             GlobalVars.ImageWidth = 200;
             GlobalVars.ImageHeight = 600;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(3, 2);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(3, 2);
             Assert.AreEqual(200, cropX);
             Assert.AreEqual(133, cropY);
 
             // wide image
             GlobalVars.ImageWidth = 1000;
             GlobalVars.ImageHeight = 200;
-            (cropX, cropY) = ResizeFunctions.getCropDimensions(3, 2);
+            (cropX, cropY) = ResizeHelper.getCropDimensions(3, 2);
             Assert.AreEqual(300, cropX);
             Assert.AreEqual(200, cropY);
         }

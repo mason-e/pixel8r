@@ -1,8 +1,10 @@
-﻿using Wacton.Unicolour;
+﻿using System;
+using System.Drawing;
+using Wacton.Unicolour;
 
-namespace pixel8r
+namespace pixel8r.Helpers
 {
-    public class PaletteMatchingFunctions
+    public class PaletteMatchingHelper
     {
         public static Color getMatchedColor(Color color, string palette, string algorithm)
         {
@@ -64,20 +66,20 @@ namespace pixel8r
 
         private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc)
         {
-            if (GlobalVars.colorMatches.Keys.Contains(color))
+            if (Constants.colorMatches.Keys.Contains(color))
             {
-                return GlobalVars.colorMatches[color];
+                return Constants.colorMatches[color];
             }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
             Color[] targetPalette = [];
             if (palette == "NES")
             {
-                targetPalette = GlobalVars.mesenColors;
+                targetPalette = Constants.mesenColors;
             }
             if (palette == "Web Colors")
             {
-                targetPalette = GlobalVars.webColors;
+                targetPalette = Constants.webColors;
             }
             for (int i = 0; i < targetPalette.Length; i++)
             {
@@ -88,29 +90,29 @@ namespace pixel8r
                     colorIndex = i;
                 }
             }
-            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
+            Constants.colorMatches.Add(color, targetPalette[colorIndex]);
             return targetPalette[colorIndex];
         }
 
         private static Color getNearestByUnicolourDelta(Color color, string palette, DeltaE deltaEnum)
         {
-            if (GlobalVars.colorMatches.Keys.Contains(color))
+            if (Constants.colorMatches.Keys.Contains(color))
             {
-                return GlobalVars.colorMatches[color];
+                return Constants.colorMatches[color];
             }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
-            Unicolour unicolour = ColorConversionFunctions.getUnicolourFromSystemColor(color);
+            Unicolour unicolour = ColorConversionHelper.getUnicolourFromSystemColor(color);
             Color[] targetPalette = [];
             if (palette == "NES")
             {
-                targetPalette = GlobalVars.mesenColors;
+                targetPalette = Constants.mesenColors;
             }
             if (palette == "Web Colors")
             {
-                targetPalette = GlobalVars.webColors;
+                targetPalette = Constants.webColors;
             }
-            Unicolour[] comparisonPalette = ColorConversionFunctions.getUnicoloursFromSystemColors(targetPalette);
+            Unicolour[] comparisonPalette = ColorConversionHelper.getUnicoloursFromSystemColors(targetPalette);
             for (int i = 0; i < targetPalette.Length; i++)
             {
                 double deltaE = unicolour.Difference(comparisonPalette[i], deltaEnum);
@@ -120,7 +122,7 @@ namespace pixel8r
                     colorIndex = i;
                 }
             }
-            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
+            Constants.colorMatches.Add(color, targetPalette[colorIndex]);
             return targetPalette[colorIndex];
         }
 

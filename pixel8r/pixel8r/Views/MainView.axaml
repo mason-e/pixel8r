@@ -1,0 +1,165 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:pixel8r.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1420" d:DesignHeight="830"
+             x:Class="pixel8r.Views.MainView"
+             x:DataType="vm:MainViewModel"
+			 KeyDown="KeyDownHandler"
+			 Loaded="MainView_Loaded">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+	<SplitView IsPaneOpen="True"
+			   DisplayMode="Inline"
+			   OpenPaneLength="250">
+		
+		<SplitView.Pane>
+			<StackPanel>
+				<!--Menu Strip-->
+				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="24, 24, 24, 24">
+					<Button Click="Open_Click" Width="24" Height="24" Grid.Column="0">
+						<Image Width="16" Height="16" Source="/Assets/open.png" />
+					</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Click="Save_Click" Width="24" Height="24" Grid.Column="1">
+						<Image Width="16" Height="16" Source="/Assets/save.png" />
+					</Button>
+					<Button IsEnabled="{Binding AllowUndo}" Click="Undo_Click" Width="24" Height="24" Grid.Column="2">
+						<Image Width="16" Height="16" Source="/Assets/undo.png" />
+					</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Click="Reload_Click" Width="24" Height="24" Grid.Column="3">
+						<Image Width="16" Height="16" Source="/Assets/reload.png" />
+					</Button>
+				</Grid>
+				<!--Discrete Palette-->
+				<Label Margin="5,5,0,0">Select Discrete Palette</Label>
+				<ComboBox Name="DiscretePalette" SelectionChanged="DiscretePalette_Selected" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+					<ComboBoxItem>NES</ComboBoxItem>
+					<ComboBoxItem>Web Colors</ComboBoxItem>
+				</ComboBox>
+				<Label Margin="5,0,0,0">Palette Preview</Label>
+				<Border BorderBrush="Blue" Margin="5" BorderThickness="2">
+					<Image Name="PalettePreviewImage" Width="240" Height="192" />
+				</Border>
+				<Label Margin="5,0,0,0">Select Algorithm:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Name="SwapAlgorithm" Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
+						<ComboBoxItem>RGB Euclidean</ComboBoxItem>
+						<ComboBoxItem>RGB Redmean</ComboBoxItem>
+						<ComboBoxItem>Lab CIE76</ComboBoxItem>
+						<ComboBoxItem>Lab Hybrid</ComboBoxItem>
+						<ComboBoxItem>Lab CIE94</ComboBoxItem>
+						<ComboBoxItem>LCh CIEDE2000</ComboBoxItem>
+						<ComboBoxItem>CMC Acceptability</ComboBoxItem>
+						<ComboBoxItem>CMC Perceptibility</ComboBoxItem>
+						<ComboBoxItem>ITP</ComboBoxItem>
+						<ComboBoxItem>Z</ComboBoxItem>
+						<ComboBoxItem>OK</ComboBoxItem>
+						<ComboBoxItem>CAM02</ComboBoxItem>
+						<ComboBoxItem>CAM16</ComboBoxItem>
+					</ComboBox>
+					<Button IsEnabled="{Binding AllowEdit}" Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+				<!--Programmatic Palette-->
+				<Label Margin="5,10,0,0">Programmatic Palette Swap:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Name="ProgrammaticPalette" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>Saturate</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 3</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 5</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 15</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 17</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 51</ComboBoxItem>
+						<ComboBoxItem>RGB Multiples of 85</ComboBoxItem>
+						<ComboBoxItem>Transpose - RBG</ComboBoxItem>
+						<ComboBoxItem>Transpose - GRB</ComboBoxItem>
+						<ComboBoxItem>Transpose - GBR</ComboBoxItem>
+						<ComboBoxItem>Transpose - BRG</ComboBoxItem>
+						<ComboBoxItem>Transpose - BGR</ComboBoxItem>
+					</ComboBox>
+					<Button IsEnabled="{Binding AllowEdit}" Click="SwapProgrammatic_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+
+				<!--Tint-->
+				<Label Margin="5,10,0,0">Tint:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Name="Tint" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>White (Brighten)</ComboBoxItem>
+						<ComboBoxItem>Black (Darken)</ComboBoxItem>
+						<ComboBoxItem>Grayscale</ComboBoxItem>
+						<ComboBoxItem>Red (Soft)</ComboBoxItem>
+						<ComboBoxItem>Red (Hard)</ComboBoxItem>
+						<ComboBoxItem>Redscale</ComboBoxItem>
+						<ComboBoxItem>Green (Soft)</ComboBoxItem>
+						<ComboBoxItem>Green (Hard)</ComboBoxItem>
+						<ComboBoxItem>Greenscale</ComboBoxItem>
+						<ComboBoxItem>Blue (Soft)</ComboBoxItem>
+						<ComboBoxItem>Blue (Hard)</ComboBoxItem>
+						<ComboBoxItem>Bluescale</ComboBoxItem>
+						<ComboBoxItem>Cyan (Soft)</ComboBoxItem>
+						<ComboBoxItem>Cyan (Hard)</ComboBoxItem>
+						<ComboBoxItem>Cyanscale</ComboBoxItem>
+						<ComboBoxItem>Yellow (Soft)</ComboBoxItem>
+						<ComboBoxItem>Yellow (Hard)</ComboBoxItem>
+						<ComboBoxItem>Yellowscale</ComboBoxItem>
+						<ComboBoxItem>Magenta (Soft)</ComboBoxItem>
+						<ComboBoxItem>Magenta (Hard)</ComboBoxItem>
+						<ComboBoxItem>Magentascale</ComboBoxItem>
+					</ComboBox>
+					<Button IsEnabled="{Binding AllowEdit}" Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
+					<ComboBox Name="Crop" SelectionChanged="Crop_Selected" Margin="5,0,0,0" Width="135" SelectedIndex="0">
+						<ComboBoxItem>1:1 (Square)</ComboBoxItem>
+						<ComboBoxItem>16:9</ComboBoxItem>
+						<ComboBoxItem>4:3</ComboBoxItem>
+						<ComboBoxItem>16:15 (NES)</ComboBoxItem>
+						<ComboBoxItem>8:7 (SNES)</ComboBoxItem>
+						<ComboBoxItem>10:7 (Genesis)</ComboBoxItem>
+						<ComboBoxItem>10:9 (GB, GG)</ComboBoxItem>
+						<ComboBoxItem>3:2 (GBA)</ComboBoxItem>
+					</ComboBox>
+					<CheckBox IsEnabled="False" Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
+				</Grid>
+				<Label Margin="5,10,0,0">
+					<Label.Content>
+						<MultiBinding StringFormat="Resize to {0}%">
+							<Binding Path="#resize.Value"/>
+						</MultiBinding>
+					</Label.Content>
+				</Label>
+				<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
+					<Slider IsEnabled="{Binding AllowEdit}" Name="ResizeSlider" PointerCaptureLost="ResizeSlider_Release" ValueChanged="ResizeSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
+					<Label Name="ResizeTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
+					<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
+				</Grid>
+				<Label Margin="5,10,0,0">Other Operations</Label>
+				<SplitButton IsEnabled="{Binding AllowEdit}" Margin="5,0,0,0" Content="Select...">
+					<SplitButton.Flyout>
+						<MenuFlyout Placement="TopEdgeAlignedLeft">
+							<MenuItem Click="Pixelate_Click" Header="Pixelate" />
+							<MenuItem Click="Scanlines_Click" Header="Scanlines" />
+						</MenuFlyout>
+					</SplitButton.Flyout>
+				</SplitButton>
+			</StackPanel>
+		</SplitView.Pane>
+		<StackPanel>
+			<Grid ShowGridLines="False" Margin="5" ColumnDefinitions="66*, 33*">
+				<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding FilePath}"/>
+				<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ImageDimensions}"/>
+			</Grid>
+			<Canvas Name="ImageCanvas" Width="{Binding ImageMaxWidth}" Height="{Binding ImageMaxHeight}">
+				<Border Width="{Binding ImageMaxWidth}" Height="{Binding ImageMaxHeight}" BorderBrush="Blue" Margin="5" BorderThickness="2"/>
+				<Image Canvas.Left="{Binding ImageLeft}" Canvas.Top="{Binding ImageTop}" PointerMoved="MainImage_Mouseover" PointerExited="MainImage_Mouseleave" Name="MainImage" PointerPressed="MainImage_Click" MaxWidth="{Binding ImageMaxWidth}" MaxHeight="{Binding ImageMaxHeight}" />
+				<Border Name="ResizePreview" IsVisible="{Binding ResizeShow}" Canvas.Left="{Binding ResizeLeft}" Canvas.Top="{Binding ResizeTop}" Height="{Binding ResizeHeight}" Width="{Binding ResizeWidth}" BorderBrush="Orange" BorderThickness="2"></Border>
+			</Canvas>
+			<TextBlock HorizontalAlignment="Center" Text="{Binding PendingEdit}"/>
+		</StackPanel>
+	</SplitView>
+</UserControl>
