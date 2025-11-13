@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using SkiaSharp;
 
 namespace pixel8r.Helpers
 {
@@ -7,7 +7,7 @@ namespace pixel8r.Helpers
         // for now make the value universal to each function for easy experimentation, but not user-selectable
         private const int tintDelta = 10;
 
-        public static Color getTintColor(Color color, string tint)
+        public static SKColor getTintColor(SKColor color, string tint)
         {
             if (tint.Contains("scale"))
             {
@@ -73,9 +73,9 @@ namespace pixel8r.Helpers
             return color;
         }
 
-        private static Color colorScale(Color color, string tint)
+        private static SKColor colorScale(SKColor color, string tint)
         {
-            int average = (int)((color.R + color.G + color.B) / 3);
+            int average = (int)((color.Red + color.Green + color.Blue) / 3);
             // default values correspond to grayscale
             double weightR = 1.0;
             double weightG = 1.0;
@@ -119,87 +119,87 @@ namespace pixel8r.Helpers
                 weightB = 0.05;
             }
 
-            return Color.FromArgb((int)(average * weightR), (int)(average * weightG), (int)(average * weightB));
+            return new SKColor((byte)(average * weightR), (byte)(average * weightG), (byte)(average * weightB));
         }
 
-        private static Color tintWhite(Color color)
+        private static SKColor tintWhite(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), addTint(color.G, tintDelta), addTint(color.B, tintDelta));
+            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintBlack(Color color)
+        private static SKColor tintBlack(SKColor color)
         {
-            return Color.FromArgb(subtractTint(color.R, tintDelta), subtractTint(color.G, tintDelta), subtractTint(color.B, tintDelta));
+            return new SKColor(subtractTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
         }
 
-        private static Color tintRedSoft(Color color)
+        private static SKColor tintRedSoft(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), color.G, color.B);
+            return new SKColor(addTint(color.Red, tintDelta), color.Green, color.Blue);
         }
 
-        private static Color tintRedHard(Color color)
+        private static SKColor tintRedHard(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), subtractTint(color.G, tintDelta), subtractTint(color.B, tintDelta));
+            return new SKColor(addTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
         }
 
-        private static Color tintGreenSoft(Color color)
+        private static SKColor tintGreenSoft(SKColor color)
         {
-            return Color.FromArgb(color.R, addTint(color.G, tintDelta), color.B);
+            return new SKColor(color.Red, addTint(color.Green, tintDelta), color.Blue);
         }
 
-        private static Color tintGreenHard(Color color)
+        private static SKColor tintGreenHard(SKColor color)
         {
-            return Color.FromArgb(subtractTint(color.R, tintDelta), addTint(color.G, 10), subtractTint(color.B, tintDelta));
+            return new SKColor(subtractTint(color.Red, tintDelta), addTint(color.Green, 10), subtractTint(color.Blue, tintDelta));
         }
 
-        private static Color tintBlueSoft(Color color)
+        private static SKColor tintBlueSoft(SKColor color)
         {
-            return Color.FromArgb(color.R, color.G, addTint(color.B, tintDelta));
+            return new SKColor(color.Red, color.Green, addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintBlueHard(Color color)
+        private static SKColor tintBlueHard(SKColor color)
         {
-            return Color.FromArgb(subtractTint(color.R, tintDelta), subtractTint(color.G, tintDelta), addTint(color.B, tintDelta));
+            return new SKColor(subtractTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintCyanSoft(Color color)
+        private static SKColor tintCyanSoft(SKColor color)
         {
-            return Color.FromArgb(color.R, addTint(color.G, tintDelta), addTint(color.B, tintDelta));
+            return new SKColor(color.Red, addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintCyanHard(Color color)
+        private static SKColor tintCyanHard(SKColor color)
         {
-            return Color.FromArgb(subtractTint(color.R, tintDelta), addTint(color.G, tintDelta), addTint(color.B, tintDelta));
+            return new SKColor(subtractTint(color.Red, tintDelta), addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintMagentaSoft(Color color)
+        private static SKColor tintMagentaSoft(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), color.G, addTint(color.B, tintDelta));
+            return new SKColor(addTint(color.Red, tintDelta), color.Green, addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintMagentaHard(Color color)
+        private static SKColor tintMagentaHard(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), subtractTint(color.G, tintDelta), addTint(color.B, tintDelta));
+            return new SKColor(addTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
         }
 
-        private static Color tintYellowSoft(Color color)
+        private static SKColor tintYellowSoft(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), addTint(color.G, tintDelta), color.B);
+            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), color.Blue);
         }
 
-        private static Color tintYellowHard(Color color)
+        private static SKColor tintYellowHard(SKColor color)
         {
-            return Color.FromArgb(addTint(color.R, tintDelta), addTint(color.G, tintDelta), subtractTint(color.B, tintDelta));
+            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
         }
 
-        private static int addTint(int original, int value)
+        private static byte addTint(byte original, int value)
         {
-            return original <= 255 - value ? original + value : 255;
+            return (byte)(original <= 255 - value ? original + value : 255);
         }
 
-        private static int subtractTint(int original, int value)
+        private static byte subtractTint(byte original, int value)
         {
-            return original >= value ? original - value : 0;
+            return (byte)(original >= value ? original - value : 0);
         }
     }
 }

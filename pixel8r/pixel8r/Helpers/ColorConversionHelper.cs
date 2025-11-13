@@ -1,32 +1,33 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using SkiaSharp;
 using Wacton.Unicolour;
 
 namespace pixel8r.Helpers
 {
     public class ColorConversionHelper
     {
-        public static Unicolour getUnicolourFromSystemColor(Color color)
+        public static Unicolour getUnicolourFromSKColor(SKColor color)
         {
-            return new Unicolour(ColourSpace.Rgb255, color.R, color.G, color.B);
+            return new Unicolour(ColourSpace.Rgb255, color.Red, color.Green, color.Blue);
         }
 
-        public static Unicolour[] getUnicoloursFromSystemColors(Color[] colors)
+        public static Unicolour[] getUnicoloursFromSKColors(SKColor[] colors)
         {
             List<Unicolour> unicolours = new List<Unicolour>();
-            foreach (Color color in colors)
+            foreach (SKColor color in colors)
             {
-                unicolours.Add(getUnicolourFromSystemColor(color));
+                unicolours.Add(getUnicolourFromSKColor(color));
             }
 
             return unicolours.ToArray();
         }
 
-        public static Color getSaturatedColor(float h, float s, float l)
+        public static SKColor getSaturatedColor(float h, float s, float l)
         {
             Unicolour unicolour = new Unicolour(ColourSpace.Hsl, h, s, l);
             Rgb255 rgb = unicolour.Rgb.Byte255;
-            return Color.FromArgb(rgb.R, rgb.G, rgb.B);
+            return new SKColor((byte)rgb.R, (byte)rgb.G, (byte)rgb.B);
         }
     }
 }

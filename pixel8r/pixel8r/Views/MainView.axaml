@@ -39,7 +39,6 @@
 				<Label Margin="5,5,0,0">Select Discrete Palette</Label>
 				<ComboBox Name="DiscretePalette" SelectionChanged="DiscretePalette_Selected" Margin="5,0,0,0" Width="175" SelectedIndex="0">
 					<ComboBoxItem>NES</ComboBoxItem>
-					<ComboBoxItem>Web Colors</ComboBoxItem>
 				</ComboBox>
 				<Label Margin="5,0,0,0">Palette Preview</Label>
 				<Border BorderBrush="Blue" Margin="5" BorderThickness="2">
