@@ -1,5 +1,4 @@
-﻿using pixel8r;
-using pixel8r.Helpers;
+﻿using pixel8r.Helpers;
 
 namespace pixel8rtests
 {

@@ -7,17 +7,17 @@ namespace pixel8r.Helpers
 {
     public class ColorConversionHelper
     {
-        public static Unicolour getUnicolourFromSystemColor(Color color)
+        public static Unicolour getUnicolourFromSKColor(SKColor color)
         {
-            return new Unicolour(ColourSpace.Rgb255, color.R, color.G, color.B);
+            return new Unicolour(ColourSpace.Rgb255, color.Red, color.Green, color.Blue);
         }
 
-        public static Unicolour[] getUnicoloursFromSystemColors(Color[] colors)
+        public static Unicolour[] getUnicoloursFromSKColors(SKColor[] colors)
         {
             List<Unicolour> unicolours = new List<Unicolour>();
-            foreach (Color color in colors)
+            foreach (SKColor color in colors)
             {
-                unicolours.Add(getUnicolourFromSystemColor(color));
+                unicolours.Add(getUnicolourFromSKColor(color));
             }
 
             return unicolours.ToArray();

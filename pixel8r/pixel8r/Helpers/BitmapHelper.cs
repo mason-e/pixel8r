@@ -35,13 +35,12 @@ namespace pixel8r.Helpers
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    Color temp = ConvertFromSKColor(skBitmap.GetPixel(x, y));
-                    Color color = PaletteMatchingHelper.getMatchedColor(temp, palette, algorithm);
-                    skBitmap.SetPixel(x, y, ConvertToSKColor(color));
+                    SKColor color = PaletteMatchingHelper.getMatchedColor(skBitmap.GetPixel(x, y), palette, algorithm);
+                    skBitmap.SetPixel(x, y, color);
                 }
             }
             // reset the color matching dictionary
-            Constants.colorMatches.Clear();
+            GlobalVars.colorMatches.Clear();
             return ConvertFromSkBitmap(skBitmap);
         }
 
@@ -142,14 +141,10 @@ namespace pixel8r.Helpers
 
         public static Bitmap DrawPalette(string palette)
         {
-            Color[] targetPalette = [];
+            SKColor[] targetPalette = [];
             if (palette == "NES")
             {
                 targetPalette = Constants.mesenColors;
-            }
-            if (palette == "Web Colors")
-            {
-                targetPalette = Constants.webColors;
             }
             SKBitmap bitmap = new SKBitmap(240, 192);
             int x = 0;
@@ -158,7 +153,7 @@ namespace pixel8r.Helpers
             // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
             int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
             int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
-            foreach (Color color in targetPalette)
+            foreach (SKColor color in targetPalette)
             {
                 // step down to next row if it would overflow the current row
                 if (x + tileSize > 240)
@@ -166,10 +161,10 @@ namespace pixel8r.Helpers
                     x = 0;
                     y += tileSize;
                 }
-                using (var canvas = new SKCanvas(bitmap))
+                using (SKCanvas canvas = new SKCanvas(bitmap))
                 {
-                    var skColor = new SKColor(color.R, color.G, color.B);
-                    using (var paint = new SKPaint { Color = skColor, Style = SKPaintStyle.Fill })
+                    SKColor skColor = new SKColor(color.Red, color.Green, color.Blue);
+                    using (SKPaint paint = new SKPaint { Color = skColor, Style = SKPaintStyle.Fill })
                     {
                         canvas.DrawRect(new SKRect(x, y, x + tileSize, y + tileSize), paint);
                     }
@@ -200,16 +195,6 @@ namespace pixel8r.Helpers
                 memory.Position = 0;
                 return SKBitmap.Decode(memory);
             }
-        }
-
-        private static Color ConvertFromSKColor(SKColor color)
-        {
-            return Color.FromArgb(color.Red, color.Green, color.Blue);
-        }
-
-        private static SKColor ConvertToSKColor(Color color)
-        {
-            return new SKColor(color.R, color.G, color.B);
         }
     }
 }
