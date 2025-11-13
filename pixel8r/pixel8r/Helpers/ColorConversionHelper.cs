@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using SkiaSharp;
 using Wacton.Unicolour;
 
 namespace pixel8r.Helpers
@@ -22,11 +23,11 @@ namespace pixel8r.Helpers
             return unicolours.ToArray();
         }
 
-        public static Color getSaturatedColor(float h, float s, float l)
+        public static SKColor getSaturatedColor(float h, float s, float l)
         {
             Unicolour unicolour = new Unicolour(ColourSpace.Hsl, h, s, l);
             Rgb255 rgb = unicolour.Rgb.Byte255;
-            return Color.FromArgb(rgb.R, rgb.G, rgb.B);
+            return new SKColor((byte)rgb.R, (byte)rgb.G, (byte)rgb.B);
         }
     }
 }

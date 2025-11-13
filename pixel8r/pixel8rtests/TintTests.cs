@@ -1,7 +1,5 @@
-﻿using pixel8r;
-using pixel8r.Helpers;
+﻿using pixel8r.Helpers;
 using SkiaSharp;
-using System.Drawing;
 
 namespace pixel8rtests
 {
