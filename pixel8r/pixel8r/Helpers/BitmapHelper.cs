@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using Avalonia.Media.Imaging;
 using SkiaSharp;
 using Bitmap = Avalonia.Media.Imaging.Bitmap;
-using SysBitmap = System.Drawing.Bitmap;
 
 namespace pixel8r.Helpers
 {
@@ -54,9 +52,8 @@ namespace pixel8r.Helpers
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    Color temp = ConvertFromSKColor(skBitmap.GetPixel(x, y));
-                    Color color = PaletteProgrammaticHelper.getProgrammaticColor(temp, palette);
-                    skBitmap.SetPixel(x, y, ConvertToSKColor(color));
+                    SKColor color = PaletteProgrammaticHelper.getProgrammaticColor(skBitmap.GetPixel(x, y), palette);
+                    skBitmap.SetPixel(x, y, color);
                 }
             }
             return ConvertFromSkBitmap(skBitmap);
