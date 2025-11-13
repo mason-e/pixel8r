@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using pixel8r;
-using pixel8r.Helpers;
+﻿using pixel8r.Helpers;
+using SkiaSharp;
 
 namespace pixel8rtests
 {
@@ -32,7 +31,7 @@ namespace pixel8rtests
                 int r = random.Next(255);
                 int g = random.Next(255);
                 int b = random.Next(255);
-                PaletteMatchingHelper.getMatchedColor(Color.FromArgb(r, g, b), "NES", algorithm);
+                PaletteMatchingHelper.getMatchedColor(new SKColor((byte)r, (byte)g, (byte)b), "NES", algorithm);
             }
         }
     }
