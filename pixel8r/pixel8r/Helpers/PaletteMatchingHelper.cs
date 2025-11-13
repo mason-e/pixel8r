@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Drawing;
+using SkiaSharp;
 using Wacton.Unicolour;
 
 namespace pixel8r.Helpers
 {
     public class PaletteMatchingHelper
     {
-        public static Color getMatchedColor(Color color, string palette, string algorithm)
+        public static SKColor getMatchedColor(SKColor color, string palette, string algorithm)
         {
             if (algorithm == "RGB Euclidean")
             {
@@ -64,22 +64,18 @@ namespace pixel8r.Helpers
             return color;
         }
 
-        private static Color getNearestBySystemColorDelta(Color color, string palette, Func<Color, Color, double> deltaFunc)
+        private static SKColor getNearestBySystemColorDelta(SKColor color, string palette, Func<SKColor, SKColor, double> deltaFunc)
         {
-            if (Constants.colorMatches.Keys.Contains(color))
+            if (GlobalVars.colorMatches.Keys.Contains(color))
             {
-                return Constants.colorMatches[color];
+                return GlobalVars.colorMatches[color];
             }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
-            Color[] targetPalette = [];
+            SKColor[] targetPalette = [];
             if (palette == "NES")
             {
                 targetPalette = Constants.mesenColors;
-            }
-            if (palette == "Web Colors")
-            {
-                targetPalette = Constants.webColors;
             }
             for (int i = 0; i < targetPalette.Length; i++)
             {
@@ -90,29 +86,25 @@ namespace pixel8r.Helpers
                     colorIndex = i;
                 }
             }
-            Constants.colorMatches.Add(color, targetPalette[colorIndex]);
+            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
             return targetPalette[colorIndex];
         }
 
-        private static Color getNearestByUnicolourDelta(Color color, string palette, DeltaE deltaEnum)
+        private static SKColor getNearestByUnicolourDelta(SKColor color, string palette, DeltaE deltaEnum)
         {
-            if (Constants.colorMatches.Keys.Contains(color))
+            if (GlobalVars.colorMatches.Keys.Contains(color))
             {
-                return Constants.colorMatches[color];
+                return GlobalVars.colorMatches[color];
             }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
-            Unicolour unicolour = ColorConversionHelper.getUnicolourFromSystemColor(color);
-            Color[] targetPalette = [];
+            Unicolour unicolour = ColorConversionHelper.getUnicolourFromSKColor(color);
+            SKColor[] targetPalette = [];
             if (palette == "NES")
             {
                 targetPalette = Constants.mesenColors;
             }
-            if (palette == "Web Colors")
-            {
-                targetPalette = Constants.webColors;
-            }
-            Unicolour[] comparisonPalette = ColorConversionHelper.getUnicoloursFromSystemColors(targetPalette);
+            Unicolour[] comparisonPalette = ColorConversionHelper.getUnicoloursFromSKColors(targetPalette);
             for (int i = 0; i < targetPalette.Length; i++)
             {
                 double deltaE = unicolour.Difference(comparisonPalette[i], deltaEnum);
@@ -122,21 +114,21 @@ namespace pixel8r.Helpers
                     colorIndex = i;
                 }
             }
-            Constants.colorMatches.Add(color, targetPalette[colorIndex]);
+            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
             return targetPalette[colorIndex];
         }
 
-        private static double getRGBEuclideanDiff(Color color1, Color color2)
+        private static double getRGBEuclideanDiff(SKColor color1, SKColor color2)
         {
-            return Math.Sqrt(Math.Pow(color1.R - color2.R, 2) + Math.Pow(color1.G - color2.G, 2) + Math.Pow(color1.B - color2.B, 2));
+            return Math.Sqrt(Math.Pow(color1.Red - color2.Red, 2) + Math.Pow(color1.Green - color2.Green, 2) + Math.Pow(color1.Blue - color2.Blue, 2));
         }
 
-        private static double getRGBRedmeanDiff(Color color1, Color color2)
+        private static double getRGBRedmeanDiff(SKColor color1, SKColor color2)
         {
-            double r = 0.5 * (color1.R + color2.R);
-            double weightedDeltaR = (2 + r / 256) * Math.Pow(color1.R - color2.R, 2);
-            double weightedDeltaG = 4 * Math.Pow(color1.G - color2.G, 2);
-            double weightedDeltaB = (2 + (255 - r) / 256) * Math.Pow(color1.B - color2.B, 2);
+            double r = 0.5 * (color1.Red + color2.Red);
+            double weightedDeltaR = (2 + r / 256) * Math.Pow(color1.Red - color2.Red, 2);
+            double weightedDeltaG = 4 * Math.Pow(color1.Green - color2.Green, 2);
+            double weightedDeltaB = (2 + (255 - r) / 256) * Math.Pow(color1.Blue - color2.Blue, 2);
             return Math.Sqrt(weightedDeltaR + weightedDeltaG + weightedDeltaB);
         }
     }

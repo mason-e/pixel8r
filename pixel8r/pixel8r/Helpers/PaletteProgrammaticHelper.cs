@@ -1,10 +1,10 @@
-﻿using System.Drawing;
+﻿using SkiaSharp;
 
 namespace pixel8r.Helpers
 {
     public class PaletteProgrammaticHelper
     {
-        public static Color getProgrammaticColor(Color color, string palette)
+        public static SKColor getProgrammaticColor(SKColor color, string palette)
         {
             if (palette == "Saturate")
             {
@@ -59,95 +59,99 @@ namespace pixel8r.Helpers
             return color;
         }
 
-        private static Color transposeRBG(Color color)
+        private static SKColor transposeRBG(SKColor color)
         {
-            return Color.FromArgb(color.R, color.B, color.G);
+            return new SKColor(color.Red, color.Blue, color.Green);
         }
 
-        private static Color transposeGRB(Color color)
+        private static SKColor transposeGRB(SKColor color)
         {
-            return Color.FromArgb(color.G, color.R, color.B);
+            return new SKColor(color.Green, color.Red, color.Blue);
         }
 
-        private static Color transposeGBR(Color color)
+        private static SKColor transposeGBR(SKColor color)
         {
-            return Color.FromArgb(color.G, color.B, color.R);
+            return new SKColor(color.Green, color.Blue, color.Red);
         }
 
-        private static Color transposeBRG(Color color)
+        private static SKColor transposeBRG(SKColor color)
         {
-            return Color.FromArgb(color.B, color.R, color.G);
+            return new SKColor(color.Blue, color.Red, color.Green);
         }
 
-        private static Color transposeBGR(Color color)
+        private static SKColor transposeBGR(SKColor color)
         {
-            return Color.FromArgb(color.B, color.G, color.R);
+            return new SKColor(color.Blue, color.Green, color.Red);
         }
 
-        private static Color saturate(Color color)
+        private static SKColor saturate(SKColor color)
         {
-            float saturation = color.GetSaturation();
+            float hue, saturation, lightness;
+            color.ToHsl(out hue, out saturation, out lightness);
+            // SKColor must be converted to a 0-1 scale for S and L - System.Color would've already been on this scale
+            saturation /= 100f;
+            lightness /= 100f; 
             if (saturation <= 0.95f)
             {
                 saturation += 0.05f;
             }
-            return ColorConversionHelper.getSaturatedColor(color.GetHue(), saturation, color.GetBrightness());
+            return ColorConversionHelper.getSaturatedColor(hue, saturation, lightness);
         }
 
-        private static Color findNearestRGBMultiple(Color color, int multiple)
+        private static SKColor findNearestRGBMultiple(SKColor color, int multiple)
         {
             double midPoint = (double)multiple / 2;
-            int rModulo = color.R % multiple;
-            int gModulo = color.G % multiple;
-            int bModulo = color.B % multiple;
+            int rModulo = color.Red % multiple;
+            int gModulo = color.Green % multiple;
+            int bModulo = color.Blue % multiple;
             int newR, newG, newB;
 
             if (rModulo != 0)
             {
                 if (rModulo < midPoint)
                 {
-                    newR = color.R - rModulo;
+                    newR = color.Red - rModulo;
                 }
                 else
                 {
-                    newR = color.R + (multiple - rModulo);
+                    newR = color.Red + (multiple - rModulo);
                 }
             }
             else
             {
-                newR = color.R;
+                newR = color.Red;
             }
             if (gModulo != 0)
             {
                 if (gModulo < midPoint)
                 {
-                    newG = color.G - gModulo;
+                    newG = color.Green - gModulo;
                 }
                 else
                 {
-                    newG = color.G + (multiple - gModulo);
+                    newG = color.Green + (multiple - gModulo);
                 }
             }
             else
             {
-                newG = color.G;
+                newG = color.Green;
             }
             if (bModulo != 0)
             {
                 if (bModulo < midPoint)
                 {
-                    newB = color.B - bModulo;
+                    newB = color.Blue - bModulo;
                 }
                 else
                 {
-                    newB = color.B + (multiple - bModulo);
+                    newB = color.Blue + (multiple - bModulo);
                 }
             }
             else
             {
-                newB = color.B;
+                newB = color.Blue;
             }
-            return Color.FromArgb(newR, newG, newB);
+            return new SKColor((byte)newR, (byte)newG, (byte)newB);
         }
     }
 }
