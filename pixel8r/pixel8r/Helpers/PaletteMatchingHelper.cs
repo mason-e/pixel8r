@@ -72,11 +72,7 @@ namespace pixel8r.Helpers
             }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
-            SKColor[] targetPalette = [];
-            if (palette == "NES")
-            {
-                targetPalette = Constants.mesenColors;
-            }
+            SKColor[] targetPalette = Constants.Palettes.TryGetValue(palette, out var p) ? p : [];
             for (int i = 0; i < targetPalette.Length; i++)
             {
                 double deltaE = deltaFunc(color, targetPalette[i]);
@@ -99,11 +95,7 @@ namespace pixel8r.Helpers
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
             Unicolour unicolour = ColorConversionHelper.getUnicolourFromSKColor(color);
-            SKColor[] targetPalette = [];
-            if (palette == "NES")
-            {
-                targetPalette = Constants.mesenColors;
-            }
+            SKColor[] targetPalette = Constants.Palettes.TryGetValue(palette, out var p) ? p : [];
             Unicolour[] comparisonPalette = ColorConversionHelper.getUnicoloursFromSKColors(targetPalette);
             for (int i = 0; i < targetPalette.Length; i++)
             {
