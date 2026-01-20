@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using System.Collections.Generic;
+using SkiaSharp;
 
 namespace pixel8r.Helpers
 {
@@ -61,5 +62,18 @@ namespace pixel8r.Helpers
             new SKColor(181, 235, 242),
             new SKColor(184, 184, 184),
         ];
+
+        public static readonly SKColor[] gbColors = [
+            SKColor.Parse("294139"),
+            SKColor.Parse("39594a"),
+            SKColor.Parse("5a7942"),
+            SKColor.Parse("7b8210")
+        ];
+
+        public static readonly Dictionary<string, SKColor[]> Palettes = new()
+        {
+            { "NES", mesenColors },
+            { "GB", gbColors }
+        };
     }
 }
