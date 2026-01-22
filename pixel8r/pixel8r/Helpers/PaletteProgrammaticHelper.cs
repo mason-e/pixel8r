@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using System;
+using SkiaSharp;
 
 namespace pixel8r.Helpers
 {
@@ -10,29 +11,29 @@ namespace pixel8r.Helpers
             {
                 return saturate(color);
             }
-            if (palette == "RGB Multiples of 3")
+            if (palette == "3 Bit RGB")
             {
-                return findNearestRGBMultiple(color, 3);
+                return reduceColor(color, 1);
             }
-            if (palette == "RGB Multiples of 5")
+            if (palette == "6 Bit RGB")
             {
-                return findNearestRGBMultiple(color, 5);
+                return reduceColor(color, 2);
             }
-            if (palette == "RGB Multiples of 15")
+            if (palette == "9 Bit RGB")
             {
-                return findNearestRGBMultiple(color, 15);
+                return reduceColor(color, 3);
             }
-            if (palette == "RGB Multiples of 17")
+            if (palette == "12 Bit RGB")
             {
-                return findNearestRGBMultiple(color, 17);
+                return reduceColor(color, 4);
             }
-            if (palette == "RGB Multiples of 51")
+            if (palette == "15 Bit RGB")
             {
-                return findNearestRGBMultiple(color, 51);
+                return reduceColor(color, 5);
             }
-            if (palette == "RGB Multiples of 85")
+            if (palette == "18 Bit RGB")
             {
-                return findNearestRGBMultiple(color, 85);
+                return reduceColor(color, 6);
             }
             if (palette == "Transpose - RBG")
             {
@@ -98,60 +99,18 @@ namespace pixel8r.Helpers
             return ColorConversionHelper.getSaturatedColor(hue, saturation, lightness);
         }
 
-        private static SKColor findNearestRGBMultiple(SKColor color, int multiple)
+        private static SKColor reduceColor(SKColor color, int bits)
         {
-            double midPoint = (double)multiple / 2;
-            int rModulo = color.Red % multiple;
-            int gModulo = color.Green % multiple;
-            int bModulo = color.Blue % multiple;
-            int newR, newG, newB;
-
-            if (rModulo != 0)
-            {
-                if (rModulo < midPoint)
-                {
-                    newR = color.Red - rModulo;
-                }
-                else
-                {
-                    newR = color.Red + (multiple - rModulo);
-                }
-            }
-            else
-            {
-                newR = color.Red;
-            }
-            if (gModulo != 0)
-            {
-                if (gModulo < midPoint)
-                {
-                    newG = color.Green - gModulo;
-                }
-                else
-                {
-                    newG = color.Green + (multiple - gModulo);
-                }
-            }
-            else
-            {
-                newG = color.Green;
-            }
-            if (bModulo != 0)
-            {
-                if (bModulo < midPoint)
-                {
-                    newB = color.Blue - bModulo;
-                }
-                else
-                {
-                    newB = color.Blue + (multiple - bModulo);
-                }
-            }
-            else
-            {
-                newB = color.Blue;
-            }
-            return new SKColor((byte)newR, (byte)newG, (byte)newB);
+            // first reduce down to a rounded multiple of the scale
+            int scale = (int)Math.Pow(2, bits) - 1; // subtract 1 because 0 counts as a value
+            int r = (int)Math.Round((double)(color.Red * scale) / 255);
+            int g = (int)Math.Round((double)(color.Green * scale) / 255);
+            int b = (int)Math.Round((double)(color.Blue * scale) / 255);
+            // scale back up to 0-255
+            r *= (255 / scale);
+            g *= (255 / scale);
+            b *= (255 / scale);
+            return new SKColor((byte)r, (byte)g, (byte)b);
         }
     }
 }
