@@ -141,11 +141,7 @@ namespace pixel8r.Helpers
 
         public static Bitmap DrawPalette(string palette)
         {
-            SKColor[] targetPalette = [];
-            if (palette == "NES")
-            {
-                targetPalette = Constants.mesenColors;
-            }
+            SKColor[] targetPalette = Constants.Palettes.TryGetValue(palette, out var p) ? p : [];
             SKBitmap bitmap = new SKBitmap(240, 192);
             int x = 0;
             int y = 0;

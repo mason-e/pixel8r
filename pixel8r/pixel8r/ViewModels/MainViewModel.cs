@@ -1,13 +1,17 @@
-﻿using System.Reactive.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Media.Imaging;
+using pixel8r.Helpers;
 using ReactiveUI;
 
 namespace pixel8r.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
+    public ObservableCollection<string> PaletteNames => new(Constants.Palettes.Keys);
+
     private string _filePath = "No file loaded. Select a file with the open button to enable more editing controls.";
     public string FilePath
     {
