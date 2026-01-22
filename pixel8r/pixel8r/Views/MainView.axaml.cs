@@ -178,13 +178,13 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     {
         if (DataContext is MainViewModel vm)
         {
-            if (Saturate.SelectedItem is ComboBoxItem selection)
+            if (SaturateSlider.Value is double percent)
             {
                 vm.PreviousImage = MainImage.Source as Bitmap;
                 vm.AllowUndo = true;
                 MainImage.Source = BitmapHelper.saturate(
                     MainImage.Source as Bitmap,
-                    selection.Content.ToString()
+                    (int)percent
                 );
             }
         }
@@ -445,6 +445,7 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             vm.ImageLeft = (vm.ImageMaxWidth - vm.ImageWidth) / 2;
             vm.ImageTop = (vm.ImageMaxHeight - vm.ImageHeight) / 2;
             SetResizeOptions();
+            SaturateSlider.Value = 0;
             MainImage.Source = image;
         }
     }

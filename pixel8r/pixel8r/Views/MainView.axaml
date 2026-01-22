@@ -88,11 +88,15 @@
 					<Button IsEnabled="{Binding AllowEdit}" Click="ReduceFidelity_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<!--Saturate-->
-				<Label Margin="5,10,0,0">Saturate:</Label>
+				<Label Margin="5,10,0,0">
+					<Label.Content>
+						<MultiBinding StringFormat="Saturate by {0}%">
+							<Binding Path="#saturate.Value"/>
+						</MultiBinding>
+					</Label.Content>
+				</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Name="Saturate" Margin="5,0,0,0" Width="175" SelectedIndex="0">
-						<ComboBoxItem>Saturate</ComboBoxItem>
-					</ComboBox>
+					<Slider IsEnabled="{Binding AllowEdit}" Name="SaturateSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-100" Maximum="100" Value="0" x:Name="saturate" />
 					<Button IsEnabled="{Binding AllowEdit}" Click="Saturate_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<!--Tint-->
