@@ -72,14 +72,14 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap saturate(Bitmap bitmap, string selection)
+        public static Bitmap saturate(Bitmap bitmap, int percent)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = SaturationHelper.getSaturatedColor(skBitmap.GetPixel(x, y), selection);
+                    SKColor color = SaturationHelper.getSaturatedColor(skBitmap.GetPixel(x, y), percent);
                     skBitmap.SetPixel(x, y, color);
                 }
             }
