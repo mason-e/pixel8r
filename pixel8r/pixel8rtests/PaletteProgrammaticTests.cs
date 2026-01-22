@@ -21,45 +21,45 @@ namespace pixel8rtests
         }
 
         [TestMethod()]
-        public void testRGBMultipleOf3CorrectRounding()
+        public void test3BitRGB()
         {
-            SKColor factored = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(121, 122, 1), "RGB Multiples of 3");
-            Assert.AreEqual(new SKColor(120, 123, 0), factored);
+            SKColor reduced = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(127, 129, 45), "3 Bit RGB");
+            Assert.AreEqual(new SKColor(0, 255, 0), reduced);
         }
 
         [TestMethod()]
-        public void testRGBMultipleOf5CorrectRounding()
+        public void test6BitRGB()
         {
-            SKColor factored = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(102, 103, 2), "RGB Multiples of 5");
-            Assert.AreEqual(new SKColor(100, 105, 0), factored);
+            SKColor reduced = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(212, 213, 42), "6 Bit RGB");
+            Assert.AreEqual(new SKColor(170, 255, 0), reduced);
         }
 
         [TestMethod()]
-        public void testRGBMultipleOf15CorrectRounding()
+        public void test9BitRGB()
         {
-            SKColor factored = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(157, 158, 7), "RGB Multiples of 15");
-            Assert.AreEqual(new SKColor(150, 165, 0), factored);
+            SKColor reduced = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(17, 19, 100), "9 Bit RGB");
+            Assert.AreEqual(new SKColor(0, 36, 108), reduced);
         }
 
         [TestMethod()]
-        public void testRGBMultipleOf17CorrectRounding()
+        public void test12BitRGB()
         {
-            SKColor factored = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(178, 179, 8), "RGB Multiples of 17");
-            Assert.AreEqual(new SKColor(170, 187, 0), factored);
+            SKColor reduced = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(8, 9, 200), "12 Bit RGB");
+            Assert.AreEqual(new SKColor(0, 17, 204), reduced);
         }
 
         [TestMethod()]
-        public void testRGBMultipleOf51CorrectRounding()
+        public void test15BitRGB()
         {
-            SKColor factored = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(127, 128, 25), "RGB Multiples of 51");
-            Assert.AreEqual(new SKColor(102, 153, 0), factored);
+            SKColor reduced = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(3, 5, 64), "15 Bit RGB");
+            Assert.AreEqual(new SKColor(0, 8, 64), reduced);
         }
 
         [TestMethod()]
-        public void testRGBMultipleOf85CorrectRounding()
+        public void test18BitRGB()
         {
-            SKColor factored = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(212, 213, 42), "RGB Multiples of 85");
-            Assert.AreEqual(new SKColor(170, 255, 0), factored);
+            SKColor reduced = PaletteProgrammaticHelper.getProgrammaticColor(new SKColor(1, 3, 204), "18 Bit RGB");
+            Assert.AreEqual(new SKColor(0, 4, 200), reduced);
         }
 
         [TestMethod()]

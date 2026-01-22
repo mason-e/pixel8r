@@ -67,12 +67,12 @@
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
 					<ComboBox Name="ProgrammaticPalette" Margin="5,0,0,0" Width="175" SelectedIndex="0">
 						<ComboBoxItem>Saturate</ComboBoxItem>
-						<ComboBoxItem>RGB Multiples of 3</ComboBoxItem>
-						<ComboBoxItem>RGB Multiples of 5</ComboBoxItem>
-						<ComboBoxItem>RGB Multiples of 15</ComboBoxItem>
-						<ComboBoxItem>RGB Multiples of 17</ComboBoxItem>
-						<ComboBoxItem>RGB Multiples of 51</ComboBoxItem>
-						<ComboBoxItem>RGB Multiples of 85</ComboBoxItem>
+						<ComboBoxItem>3 Bit RGB</ComboBoxItem>
+						<ComboBoxItem>6 Bit RGB</ComboBoxItem>
+						<ComboBoxItem>9 Bit RGB</ComboBoxItem>
+						<ComboBoxItem>12 Bit RGB</ComboBoxItem>
+						<ComboBoxItem>15 Bit RGB</ComboBoxItem>
+						<ComboBoxItem>18 Bit RGB</ComboBoxItem>
 						<ComboBoxItem>Transpose - RBG</ComboBoxItem>
 						<ComboBoxItem>Transpose - GRB</ComboBoxItem>
 						<ComboBoxItem>Transpose - GBR</ComboBoxItem>
