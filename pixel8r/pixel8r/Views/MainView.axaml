@@ -62,26 +62,39 @@
 					</ComboBox>
 					<Button IsEnabled="{Binding AllowEdit}" Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
-				<!--Programmatic Palette-->
-				<Label Margin="5,10,0,0">Programmatic Palette Swap:</Label>
+				<!--Transposee-->
+				<Label Margin="5,10,0,0">Transpose:</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Name="ProgrammaticPalette" Margin="5,0,0,0" Width="175" SelectedIndex="0">
-						<ComboBoxItem>Saturate</ComboBoxItem>
+					<ComboBox Name="Transpose" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>RBG</ComboBoxItem>
+						<ComboBoxItem>GRB</ComboBoxItem>
+						<ComboBoxItem>GBR</ComboBoxItem>
+						<ComboBoxItem>BRG</ComboBoxItem>
+						<ComboBoxItem>BGR</ComboBoxItem>
+					</ComboBox>
+					<Button IsEnabled="{Binding AllowEdit}" Click="Transpose_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
+				<!--Reduce Fidelity-->
+				<Label Margin="5,10,0,0">Reduce Fidelity:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Name="ReduceBits" Margin="5,0,0,0" Width="175" SelectedIndex="0">
 						<ComboBoxItem>3 Bit RGB</ComboBoxItem>
 						<ComboBoxItem>6 Bit RGB</ComboBoxItem>
 						<ComboBoxItem>9 Bit RGB</ComboBoxItem>
 						<ComboBoxItem>12 Bit RGB</ComboBoxItem>
 						<ComboBoxItem>15 Bit RGB</ComboBoxItem>
 						<ComboBoxItem>18 Bit RGB</ComboBoxItem>
-						<ComboBoxItem>Transpose - RBG</ComboBoxItem>
-						<ComboBoxItem>Transpose - GRB</ComboBoxItem>
-						<ComboBoxItem>Transpose - GBR</ComboBoxItem>
-						<ComboBoxItem>Transpose - BRG</ComboBoxItem>
-						<ComboBoxItem>Transpose - BGR</ComboBoxItem>
 					</ComboBox>
-					<Button IsEnabled="{Binding AllowEdit}" Click="SwapProgrammatic_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+					<Button IsEnabled="{Binding AllowEdit}" Click="ReduceFidelity_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
-
+				<!--Saturate-->
+				<Label Margin="5,10,0,0">Saturate:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+					<ComboBox Name="Saturate" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+						<ComboBoxItem>Saturate</ComboBoxItem>
+					</ComboBox>
+					<Button IsEnabled="{Binding AllowEdit}" Click="Saturate_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+				</Grid>
 				<!--Tint-->
 				<Label Margin="5,10,0,0">Tint:</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
@@ -110,6 +123,7 @@
 					</ComboBox>
 					<Button IsEnabled="{Binding AllowEdit}" Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
+				<!--Crop-->
 				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
 					<ComboBox Name="Crop" SelectionChanged="Crop_Selected" Margin="5,0,0,0" Width="135" SelectedIndex="0">
@@ -124,6 +138,7 @@
 					</ComboBox>
 					<CheckBox IsEnabled="False" Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
 				</Grid>
+				<!--Resize-->
 				<Label Margin="5,10,0,0">
 					<Label.Content>
 						<MultiBinding StringFormat="Resize to {0}%">
@@ -136,6 +151,7 @@
 					<Label Name="ResizeTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
 					<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
 				</Grid>
+				<!--Effects/Filters-->
 				<Label Margin="5,10,0,0">Other Operations</Label>
 				<SplitButton IsEnabled="{Binding AllowEdit}" Margin="5,0,0,0" Content="Select...">
 					<SplitButton.Flyout>

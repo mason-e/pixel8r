@@ -44,28 +44,56 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap paletteSwapProgrammatic(Bitmap bitmap, string palette)
+        public static Bitmap transpose(Bitmap bitmap, string selection)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = PaletteProgrammaticHelper.getProgrammaticColor(skBitmap.GetPixel(x, y), palette);
+                    SKColor color = TransposeHelper.getTransposedColor(skBitmap.GetPixel(x, y), selection);
                     skBitmap.SetPixel(x, y, color);
                 }
             }
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap tint(Bitmap bitmap, string palette)
+        public static Bitmap reduceFidelity(Bitmap bitmap, string selection)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = TintHelper.getTintColor(skBitmap.GetPixel(x, y), palette);
+                    SKColor color = ReduceFidelityHelper.getReducedColor(skBitmap.GetPixel(x, y), selection);
+                    skBitmap.SetPixel(x, y, color);
+                }
+            }
+            return ConvertFromSkBitmap(skBitmap);
+        }
+
+        public static Bitmap saturate(Bitmap bitmap, string selection)
+        {
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
+            {
+                for (int x = 0; x < skBitmap.Width; x++)
+                {
+                    SKColor color = SaturationHelper.getSaturatedColor(skBitmap.GetPixel(x, y), selection);
+                    skBitmap.SetPixel(x, y, color);
+                }
+            }
+            return ConvertFromSkBitmap(skBitmap);
+        }
+
+        public static Bitmap tint(Bitmap bitmap, string selection)
+        {
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
+            {
+                for (int x = 0; x < skBitmap.Width; x++)
+                {
+                    SKColor color = TintHelper.getTintColor(skBitmap.GetPixel(x, y), selection);
                     skBitmap.SetPixel(x, y, color);
                 }
             }

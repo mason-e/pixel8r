@@ -142,17 +142,49 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
-    private void SwapProgrammatic_Click(object? sender, RoutedEventArgs e)
+    private void Transpose_Click(object? sender, RoutedEventArgs e)
     {
         if (DataContext is MainViewModel vm)
         {
-            if (ProgrammaticPalette.SelectedItem is ComboBoxItem palette)
+            if (Transpose.SelectedItem is ComboBoxItem selection)
             {
                 vm.PreviousImage = MainImage.Source as Bitmap;
                 vm.AllowUndo = true;
-                MainImage.Source = BitmapHelper.paletteSwapProgrammatic(
+                MainImage.Source = BitmapHelper.transpose(
                     MainImage.Source as Bitmap,
-                    palette.Content.ToString()
+                    selection.Content.ToString()
+                );
+            }
+        }
+    }
+
+    private void ReduceFidelity_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (ReduceBits.SelectedItem is ComboBoxItem selection)
+            {
+                vm.PreviousImage = MainImage.Source as Bitmap;
+                vm.AllowUndo = true;
+                MainImage.Source = BitmapHelper.reduceFidelity(
+                    MainImage.Source as Bitmap,
+                    selection.Content.ToString()
+                );
+            }
+        }
+    }
+
+    private void Saturate_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (Saturate.SelectedItem is ComboBoxItem selection)
+            {
+                vm.PreviousImage = MainImage.Source as Bitmap;
+                vm.AllowUndo = true;
+                MainImage.Source = BitmapHelper.saturate(
+                    MainImage.Source as Bitmap,
+                    selection.Content.ToString()
                 );
             }
         }
@@ -162,13 +194,13 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     {
         if (DataContext is MainViewModel vm)
         {
-            if (Tint.SelectedItem is ComboBoxItem tint)
+            if (Tint.SelectedItem is ComboBoxItem selection)
             {
                 vm.PreviousImage = MainImage.Source as Bitmap;
                 vm.AllowUndo = true;
                 MainImage.Source = BitmapHelper.tint(
                     MainImage.Source as Bitmap,
-                    tint.Content.ToString()
+                    selection.Content.ToString()
                 );
             }
         }
