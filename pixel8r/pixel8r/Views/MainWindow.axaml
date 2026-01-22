@@ -9,6 +9,6 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="pixel8r"
         Width="1600"
-        Height="800">
+        Height="950">
         <views:MainView />
 </Window>
