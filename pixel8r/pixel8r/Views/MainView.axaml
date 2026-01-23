@@ -100,21 +100,25 @@
 					<Button IsEnabled="{Binding AllowEdit}" Click="Saturate_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<!--Tint-->
-				<Grid ShowGridLines="False" Margin="5,0,0,0" ColumnDefinitions="185, 45">
-					<Label Margin="5,10,0,0" Grid.Column="0">
-						<Label.Content>
-							<MultiBinding StringFormat="Tint by {0}">
-								<Binding Path="#tint.Value"/>
-							</MultiBinding>
-						</Label.Content>
-					</Label>
-					<Label Margin="5, 10, 0, 0" Grid.Column="1">
-						<!-- TODO: Show "Soft" or "Hard" based on ToggleSwitch state -->
-					</Label>
-				</Grid>
+				<Label Margin="5,10,0,0" Grid.Column="0">
+					<Label.Content>
+						<MultiBinding StringFormat="Tint by {0}">
+							<Binding Path="#tint.Value"/>
+						</MultiBinding>
+					</Label.Content>
+				</Label>
 				<Grid ShowGridLines="False" Margin="5,0,0,0" ColumnDefinitions="185, 45">
 					<Slider IsEnabled="{Binding AllowEdit}" Name="TintSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-255" Maximum="255" Value="0" x:Name="tint" />
-					<ToggleSwitch Name="TintSoftHard" IsEnabled="{Binding AllowEdit}" Grid.Column="1"></ToggleSwitch>
+					<ToggleSwitch Name="TintSoftHard" IsEnabled="{Binding AllowEdit}" Grid.Column="1">
+						<ToggleSwitch.Styles>
+							<Style Selector="ToggleSwitch">
+								<Setter Property="Content" Value="Soft" />
+							</Style>
+							<Style Selector="ToggleSwitch:checked">
+								<Setter Property="Content" Value="Hard" />
+							</Style>
+						</ToggleSwitch.Styles>
+					</ToggleSwitch>
 				</Grid>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
 					<ComboBox Name="Tint" Margin="5,0,0,0" Width="175" SelectedIndex="0">

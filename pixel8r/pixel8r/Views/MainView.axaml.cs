@@ -463,6 +463,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
             vm.ImageTop = (vm.ImageMaxHeight - vm.ImageHeight) / 2;
             SetResizeOptions();
             SaturateSlider.Value = 0;
+            TintSlider.Value = 0;
+            TintSoftHard.IsChecked = false;
             MainImage.Source = image;
         }
     }
