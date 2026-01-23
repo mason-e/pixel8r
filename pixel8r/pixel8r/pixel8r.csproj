@@ -24,4 +24,10 @@
     <PackageReference Include="System.Drawing.Common" />
     <PackageReference Include="Wacton.Unicolour" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Palettes\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

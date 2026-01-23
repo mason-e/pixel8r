@@ -28,14 +28,14 @@ namespace pixel8r.Helpers
             return original.CreateScaledBitmap(new Avalonia.PixelSize(width, height));
         }
 
-        public static Bitmap paletteSwapPredefined(Bitmap bitmap, string palette, string algorithm)
+        public static Bitmap paletteSwapPredefined(Bitmap bitmap, string algorithm)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = PaletteMatchingHelper.getMatchedColor(skBitmap.GetPixel(x, y), palette, algorithm);
+                    SKColor color = PaletteMatchingHelper.getMatchedColor(skBitmap.GetPixel(x, y), algorithm);
                     skBitmap.SetPixel(x, y, color);
                 }
             }
@@ -181,17 +181,16 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap DrawPalette(string palette)
+        public static Bitmap DrawPalette()
         {
-            SKColor[] targetPalette = Constants.Palettes.TryGetValue(palette, out var p) ? p : [];
             SKBitmap bitmap = new SKBitmap(240, 192);
             int x = 0;
             int y = 0;
             // attempts to fill the preview area as much as possible based on the size of the palette
             // the total available pixels are 240*192 = 46,080, adjust side length to 8, 16, 24, 48 (common factors of 240 and 192)
-            int rawTileSize = (int)Math.Sqrt(46080 / targetPalette.Length);
+            int rawTileSize = (int)Math.Sqrt(46080 / GlobalVars.CurrentPalette.Count);
             int tileSize = rawTileSize > 48 ? 48 : (rawTileSize > 24 ? 24 : (rawTileSize > 16 ? 16 : (rawTileSize > 8 ? 8 : rawTileSize)));
-            foreach (SKColor color in targetPalette)
+            foreach (SKColor color in GlobalVars.CurrentPalette)
             {
                 // step down to next row if it would overflow the current row
                 if (x + tileSize > 240)
