@@ -4,70 +4,27 @@ namespace pixel8r.Helpers
 {
     public class TintHelper
     {
-        // for now make the value universal to each function for easy experimentation, but not user-selectable
-        private const int tintDelta = 10;
-
-        public static SKColor getTintColor(SKColor color, string tint)
+        public static SKColor getTintColor(SKColor color, string tint, int value)
         {
             if (tint.Contains("scale"))
             {
                 return colorScale(color, tint);
             }
-            if (tint == "White (Brighten)")
+            if (tint == "Black < -- > White")
             {
-                return tintWhite(color);
+                return tintBlackWhite(color, value);
             }
-            if (tint == "Black (Darken)")
+            if (tint == "Cyan < -- > Red")
             {
-                return tintBlack(color);
+                return tintCyanRed(color, value);
             }
-            if (tint == "Red (Soft)")
+            if (tint == "Magenta < -- > Green")
             {
-                return tintRedSoft(color);
+                return tintMagentaGreen(color, value);
             }
-            if (tint == "Red (Hard)")
+            if (tint == "Yellow < -- > Blue")
             {
-                return tintRedHard(color);
-            }
-            if (tint == "Green (Soft)")
-            {
-                return tintGreenSoft(color);
-            }
-            if (tint == "Green (Hard)")
-            {
-                return tintGreenHard(color);
-            }
-            if (tint == "Blue (Soft)")
-            {
-                return tintBlueSoft(color);
-            }
-            if (tint == "Blue (Hard)")
-            {
-                return tintBlueHard(color);
-            }
-            if (tint == "Cyan (Soft)")
-            {
-                return tintCyanSoft(color);
-            }
-            if (tint == "Cyan (Hard)")
-            {
-                return tintCyanHard(color);
-            }
-            if (tint == "Magenta (Soft)")
-            {
-                return tintMagentaSoft(color);
-            }
-            if (tint == "Magenta (Hard)")
-            {
-                return tintMagentaHard(color);
-            }
-            if (tint == "Yellow (Soft)")
-            {
-                return tintYellowSoft(color);
-            }
-            if (tint == "Yellow (Hard)")
-            {
-                return tintYellowHard(color);
+                return tintYellowBlue(color, value);
             }
             // default case, should not be reachable
             return color;
@@ -122,84 +79,30 @@ namespace pixel8r.Helpers
             return new SKColor((byte)(average * weightR), (byte)(average * weightG), (byte)(average * weightB));
         }
 
-        private static SKColor tintWhite(SKColor color)
+        private static SKColor tintBlackWhite(SKColor color, int value)
         {
-            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
+            return new SKColor(addTint(color.Red, value), addTint(color.Green, value), addTint(color.Blue, value));
         }
 
-        private static SKColor tintBlack(SKColor color)
+        private static SKColor tintCyanRed(SKColor color, int value)
         {
-            return new SKColor(subtractTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
+            return new SKColor(addTint(color.Red, value), color.Green, color.Blue);
         }
 
-        private static SKColor tintRedSoft(SKColor color)
+        private static SKColor tintMagentaGreen(SKColor color, int value)
         {
-            return new SKColor(addTint(color.Red, tintDelta), color.Green, color.Blue);
+            return new SKColor(color.Red, addTint(color.Green, value), color.Blue);
         }
 
-        private static SKColor tintRedHard(SKColor color)
+        private static SKColor tintYellowBlue(SKColor color, int value)
         {
-            return new SKColor(addTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintGreenSoft(SKColor color)
-        {
-            return new SKColor(color.Red, addTint(color.Green, tintDelta), color.Blue);
-        }
-
-        private static SKColor tintGreenHard(SKColor color)
-        {
-            return new SKColor(subtractTint(color.Red, tintDelta), addTint(color.Green, 10), subtractTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintBlueSoft(SKColor color)
-        {
-            return new SKColor(color.Red, color.Green, addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintBlueHard(SKColor color)
-        {
-            return new SKColor(subtractTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintCyanSoft(SKColor color)
-        {
-            return new SKColor(color.Red, addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintCyanHard(SKColor color)
-        {
-            return new SKColor(subtractTint(color.Red, tintDelta), addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintMagentaSoft(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), color.Green, addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintMagentaHard(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintYellowSoft(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), color.Blue);
-        }
-
-        private static SKColor tintYellowHard(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
+            return new SKColor(color.Red, color.Green, addTint(color.Blue, value));
         }
 
         private static byte addTint(byte original, int value)
         {
-            return (byte)(original <= 255 - value ? original + value : 255);
-        }
-
-        private static byte subtractTint(byte original, int value)
-        {
-            return (byte)(original >= value ? original - value : 0);
+            int tinted = original + value;
+            return (byte)(tinted < 255 ? (tinted > 0 ? tinted : 0) : 255);
         }
     }
 }

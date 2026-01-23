@@ -196,12 +196,16 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (Tint.SelectedItem is ComboBoxItem selection)
             {
-                vm.PreviousImage = MainImage.Source as Bitmap;
-                vm.AllowUndo = true;
-                MainImage.Source = BitmapHelper.tint(
-                    MainImage.Source as Bitmap,
-                    selection.Content.ToString()
-                );
+                if (TintSlider.Value is double value)
+                {
+                    vm.PreviousImage = MainImage.Source as Bitmap;
+                    vm.AllowUndo = true;
+                    MainImage.Source = BitmapHelper.tint(
+                        MainImage.Source as Bitmap,
+                        selection.Content.ToString(),
+                        (int)value
+                    );
+                }
             }
         }
     }

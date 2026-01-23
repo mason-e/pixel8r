@@ -86,14 +86,14 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap tint(Bitmap bitmap, string selection)
+        public static Bitmap tint(Bitmap bitmap, string selection, int value)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = TintHelper.getTintColor(skBitmap.GetPixel(x, y), selection);
+                    SKColor color = TintHelper.getTintColor(skBitmap.GetPixel(x, y), selection, value);
                     skBitmap.SetPixel(x, y, color);
                 }
             }
@@ -155,11 +155,11 @@ namespace pixel8r.Helpers
                     SKColor color = skBitmap.GetPixel(x, y);
                     if (y % 2 == 0)
                     {
-                        color = TintHelper.getTintColor(color, "White (Brighten)");
+                        color = TintHelper.getTintColor(color, "Black < -- > White", 10);
                     }
                     else
                     {
-                        color = TintHelper.getTintColor(color, "Black (Darken)");
+                        color = TintHelper.getTintColor(color, "Black < -- > White", -10);
                     }
                     skBitmap.SetPixel(x, y, color);
                 }
