@@ -196,15 +196,28 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (Tint.SelectedItem is ComboBoxItem selection)
             {
-                if (TintSlider.Value is double value)
+                if (selection.Content.ToString().Contains("scale"))
                 {
                     vm.PreviousImage = MainImage.Source as Bitmap;
                     vm.AllowUndo = true;
-                    MainImage.Source = BitmapHelper.tint(
+                    MainImage.Source = BitmapHelper.tintScale(
                         MainImage.Source as Bitmap,
-                        selection.Content.ToString(),
-                        (int)value
+                        selection.Content.ToString()
                     );
+                }
+                else
+                {
+                    if (TintSlider.Value is double value)
+                    {
+                        vm.PreviousImage = MainImage.Source as Bitmap;
+                        vm.AllowUndo = true;
+                        MainImage.Source = BitmapHelper.tint(
+                            MainImage.Source as Bitmap,
+                            selection.Content.ToString(),
+                            (int)value,
+                            TintSoftHard.IsChecked ?? false
+                        );
+                    }
                 }
             }
         }
