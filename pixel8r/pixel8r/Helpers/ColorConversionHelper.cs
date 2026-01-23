@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using SkiaSharp;
 using Wacton.Unicolour;
 
@@ -12,7 +11,7 @@ namespace pixel8r.Helpers
             return new Unicolour(ColourSpace.Rgb255, color.Red, color.Green, color.Blue);
         }
 
-        public static Unicolour[] getUnicoloursFromSKColors(SKColor[] colors)
+        public static Unicolour[] getUnicoloursFromSKColors(List<SKColor> colors)
         {
             List<Unicolour> unicolours = new List<Unicolour>();
             foreach (SKColor color in colors)

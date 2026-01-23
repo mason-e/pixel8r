@@ -21,8 +21,31 @@ namespace pixel8rtests
         [DataRow("OK")]
         [DataRow("CAM02")]
         [DataRow("CAM16")]
-        public void testColorMatchedToNESPalette(string algorithm)
+        public void testColorMatchedToSamplePalette(string algorithm)
         {
+            // configure an example palette
+            GlobalVars.CurrentPalette = new List<SKColor>{
+                SKColors.Red,
+                SKColors.Green,
+                SKColors.Blue,
+                SKColors.Yellow,
+                SKColors.Cyan,
+                SKColors.Magenta,
+                SKColors.Black,
+                SKColors.White,
+                SKColors.Gray,
+                SKColors.Orange,
+                SKColors.Purple,
+                SKColors.Brown,
+                SKColors.Pink,
+                SKColors.Lime,
+                SKColors.Navy,
+                SKColors.Teal,
+                SKColors.Olive,
+                SKColors.Maroon,
+                SKColors.Silver
+            };
+
             // start with a random color for a bit of variation in the test
             Random random = new Random();
             int r = random.Next(255);
@@ -32,8 +55,8 @@ namespace pixel8rtests
 
             // only asserting that a match is done, not what the color "should" be
             // if we knew what they should be, there wouldn't be so many color matching algorithms!
-            color = PaletteMatchingHelper.getMatchedColor(color, "NES", algorithm);
-            CollectionAssert.Contains(Constants.mesenColors, color);
+            color = PaletteMatchingHelper.getMatchedColor(color, algorithm);
+            CollectionAssert.Contains(GlobalVars.CurrentPalette, color);
         }
     }
 }

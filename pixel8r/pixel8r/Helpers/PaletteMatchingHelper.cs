@@ -6,65 +6,65 @@ namespace pixel8r.Helpers
 {
     public class PaletteMatchingHelper
     {
-        public static SKColor getMatchedColor(SKColor color, string palette, string algorithm)
+        public static SKColor getMatchedColor(SKColor color, string algorithm)
         {
             if (algorithm == "RGB Euclidean")
             {
-                return getNearestBySystemColorDelta(color, palette, getRGBEuclideanDiff);
+                return getNearestBySystemColorDelta(color, getRGBEuclideanDiff);
             }
             if (algorithm == "RGB Redmean")
             {
-                return getNearestBySystemColorDelta(color, palette, getRGBRedmeanDiff);
+                return getNearestBySystemColorDelta(color, getRGBRedmeanDiff);
             }
             if (algorithm == "Lab CIE76")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie76);
+                return getNearestByUnicolourDelta(color, DeltaE.Cie76);
             }
             if (algorithm == "Lab Hybrid")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Hyab);
+                return getNearestByUnicolourDelta(color, DeltaE.Hyab);
             }
             if (algorithm == "Lab CIE94")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cie94);
+                return getNearestByUnicolourDelta(color, DeltaE.Cie94);
             }
             if (algorithm == "LCh CIEDE2000")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Ciede2000);
+                return getNearestByUnicolourDelta(color, DeltaE.Ciede2000);
             }
             if (algorithm == "CMC Acceptability")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcAcceptability);
+                return getNearestByUnicolourDelta(color, DeltaE.CmcAcceptability);
             }
             if (algorithm == "CMC Perceptibility")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.CmcPerceptibility);
+                return getNearestByUnicolourDelta(color, DeltaE.CmcPerceptibility);
             }
             if (algorithm == "ITP")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Itp);
+                return getNearestByUnicolourDelta(color, DeltaE.Itp);
             }
             if (algorithm == "Z")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Z);
+                return getNearestByUnicolourDelta(color, DeltaE.Z);
             }
             if (algorithm == "OK")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Ok);
+                return getNearestByUnicolourDelta(color, DeltaE.Ok);
             }
             if (algorithm == "CAM02")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam02);
+                return getNearestByUnicolourDelta(color, DeltaE.Cam02);
             }
             if (algorithm == "CAM16")
             {
-                return getNearestByUnicolourDelta(color, palette, DeltaE.Cam16);
+                return getNearestByUnicolourDelta(color, DeltaE.Cam16);
             }
             // default case, should not be reachable
             return color;
         }
 
-        private static SKColor getNearestBySystemColorDelta(SKColor color, string palette, Func<SKColor, SKColor, double> deltaFunc)
+        private static SKColor getNearestBySystemColorDelta(SKColor color, Func<SKColor, SKColor, double> deltaFunc)
         {
             if (GlobalVars.colorMatches.Keys.Contains(color))
             {
@@ -72,21 +72,20 @@ namespace pixel8r.Helpers
             }
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
-            SKColor[] targetPalette = Constants.Palettes.TryGetValue(palette, out var p) ? p : [];
-            for (int i = 0; i < targetPalette.Length; i++)
+            for (int i = 0; i < GlobalVars.CurrentPalette.Count; i++)
             {
-                double deltaE = deltaFunc(color, targetPalette[i]);
+                double deltaE = deltaFunc(color, GlobalVars.CurrentPalette[i]);
                 if (deltaE < deltaEMin)
                 {
                     deltaEMin = deltaE;
                     colorIndex = i;
                 }
             }
-            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
-            return targetPalette[colorIndex];
+            GlobalVars.colorMatches.Add(color, GlobalVars.CurrentPalette[colorIndex]);
+            return GlobalVars.CurrentPalette[colorIndex];
         }
 
-        private static SKColor getNearestByUnicolourDelta(SKColor color, string palette, DeltaE deltaEnum)
+        private static SKColor getNearestByUnicolourDelta(SKColor color, DeltaE deltaEnum)
         {
             if (GlobalVars.colorMatches.Keys.Contains(color))
             {
@@ -95,9 +94,8 @@ namespace pixel8r.Helpers
             double deltaEMin = 10000; // set to a very high number that any delta can beat
             int colorIndex = -1;
             Unicolour unicolour = ColorConversionHelper.getUnicolourFromSKColor(color);
-            SKColor[] targetPalette = Constants.Palettes.TryGetValue(palette, out var p) ? p : [];
-            Unicolour[] comparisonPalette = ColorConversionHelper.getUnicoloursFromSKColors(targetPalette);
-            for (int i = 0; i < targetPalette.Length; i++)
+            Unicolour[] comparisonPalette = ColorConversionHelper.getUnicoloursFromSKColors(GlobalVars.CurrentPalette);
+            for (int i = 0; i < GlobalVars.CurrentPalette.Count; i++)
             {
                 double deltaE = unicolour.Difference(comparisonPalette[i], deltaEnum);
                 if (deltaE < deltaEMin)
@@ -106,8 +104,8 @@ namespace pixel8r.Helpers
                     colorIndex = i;
                 }
             }
-            GlobalVars.colorMatches.Add(color, targetPalette[colorIndex]);
-            return targetPalette[colorIndex];
+            GlobalVars.colorMatches.Add(color, GlobalVars.CurrentPalette[colorIndex]);
+            return GlobalVars.CurrentPalette[colorIndex];
         }
 
         private static double getRGBEuclideanDiff(SKColor color1, SKColor color2)
