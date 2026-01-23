@@ -27,7 +27,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (DiscretePalette.SelectedItem is string selectedPalette)
             {
-                PalettePreviewImage.Source = BitmapHelper.DrawPalette(selectedPalette);
+                PaletteLoader.setCurrentPalette(selectedPalette);
+                PalettePreviewImage.Source = BitmapHelper.DrawPalette();
             }
         }
     }
@@ -116,7 +117,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             if (DiscretePalette.SelectedItem is string selectedPalette)
             {
-                PalettePreviewImage.Source = BitmapHelper.DrawPalette(selectedPalette);
+                PaletteLoader.setCurrentPalette(selectedPalette);
+                PalettePreviewImage.Source = BitmapHelper.DrawPalette();
             }
         }
     }
@@ -125,19 +127,14 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
     {
         if (DataContext is MainViewModel vm)
         {
-            if (DiscretePalette.SelectedItem is string palette)
+            if (SwapAlgorithm.SelectedItem is ComboBoxItem algorithm)
             {
-                if (SwapAlgorithm.SelectedItem is ComboBoxItem algorithm)
-                {
-                    vm.PreviousImage = MainImage.Source as Bitmap;
-                    vm.AllowUndo = true;
-                    MainImage.Source = BitmapHelper.paletteSwapPredefined(
-                        MainImage.Source as Bitmap,
-                        palette,
-                        algorithm.Content.ToString()
-                    );
-                }
-
+                vm.PreviousImage = MainImage.Source as Bitmap;
+                vm.AllowUndo = true;
+                MainImage.Source = BitmapHelper.paletteSwapPredefined(
+                    MainImage.Source as Bitmap,
+                    algorithm.Content.ToString()
+                );
             }
         }
     }
