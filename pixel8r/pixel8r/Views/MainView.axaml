@@ -100,29 +100,34 @@
 					<Button IsEnabled="{Binding AllowEdit}" Click="Saturate_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
 				</Grid>
 				<!--Tint-->
-				<Label Margin="5,10,0,0">Tint:</Label>
+				<Grid ShowGridLines="False" Margin="5,0,0,0" ColumnDefinitions="185, 45">
+					<Label Margin="5,10,0,0" Grid.Column="0">
+						<Label.Content>
+							<MultiBinding StringFormat="Tint by {0}">
+								<Binding Path="#tint.Value"/>
+							</MultiBinding>
+						</Label.Content>
+					</Label>
+					<Label Margin="5, 10, 0, 0" Grid.Column="1">
+						<!-- TODO: Show "Soft" or "Hard" based on ToggleSwitch state -->
+					</Label>
+				</Grid>
+				<Grid ShowGridLines="False" Margin="5,0,0,0" ColumnDefinitions="185, 45">
+					<Slider IsEnabled="{Binding AllowEdit}" Name="TintSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-255" Maximum="255" Value="0" x:Name="tint" />
+					<ToggleSwitch Name="TintSoftHard" IsEnabled="{Binding AllowEdit}" Grid.Column="1"></ToggleSwitch>
+				</Grid>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
 					<ComboBox Name="Tint" Margin="5,0,0,0" Width="175" SelectedIndex="0">
-						<ComboBoxItem>White (Brighten)</ComboBoxItem>
-						<ComboBoxItem>Black (Darken)</ComboBoxItem>
+						<ComboBoxItem>Black &lt; -- &gt; White</ComboBoxItem>
+						<ComboBoxItem>Cyan &lt; -- &gt; Red</ComboBoxItem>
+						<ComboBoxItem>Magenta &lt; -- &gt; Green</ComboBoxItem>
+						<ComboBoxItem>Yellow &lt; -- &gt; Blue</ComboBoxItem>
 						<ComboBoxItem>Grayscale</ComboBoxItem>
-						<ComboBoxItem>Red (Soft)</ComboBoxItem>
-						<ComboBoxItem>Red (Hard)</ComboBoxItem>
 						<ComboBoxItem>Redscale</ComboBoxItem>
-						<ComboBoxItem>Green (Soft)</ComboBoxItem>
-						<ComboBoxItem>Green (Hard)</ComboBoxItem>
 						<ComboBoxItem>Greenscale</ComboBoxItem>
-						<ComboBoxItem>Blue (Soft)</ComboBoxItem>
-						<ComboBoxItem>Blue (Hard)</ComboBoxItem>
 						<ComboBoxItem>Bluescale</ComboBoxItem>
-						<ComboBoxItem>Cyan (Soft)</ComboBoxItem>
-						<ComboBoxItem>Cyan (Hard)</ComboBoxItem>
 						<ComboBoxItem>Cyanscale</ComboBoxItem>
-						<ComboBoxItem>Yellow (Soft)</ComboBoxItem>
-						<ComboBoxItem>Yellow (Hard)</ComboBoxItem>
 						<ComboBoxItem>Yellowscale</ComboBoxItem>
-						<ComboBoxItem>Magenta (Soft)</ComboBoxItem>
-						<ComboBoxItem>Magenta (Hard)</ComboBoxItem>
 						<ComboBoxItem>Magentascale</ComboBoxItem>
 					</ComboBox>
 					<Button IsEnabled="{Binding AllowEdit}" Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
