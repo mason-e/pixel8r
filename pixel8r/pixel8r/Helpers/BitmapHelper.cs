@@ -86,14 +86,28 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap tint(Bitmap bitmap, string selection, int value)
+        public static Bitmap tintScale(Bitmap bitmap, string selection)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = TintHelper.getTintColor(skBitmap.GetPixel(x, y), selection, value);
+                    SKColor color = TintHelper.getTintScaleColor(skBitmap.GetPixel(x, y), selection);
+                    skBitmap.SetPixel(x, y, color);
+                }
+            }
+            return ConvertFromSkBitmap(skBitmap);
+        }
+
+        public static Bitmap tint(Bitmap bitmap, string selection, int value, bool isHard)
+        {
+            SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
+            for (int y = 0; y < skBitmap.Height; y++)
+            {
+                for (int x = 0; x < skBitmap.Width; x++)
+                {
+                    SKColor color = TintHelper.getTintColor(skBitmap.GetPixel(x, y), selection, value, isHard);
                     skBitmap.SetPixel(x, y, color);
                 }
             }
@@ -155,11 +169,11 @@ namespace pixel8r.Helpers
                     SKColor color = skBitmap.GetPixel(x, y);
                     if (y % 2 == 0)
                     {
-                        color = TintHelper.getTintColor(color, "Black < -- > White", 10);
+                        color = TintHelper.getTintColor(color, "Black < -- > White", 10, false);
                     }
                     else
                     {
-                        color = TintHelper.getTintColor(color, "Black < -- > White", -10);
+                        color = TintHelper.getTintColor(color, "Black < -- > White", -10, false);
                     }
                     skBitmap.SetPixel(x, y, color);
                 }
