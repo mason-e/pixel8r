@@ -4,76 +4,34 @@ namespace pixel8r.Helpers
 {
     public class TintHelper
     {
-        // for now make the value universal to each function for easy experimentation, but not user-selectable
-        private const int tintDelta = 10;
-
-        public static SKColor getTintColor(SKColor color, string tint)
+        public static SKColor getTintScaleColor(SKColor color, string selection)
         {
-            if (tint.Contains("scale"))
+            return colorScale(color, selection);
+        }
+
+        public static SKColor getTintColor(SKColor color, string tint, int value, bool isHard)
+        {
+            if (tint == "Black < -- > White")
             {
-                return colorScale(color, tint);
+                return tintBlackWhite(color, value);
             }
-            if (tint == "White (Brighten)")
+            if (tint == "Cyan < -- > Red")
             {
-                return tintWhite(color);
+                return tintCyanRed(color, value, isHard);
             }
-            if (tint == "Black (Darken)")
+            if (tint == "Magenta < -- > Green")
             {
-                return tintBlack(color);
+                return tintMagentaGreen(color, value, isHard);
             }
-            if (tint == "Red (Soft)")
+            if (tint == "Yellow < -- > Blue")
             {
-                return tintRedSoft(color);
-            }
-            if (tint == "Red (Hard)")
-            {
-                return tintRedHard(color);
-            }
-            if (tint == "Green (Soft)")
-            {
-                return tintGreenSoft(color);
-            }
-            if (tint == "Green (Hard)")
-            {
-                return tintGreenHard(color);
-            }
-            if (tint == "Blue (Soft)")
-            {
-                return tintBlueSoft(color);
-            }
-            if (tint == "Blue (Hard)")
-            {
-                return tintBlueHard(color);
-            }
-            if (tint == "Cyan (Soft)")
-            {
-                return tintCyanSoft(color);
-            }
-            if (tint == "Cyan (Hard)")
-            {
-                return tintCyanHard(color);
-            }
-            if (tint == "Magenta (Soft)")
-            {
-                return tintMagentaSoft(color);
-            }
-            if (tint == "Magenta (Hard)")
-            {
-                return tintMagentaHard(color);
-            }
-            if (tint == "Yellow (Soft)")
-            {
-                return tintYellowSoft(color);
-            }
-            if (tint == "Yellow (Hard)")
-            {
-                return tintYellowHard(color);
+                return tintYellowBlue(color, value, isHard);
             }
             // default case, should not be reachable
             return color;
         }
 
-        private static SKColor colorScale(SKColor color, string tint)
+        private static SKColor colorScale(SKColor color, string selection)
         {
             int average = (int)((color.Red + color.Green + color.Blue) / 3);
             // default values correspond to grayscale
@@ -82,37 +40,37 @@ namespace pixel8r.Helpers
             double weightB = 1.0;
 
             // values vary due to different perceptual strengths of each primary
-            if (tint == "Redscale")
+            if (selection == "Redscale")
             {
                 weightR = 0.9;
                 weightG = 0.05;
                 weightB = 0.05;
             }
-            if (tint == "Greenscale")
+            if (selection == "Greenscale")
             {
                 weightR = 0.1;
                 weightG = 0.8;
                 weightB = 0.1;
             }
-            if (tint == "Bluescale")
+            if (selection == "Bluescale")
             {
                 weightR = 0.15;
                 weightG = 0.3;
                 weightB = 0.55;
             }
-            if (tint == "Cyanscale")
+            if (selection == "Cyanscale")
             {
                 weightR = 0.1;
                 weightG = 0.45;
                 weightB = 0.45;
             }
-            if (tint == "Magentascale")
+            if (selection == "Magentascale")
             {
                 weightR = 0.6;
                 weightG = 0.1;
                 weightB = 0.3;
             }
-            if (tint == "Yellowscale")
+            if (selection == "Yellowscale")
             {
                 weightR = 0.55;
                 weightG = 0.4;
@@ -122,84 +80,51 @@ namespace pixel8r.Helpers
             return new SKColor((byte)(average * weightR), (byte)(average * weightG), (byte)(average * weightB));
         }
 
-        private static SKColor tintWhite(SKColor color)
+        private static SKColor tintBlackWhite(SKColor color, int value)
         {
-            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
+            return new SKColor(addTint(color.Red, value), addTint(color.Green, value), addTint(color.Blue, value));
         }
 
-        private static SKColor tintBlack(SKColor color)
+        private static SKColor tintCyanRed(SKColor color, int value, bool isHard)
         {
-            return new SKColor(subtractTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
+            if (isHard)
+            {
+                return new SKColor(addTint(color.Red, value), addTint(color.Green, -value), addTint(color.Blue, -value));
+            }
+            else
+            {
+                return new SKColor(addTint(color.Red, value), color.Green, color.Blue);
+            }
         }
 
-        private static SKColor tintRedSoft(SKColor color)
+        private static SKColor tintMagentaGreen(SKColor color, int value, bool isHard)
         {
-            return new SKColor(addTint(color.Red, tintDelta), color.Green, color.Blue);
+            if (isHard)
+            {
+                return new SKColor(addTint(color.Red, -value), addTint(color.Green, value), addTint(color.Blue, -value));
+            }
+            else
+            {
+                return new SKColor(color.Red, addTint(color.Green, value), color.Blue);
+            }
         }
 
-        private static SKColor tintRedHard(SKColor color)
+        private static SKColor tintYellowBlue(SKColor color, int value, bool isHard)
         {
-            return new SKColor(addTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintGreenSoft(SKColor color)
-        {
-            return new SKColor(color.Red, addTint(color.Green, tintDelta), color.Blue);
-        }
-
-        private static SKColor tintGreenHard(SKColor color)
-        {
-            return new SKColor(subtractTint(color.Red, tintDelta), addTint(color.Green, 10), subtractTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintBlueSoft(SKColor color)
-        {
-            return new SKColor(color.Red, color.Green, addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintBlueHard(SKColor color)
-        {
-            return new SKColor(subtractTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintCyanSoft(SKColor color)
-        {
-            return new SKColor(color.Red, addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintCyanHard(SKColor color)
-        {
-            return new SKColor(subtractTint(color.Red, tintDelta), addTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintMagentaSoft(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), color.Green, addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintMagentaHard(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), subtractTint(color.Green, tintDelta), addTint(color.Blue, tintDelta));
-        }
-
-        private static SKColor tintYellowSoft(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), color.Blue);
-        }
-
-        private static SKColor tintYellowHard(SKColor color)
-        {
-            return new SKColor(addTint(color.Red, tintDelta), addTint(color.Green, tintDelta), subtractTint(color.Blue, tintDelta));
+            if (isHard)
+            {
+                return new SKColor(addTint(color.Red, -value), addTint(color.Green, -value), addTint(color.Blue, value));
+            }
+            else
+            {
+                return new SKColor(color.Red, color.Green, addTint(color.Blue, value));
+            }
         }
 
         private static byte addTint(byte original, int value)
         {
-            return (byte)(original <= 255 - value ? original + value : 255);
-        }
-
-        private static byte subtractTint(byte original, int value)
-        {
-            return (byte)(original >= value ? original - value : 0);
+            int tinted = original + value;
+            return (byte)(tinted < 255 ? (tinted > 0 ? tinted : 0) : 255);
         }
     }
 }
