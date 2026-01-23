@@ -25,13 +25,36 @@ namespace pixel8rtests
         [DataRow("CAM16")]
         public void testColorMatchingPerformance(string algorithm)
         {
+            // configure an example palette
+            GlobalVars.CurrentPalette = new List<SKColor>{
+                SKColors.Red,
+                SKColors.Green,
+                SKColors.Blue,
+                SKColors.Yellow,
+                SKColors.Cyan,
+                SKColors.Magenta,
+                SKColors.Black,
+                SKColors.White,
+                SKColors.Gray,
+                SKColors.Orange,
+                SKColors.Purple,
+                SKColors.Brown,
+                SKColors.Pink,
+                SKColors.Lime,
+                SKColors.Navy,
+                SKColors.Teal,
+                SKColors.Olive,
+                SKColors.Maroon,
+                SKColors.Silver
+            };
+
             for (int i = 0; i < 50000; i++)
             {
                 Random random = new Random();
                 int r = random.Next(255);
                 int g = random.Next(255);
                 int b = random.Next(255);
-                PaletteMatchingHelper.getMatchedColor(new SKColor((byte)r, (byte)g, (byte)b), "NES", algorithm);
+                PaletteMatchingHelper.getMatchedColor(new SKColor((byte)r, (byte)g, (byte)b),  algorithm);
             }
         }
     }

@@ -10,7 +10,7 @@ namespace pixel8r.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    public ObservableCollection<string> PaletteNames => new(Constants.Palettes.Keys);
+    public ObservableCollection<string> PaletteNames => new(PaletteLoader.getPalettes());
 
     private string _filePath = "No file loaded. Select a file with the open button to enable more editing controls.";
     public string FilePath
