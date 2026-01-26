@@ -38,29 +38,63 @@ Color matching is based on the idea of a mathematical measure of the smallest "d
 With the example image, we can see the differences in how different algorithms produce matches to an NES color palette:
 
 ![](./screenshots/manual/color-distance/colorspace-nes-01-rgb-euclidean.png)  
+*RGB Euclidean*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-02-rgb-redmean.png)  
+*RGB Redmean*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-03-lab-1976.png)  
+*Lab CIE76*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-04-lab-hybrid.png)  
+*Lab Hybrid*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-05-lab-1994.png)  
+*Lab CIE94*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-06-lch-2000.png)  
+*LCh CIEDE2000*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-07-cmc-a.png)  
+*CMC Acceptability*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-08-cmc-p.png)  
+*CMC Perceptibility*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-09-itp.png)  
+*ITP*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-10-z.png)  
+*Z*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-11-ok.png)  
+*OK*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-12-cam02.png)  
+*CAM02*
+
 ![](./screenshots/manual/color-distance/colorspace-nes-13-cam16.png)  
+*CAM16*
 
 
 ## Transpose
 
 These algorithms are more "just for fun" since the resultant colors don't really have any significance. These swap the bytes for each of R, G and B around. So for example, in the BRG one, the red comes from the original blue value; green comes from the original red value; and blue comes from the original red value.
 
-![](./screenshots/manual/transpose/colorspace-01-rbg.png)  
-![](./screenshots/manual/transpose/colorspace-02-grb.png)  
+![](./screenshots/manual/transpose/colorspace-01-rbg.png)
+*RBG*
+
+![](./screenshots/manual/transpose/colorspace-02-grb.png) 
+*GRB*
+
 ![](./screenshots/manual/transpose/colorspace-03-gbr.png)  
-![](./screenshots/manual/transpose/colorspace-04-brg.png)  
+*GBR*
+
+![](./screenshots/manual/transpose/colorspace-04-brg.png) 
+*BRG*
+
 ![](./screenshots/manual/transpose/colorspace-05-bgr.png)  
+*BGR*
 
 ## Fidelity Reduction
 
@@ -71,11 +105,22 @@ The algorithms in this section attempt to approximate these lower fidelity color
 Let's use a different color space image that shows this more prominently - this comes from Wikipedia's complete [24-Bit Colorspace](https://en.wikipedia.org/wiki/File:16777216colors.png), although it's scaled down by the program.
 
 ![](./screenshots/manual/fidelity-reduced/colorspace-01-18-bit.png)  
+*18-Bit*
+
 ![](./screenshots/manual/fidelity-reduced/colorspace-02-15-bit.png)  
+*15-Bit*
+
 ![](./screenshots/manual/fidelity-reduced/colorspace-03-12-bit.png)  
+*12-Bit*
+
 ![](./screenshots/manual/fidelity-reduced/colorspace-04-9-bit.png)  
+*9-Bit*
+
 ![](./screenshots/manual/fidelity-reduced/colorspace-05-6-bit.png)  
+*6-Bit*
+
 ![](./screenshots/manual/fidelity-reduced/colorspace-06-3-bit.png)  
+*3-Bit*
 
 ## Saturation
 
