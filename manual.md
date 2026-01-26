@@ -12,7 +12,7 @@ pixel8r does not overwrite the original loaded image, so it is safe to mess arou
 
 ## Example Image
 
-The example image in this document was generated to approximate the entire RGB color space. Since RGB is based on three values from 0-255, it would take 256^3 = 16,777,216 pixels to display every possible color at minimum - that's about two complete 4K monitors! 
+The example image in this document was generated to approximate the entire RGB color space. Since 24-bit RGB is based on three values from 0-255, it would take 256^3 = 16,777,216 pixels to display every possible color at minimum - that's about two complete 4K monitors! 
 
 Instead, it goes every 3 values, for a more manageable 86^3 - 636,056 pixels (although the actual image is a bit larger since 86 squares don't easily make for a uniform rectangle):
 
@@ -27,9 +27,9 @@ The menu strip on the top left has controls to open or save a file, undo and rel
 - Undo currently supports only going back one step.
 - Reload will reset the image for the currently loaded file.
 
-## Changing to a Predefined Palette
+## Changing Palette
 
-The first dropdown consists of palettes with a discrete set of colors. Upon selecting one, the Palette Preview pane will show squares of all the available colors in the selected palette. Once an algorithm is selected, the button to make the swap becomes available. Upon clicking this button, it will attempt to update each pixel's color to the closest available one in the palette according to the chosen algorithm.
+The first dropdown consists of palettes with a discrete set of colors. The Palette Preview pane will show squares of all the available colors in the selected palette. The selected algorithm will affect how the program attempts to update each pixel's color when the button is clicked.
 
 ### Algorithm Details
 
@@ -52,66 +52,65 @@ With the example image, we can see the differences in how different algorithms p
 ![](./screenshots/manual/color-distance/colorspace-nes-13-cam16.png)  
 
 
-## Changing to a Programmatic Palette
-
-Programmatic palettes change the palette based on some kind of formula instead of a discretely defined set.
-
-#### Saturation
-
-Saturation is, in plain terms, roughly a measure of the "boldness" a color. On a scale of 0.0 to 1.0, or 0 to 100%, each application of the Saturate option increases it by +5%. Therefore, after at most 20 applications this won't change the image anymore. The benefit of saturation is that by making the colors "pop" a bit more, it tends to match better on a palette of simple colors. For example, on an unaltered photo it can have difficulty with skin tones or the subtle gray elements of a blue sky.
-
-The effect isn't super noticeable on the example image, so here is a lone example with the saturation at max. The affect on the grayscale squares shows a potential downside with too much saturation - the HSL/HSV model produces black/white/gray by saturation and lightness/value only, with red being the default 0 hue value.
-
-![](./screenshots/manual/programmatic/colorspace-01-saturated.png)
-
-#### RGB Multiples of X
-
-All of the palettes in this category are based on factors of 255. The idea with these is if we can approximate the original color space with a smaller, simpler palette, maybe when subsequently changing to a discrete palette, there will be a better chance of matching. For each factor, 255 divided by the factor value produces the number of steps to count to 255. Add one to that to account for 0 and you get the number of values for each of R, G, B. That number cubed is the total number of available colors:
-
-Factor | Values | Total Colors |
-| --- | --- | --- |
-3 | 86 | 636,056 |
-5 | 52 | 140,608 |
-15 | 18 | 5832 |
-17 | 16 | 4096 |
-51 | 6 | 216 |
-85 | 4 | 64 |
-
-Some examples that don't show a big difference are skipped, but here are some noticeable ones:
-
-![](./screenshots/manual/programmatic/colorspace-02-factor-17.png)  
-![](./screenshots/manual/programmatic/colorspace-03-factor-51.png)  
-![](./screenshots/manual/programmatic/colorspace-04-factor-85.png)  
-
-#### Transpose
+## Transpose
 
 These algorithms are more "just for fun" since the resultant colors don't really have any significance. These swap the bytes for each of R, G and B around. So for example, in the BRG one, the red comes from the original blue value; green comes from the original red value; and blue comes from the original red value.
 
-![](./screenshots/manual/programmatic/colorspace-05-rbg.png)  
-![](./screenshots/manual/programmatic/colorspace-06-grb.png)  
-![](./screenshots/manual/programmatic/colorspace-07-gbr.png)  
-![](./screenshots/manual/programmatic/colorspace-08-brg.png)  
-![](./screenshots/manual/programmatic/colorspace-09-bgr.png)  
+![](./screenshots/manual/transpose/colorspace-01-rbg.png)  
+![](./screenshots/manual/transpose/colorspace-02-grb.png)  
+![](./screenshots/manual/transpose/colorspace-03-gbr.png)  
+![](./screenshots/manual/transpose/colorspace-04-brg.png)  
+![](./screenshots/manual/transpose/colorspace-05-bgr.png)  
+
+## Fidelity Reduction
+
+Many older computer system and consoles had RGB color with smaller ranges than the 0-255 we are used to on modern computers. More details can be found on this [Wiki Page](https://en.wikipedia.org/wiki/List_of_monochrome_and_RGB_color_formats#Regular_RGB_palettes)
+
+The algorithms in this section attempt to approximate these lower fidelity colors. Of course, they may not be accurate to the actual color systems - they work by limiting the amount of values within the 24-bit RGB space that can be used.
+
+Let's use a different color space image that shows this more prominently - this comes from Wikipedia's complete [24-Bit Colorspace](https://en.wikipedia.org/wiki/File:16777216colors.png), although it's scaled down by the program.
+
+![](./screenshots/manual/fidelity-reduced/colorspace-01-18-bit.png)  
+![](./screenshots/manual/fidelity-reduced/colorspace-02-15-bit.png)  
+![](./screenshots/manual/fidelity-reduced/colorspace-03-12-bit.png)  
+![](./screenshots/manual/fidelity-reduced/colorspace-04-9-bit.png)  
+![](./screenshots/manual/fidelity-reduced/colorspace-05-6-bit.png)  
+![](./screenshots/manual/fidelity-reduced/colorspace-06-3-bit.png)  
+
+## Saturation
+
+Saturation is, in plain terms, roughly a measure of the "boldness" a color. The benefit of saturation is that by making the colors "pop" a bit more, it tends to match better on a palette of simple colors. For example, on an unaltered photo it can have difficulty with skin tones or the subtle gray elements of a blue sky.
+
+Saturation operates on a 0.0 to 1.0, or 0 to 100% scale, and the slider reflects this. A negative value would desaturate in this case.
+
+Some things to be aware of using this:
+- The saturation effect re-applies each time you use it, not just to the starting image. So if you saturate by 5%, then run it again at 15%, this will be 20% total, _not_ 15%.
+- Saturation isn't idempotent in both directions necessarily. An example would be if you saturate by 30%, any pixels that were at 70% or more saturation are limited to 100%. Then if you go back by -30%, pixels that were originally _over_ 70% will be reduced to 70%.
+- Another example of inconsistency is that too much desaturation can strip out the hue info, due to grays not being dictated by hue. This can be seen in the example below, but would also happen if you were to desaturate to gray and resaturate. This is because the hue range default of 0 is red.
+
+This is the colorspace example with saturation at max:
+
+![](./screenshots/manual/programmatic/colorspace-01-saturated.png)
 
 ## Tinting
 
-Tinting works more or less the same way as a programmatic palette, although it's more focused on accentuating a certain color. The colors that can be accentuated are:
+Tinting changes the primary and secondary colors and black and white in an image by manipulating the value of one or more of the RGB channels. The dropdown reflects the color that will show more whether addition or subtraction is applied. For example, since red and cyan are complements of each other, by reducing the red channel a color appears more cyan.
 
-- Primary: Red, Green, Blue
-- Secondary: Cyan, Magenta, Yellow
-- Black, White, Grayscale
+Like with saturation, these add to the last version of the image each time the operation is performed. Also like saturation, adding/subtracting a value and then doing the reverse operation may not always produce the same result.
 
 The differences between what I've called "hard" and "soft" tinting, as well as the "scales" are explained below. There is no hard or soft tint for black and white since those colors use all bytes in the RGB space.
 
-#### Soft Tint
+The "scale" colors aren't affected by the soft/hard toggle _or_ the slider value.
 
-Adds a small increment to only the color byte(s) that contribute to the selected tint. So for example, if you are tinting Magenta, the R and B bytes will gradually increase, with G staying the same. Can be done multiple times to intensify.
+### Soft Tint
 
-#### Hard Tint
+Adds or subtracts a small increment to only the color byte that contribute to the selected tint. So for example, if you are tinting red, the R bytes will be affected, with B and G staying the same. This means the max application will still retain some of the original image.
 
-Adds increments to the tint byte(s) just like a soft tint, but _also_ decrements the byte that doesn't contribute. So following the example from before, since the G byte will decrease, if this tint was applied repeatedly, eventually it would produce a screen of pure Magenta.
+### Hard Tint
 
-#### Scale
+Adds or subtracts to the tint byte just like a soft tint, but _also_ does the opposite operation at the same rate to the complement bytes. So following the example from before, the G and B bytes will be affected the same amount in the opposite direction of R. This means the max application of this would result in an image that's entirely the given color.
+
+### Scale
 
 Gets an average value of the existing color bytes, then multiplies them by weighted values to make the desired tint color. In practice, this makes the tint much more intense than the other methods. The weight values were chosen based on experimentation. They differ because of perceptual differences in color, i.e. red tends to appear brighter than blue, so blue is weighted softer so as to avoid an overly dark appearance.
 
@@ -121,8 +120,12 @@ Crop values are preselected based on common aspect ratios, including pixel perfe
 
 ## Resize
 
-TBD - Operation not working how I want it currently
+The resize slider automatically gets a range of values within the allowed size to expand or shrink the image to. The % value here is a bit misleading, as it's the percentage of a single dimension, not the whole area. 
 
 ## Pixelate
 
-TBD - Operation not working how I want it currently
+Makes the image look more pixelated by creating 3x3 (real pixel) sized "pixels". At present, to make even bigger pixels, you'd need to size the image down to 33%, pixelate, and then size back up to 100%, although this can produce weird results due to rounding.
+
+## Scanlines
+
+Produces a scanline effect using subtle brightness changes every other line. Reapplying this will affect it again, but is not recommended as it tends to just make the whole image look brighter. Like pixelation, the scanlines can be made bigger by sizing down before applying and then sizing back up.
