@@ -32,6 +32,9 @@ on:
   pull_request:
     branches:
     - "main" 
+    paths:
+    - '**/*.cs'
+    - '**/*.csproj'
 
 env:
   DOTNET_VERSION: '9.0.x'
