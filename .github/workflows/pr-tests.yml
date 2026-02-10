@@ -21,10 +21,12 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install dependencies
-      run: |
-        cd pixel8r/pixel8rtests
-        dotnet restore
+    # - name: Install dependencies
+    #   run: |
+    #     cd pixel8r/pixel8rtests
+    #     dotnet restore
 
     - name: Test
-      run: dotnet test --no-restore --verbosity detailed
+      run: |
+        cd pixel8r/pixel8rtests 
+        dotnet test --verbosity detailed
