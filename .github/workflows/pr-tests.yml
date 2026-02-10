@@ -29,4 +29,4 @@ jobs:
     - name: Test
       run: |
         cd pixel8r/pixel8rtests 
-        dotnet test --no-restore --verbosity normal
+        dotnet test --no-restore --verbosity minimal
