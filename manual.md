@@ -31,6 +31,8 @@ The menu strip on the top left has controls to open or save a file, undo and rel
 
 The first dropdown consists of palettes with a discrete set of colors. The Palette Preview pane will show squares of all the available colors in the selected palette. The selected algorithm will affect how the program attempts to update each pixel's color when the button is clicked.
 
+Most of the palettes are sourced from this [Wiki Page](https://en.wikipedia.org/wiki/List_of_video_game_console_palettes).
+
 ### Algorithm Details
 
 Color matching is based on the idea of a mathematical measure of the smallest "distance" between colors. More details can be found on this [Wiki Page](https://en.wikipedia.org/wiki/Color_difference). 
