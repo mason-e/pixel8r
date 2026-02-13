@@ -19,5 +19,5 @@ The initial performance tests are rather informal, as they capture execution tim
 | LCh CIEDE2000| 758 ms |
 | OK | 789 ms |
 | Z | 851 ms |
-| CAM02 | 3.55 s |
 | CAM16 | 2.74 s |
+| CAM02 | 3.55 s |
