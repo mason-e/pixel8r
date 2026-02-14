@@ -19,8 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.4.1" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
+    <PackageVersion Include="MSTest.Sdk" Version="4.1.0" />
     <PackageVersion Include="MSTest" Version="4.1.0" />
   </ItemGroup>
 </Project>
