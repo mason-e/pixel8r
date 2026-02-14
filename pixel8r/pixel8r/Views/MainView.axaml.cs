@@ -133,7 +133,8 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
                 vm.AllowUndo = true;
                 MainImage.Source = BitmapHelper.paletteSwapPredefined(
                     MainImage.Source as Bitmap,
-                    algorithm.Content.ToString()
+                    algorithm.Content.ToString(),
+                    FastMode.IsChecked ?? false
                 );
             }
         }
