@@ -6,21 +6,20 @@
   <ItemGroup>
     <!-- Avalonia packages -->
     <!-- Important: keep version in sync! -->
-    <PackageVersion Include="Avalonia" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.Desktop" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.Browser" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.6" />
-    <PackageVersion Include="Avalonia.Skia" Version="11.3.6" />
-    <PackageVersion Include="System.Drawing.Common" Version="9.0.10" />
-    <PackageVersion Include="Wacton.Unicolour" Version="6.3.0" />
+    <PackageVersion Include="Avalonia" Version="11.3.12" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.12" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.12" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.12" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.3.12" />
+    <PackageVersion Include="Avalonia.Browser" Version="11.3.12" />
+    <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Skia" Version="11.3.12" />
+    <PackageVersion Include="System.Drawing.Common" Version="10.0.3" />
+    <PackageVersion Include="Wacton.Unicolour" Version="6.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
-    <PackageVersion Include="MSTest" Version="3.6.4" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="MSTest.Sdk" Version="4.1.0" />
+    <PackageVersion Include="MSTest" Version="4.1.0" />
   </ItemGroup>
 </Project>

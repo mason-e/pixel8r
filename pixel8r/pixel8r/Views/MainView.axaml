@@ -43,7 +43,10 @@
 				<Border BorderBrush="Blue" Margin="5" BorderThickness="2">
 					<Image Name="PalettePreviewImage" Width="240" Height="192" />
 				</Border>
-				<Label Margin="5,0,0,0">Select Algorithm:</Label>
+				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="125,105">
+					<Label Grid.Column="0" Margin="5,0,0,0">Select Algorithm:</Label>
+					<CheckBox Grid.Column="1" Name="FastMode" Margin="5,0,0,0" HorizontalAlignment="Right">Fast Mode</CheckBox>
+				</Grid>
 				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
 					<ComboBox Name="SwapAlgorithm" Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
 						<ComboBoxItem>RGB Euclidean</ComboBoxItem>
