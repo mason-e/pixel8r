@@ -28,14 +28,19 @@ namespace pixel8r.Helpers
             return original.CreateScaledBitmap(new Avalonia.PixelSize(width, height));
         }
 
-        public static Bitmap paletteSwapPredefined(Bitmap bitmap, string algorithm)
+        public static Bitmap paletteSwapPredefined(Bitmap bitmap, string algorithm, bool fastMode)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
             {
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
-                    SKColor color = PaletteMatchingHelper.getMatchedColor(skBitmap.GetPixel(x, y), algorithm);
+                    SKColor color = skBitmap.GetPixel(x, y);
+                    if (fastMode && algorithm != "RGB Euclidean" && algorithm != "RGB Redmean")
+                    {
+                        color = ReduceFidelityHelper.getReducedColor(color, "18 Bit RGB");
+                    }
+                    color = PaletteMatchingHelper.getMatchedColor(color, algorithm);
                     skBitmap.SetPixel(x, y, color);
                 }
             }
