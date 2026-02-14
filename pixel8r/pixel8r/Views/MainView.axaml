@@ -17,11 +17,9 @@
 	<SplitView IsPaneOpen="True"
 			   DisplayMode="Inline"
 			   OpenPaneLength="250">
-		
 		<SplitView.Pane>
-			<StackPanel>
-				<!--Menu Strip-->
-				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="24, 24, 24, 24">
+			<DockPanel>
+				<Grid DockPanel.Dock="Top" ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="24, 24, 24, 24">
 					<Button Click="Open_Click" Width="24" Height="24" Grid.Column="0">
 						<Image Width="16" Height="16" Source="/Assets/open.png" />
 					</Button>
@@ -35,149 +33,153 @@
 						<Image Width="16" Height="16" Source="/Assets/reload.png" />
 					</Button>
 				</Grid>
-				<!--Discrete Palette-->
-				<Label Margin="5,5,0,0">Select Discrete Palette</Label>
-				<ComboBox Name="DiscretePalette" SelectionChanged="DiscretePalette_Selected" Margin="5,0,0,0" Width="175" SelectedIndex="0" ItemsSource="{Binding PaletteNames}">
-				</ComboBox>
-				<Label Margin="5,0,0,0">Palette Preview</Label>
-				<Border BorderBrush="Blue" Margin="5" BorderThickness="2">
-					<Image Name="PalettePreviewImage" Width="240" Height="192" />
-				</Border>
-				<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="125,105">
-					<Label Grid.Column="0" Margin="5,0,0,0">Select Algorithm:</Label>
-					<CheckBox Grid.Column="1" Name="FastMode" Margin="5,0,0,0" HorizontalAlignment="Right">Fast Mode</CheckBox>
-				</Grid>
-				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Name="SwapAlgorithm" Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
-						<ComboBoxItem>RGB Euclidean</ComboBoxItem>
-						<ComboBoxItem>RGB Redmean</ComboBoxItem>
-						<ComboBoxItem>Lab CIE76</ComboBoxItem>
-						<ComboBoxItem>Lab Hybrid</ComboBoxItem>
-						<ComboBoxItem>Lab CIE94</ComboBoxItem>
-						<ComboBoxItem>LCh CIEDE2000</ComboBoxItem>
-						<ComboBoxItem>CMC Acceptability</ComboBoxItem>
-						<ComboBoxItem>CMC Perceptibility</ComboBoxItem>
-						<ComboBoxItem>ITP</ComboBoxItem>
-						<ComboBoxItem>Z</ComboBoxItem>
-						<ComboBoxItem>OK</ComboBoxItem>
-						<ComboBoxItem>CAM02</ComboBoxItem>
-						<ComboBoxItem>CAM16</ComboBoxItem>
-					</ComboBox>
-					<Button IsEnabled="{Binding AllowEdit}" Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
-				</Grid>
-				<!--Transposee-->
-				<Label Margin="5,10,0,0">Transpose:</Label>
-				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Name="Transpose" Margin="5,0,0,0" Width="175" SelectedIndex="0">
-						<ComboBoxItem>RBG</ComboBoxItem>
-						<ComboBoxItem>GRB</ComboBoxItem>
-						<ComboBoxItem>GBR</ComboBoxItem>
-						<ComboBoxItem>BRG</ComboBoxItem>
-						<ComboBoxItem>BGR</ComboBoxItem>
-					</ComboBox>
-					<Button IsEnabled="{Binding AllowEdit}" Click="Transpose_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
-				</Grid>
-				<!--Reduce Fidelity-->
-				<Label Margin="5,10,0,0">Reduce Fidelity:</Label>
-				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Name="ReduceBits" Margin="5,0,0,0" Width="175" SelectedIndex="0">
-						<ComboBoxItem>3 Bit RGB</ComboBoxItem>
-						<ComboBoxItem>6 Bit RGB</ComboBoxItem>
-						<ComboBoxItem>9 Bit RGB</ComboBoxItem>
-						<ComboBoxItem>12 Bit RGB</ComboBoxItem>
-						<ComboBoxItem>15 Bit RGB</ComboBoxItem>
-						<ComboBoxItem>18 Bit RGB</ComboBoxItem>
-					</ComboBox>
-					<Button IsEnabled="{Binding AllowEdit}" Click="ReduceFidelity_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
-				</Grid>
-				<!--Saturate-->
-				<Label Margin="5,10,0,0">
-					<Label.Content>
-						<MultiBinding StringFormat="Saturate by {0}%">
-							<Binding Path="#saturate.Value"/>
-						</MultiBinding>
-					</Label.Content>
-				</Label>
-				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<Slider IsEnabled="{Binding AllowEdit}" Name="SaturateSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-100" Maximum="100" Value="0" x:Name="saturate" />
-					<Button IsEnabled="{Binding AllowEdit}" Click="Saturate_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
-				</Grid>
-				<!--Tint-->
-				<Label Margin="5,10,0,0" Grid.Column="0">
-					<Label.Content>
-						<MultiBinding StringFormat="Tint by {0}">
-							<Binding Path="#tint.Value"/>
-						</MultiBinding>
-					</Label.Content>
-				</Label>
-				<Grid ShowGridLines="False" Margin="5,0,0,0" ColumnDefinitions="185, 45">
-					<Slider IsEnabled="{Binding AllowEdit}" Name="TintSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-255" Maximum="255" Value="0" x:Name="tint" />
-					<ToggleSwitch Name="TintSoftHard" IsEnabled="{Binding AllowEdit}" Grid.Column="1">
-						<ToggleSwitch.Styles>
-							<Style Selector="ToggleSwitch">
-								<Setter Property="Content" Value="Soft" />
-							</Style>
-							<Style Selector="ToggleSwitch:checked">
-								<Setter Property="Content" Value="Hard" />
-							</Style>
-						</ToggleSwitch.Styles>
-					</ToggleSwitch>
-				</Grid>
-				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
-					<ComboBox Name="Tint" Margin="5,0,0,0" Width="175" SelectedIndex="0">
-						<ComboBoxItem>Black &lt; -- &gt; White</ComboBoxItem>
-						<ComboBoxItem>Cyan &lt; -- &gt; Red</ComboBoxItem>
-						<ComboBoxItem>Magenta &lt; -- &gt; Green</ComboBoxItem>
-						<ComboBoxItem>Yellow &lt; -- &gt; Blue</ComboBoxItem>
-						<ComboBoxItem>Grayscale</ComboBoxItem>
-						<ComboBoxItem>Redscale</ComboBoxItem>
-						<ComboBoxItem>Greenscale</ComboBoxItem>
-						<ComboBoxItem>Bluescale</ComboBoxItem>
-						<ComboBoxItem>Cyanscale</ComboBoxItem>
-						<ComboBoxItem>Yellowscale</ComboBoxItem>
-						<ComboBoxItem>Magentascale</ComboBoxItem>
-					</ComboBox>
-					<Button IsEnabled="{Binding AllowEdit}" Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
-				</Grid>
-				<!--Crop-->
-				<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
-				<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
-					<ComboBox Name="Crop" SelectionChanged="Crop_Selected" Margin="5,0,0,0" Width="135" SelectedIndex="0">
-						<ComboBoxItem>1:1 (Square)</ComboBoxItem>
-						<ComboBoxItem>16:9</ComboBoxItem>
-						<ComboBoxItem>4:3</ComboBoxItem>
-						<ComboBoxItem>16:15 (NES)</ComboBoxItem>
-						<ComboBoxItem>8:7 (SNES)</ComboBoxItem>
-						<ComboBoxItem>10:7 (Genesis)</ComboBoxItem>
-						<ComboBoxItem>10:9 (GB, GG)</ComboBoxItem>
-						<ComboBoxItem>3:2 (GBA)</ComboBoxItem>
-					</ComboBox>
-					<CheckBox IsEnabled="False" Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
-				</Grid>
-				<!--Resize-->
-				<Label Margin="5,10,0,0">
-					<Label.Content>
-						<MultiBinding StringFormat="Resize to {0}%">
-							<Binding Path="#resize.Value"/>
-						</MultiBinding>
-					</Label.Content>
-				</Label>
-				<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
-					<Slider IsEnabled="{Binding AllowEdit}" Name="ResizeSlider" PointerCaptureLost="ResizeSlider_Release" ValueChanged="ResizeSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
-					<Label Name="ResizeTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
-					<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
-				</Grid>
-				<!--Effects/Filters-->
-				<Label Margin="5,10,0,0">Other Operations</Label>
-				<SplitButton IsEnabled="{Binding AllowEdit}" Margin="5,0,0,0" Content="Select...">
-					<SplitButton.Flyout>
-						<MenuFlyout Placement="TopEdgeAlignedLeft">
-							<MenuItem Click="Pixelate_Click" Header="Pixelate" />
-							<MenuItem Click="Scanlines_Click" Header="Scanlines" />
-						</MenuFlyout>
-					</SplitButton.Flyout>
-				</SplitButton>
-			</StackPanel>
+				<ScrollViewer VerticalScrollBarVisibility="Auto">
+					<StackPanel>
+						<!--Discrete Palette-->
+						<Label Margin="5,5,0,0">Select Discrete Palette</Label>
+						<ComboBox Name="DiscretePalette" SelectionChanged="DiscretePalette_Selected" Margin="5,0,0,0" Width="175" SelectedIndex="0" ItemsSource="{Binding PaletteNames}">
+						</ComboBox>
+						<Label Margin="5,0,0,0">Palette Preview</Label>
+						<Border BorderBrush="Blue" Margin="5" BorderThickness="2">
+							<Image Name="PalettePreviewImage" Width="240" Height="192" />
+						</Border>
+						<Grid ShowGridLines="False" Margin="5,5,0,0" ColumnDefinitions="125,105">
+							<Label Grid.Column="0" Margin="5,0,0,0">Select Algorithm:</Label>
+							<CheckBox Grid.Column="1" Name="FastMode" Margin="5,0,0,0" HorizontalAlignment="Right">Fast Mode</CheckBox>
+						</Grid>
+						<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+							<ComboBox Name="SwapAlgorithm" Margin="5,0,0,0" Width="175" SelectedIndex="0" Grid.Column="0">
+								<ComboBoxItem>RGB Euclidean</ComboBoxItem>
+								<ComboBoxItem>RGB Redmean</ComboBoxItem>
+								<ComboBoxItem>Lab CIE76</ComboBoxItem>
+								<ComboBoxItem>Lab Hybrid</ComboBoxItem>
+								<ComboBoxItem>Lab CIE94</ComboBoxItem>
+								<ComboBoxItem>LCh CIEDE2000</ComboBoxItem>
+								<ComboBoxItem>CMC Acceptability</ComboBoxItem>
+								<ComboBoxItem>CMC Perceptibility</ComboBoxItem>
+								<ComboBoxItem>ITP</ComboBoxItem>
+								<ComboBoxItem>Z</ComboBoxItem>
+								<ComboBoxItem>OK</ComboBoxItem>
+								<ComboBoxItem>CAM02</ComboBoxItem>
+								<ComboBoxItem>CAM16</ComboBoxItem>
+							</ComboBox>
+							<Button IsEnabled="{Binding AllowEdit}" Click="SwapDiscrete_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+						</Grid>
+						<!--Transposee-->
+						<Label Margin="5,10,0,0">Transpose:</Label>
+						<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+							<ComboBox Name="Transpose" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+								<ComboBoxItem>RBG</ComboBoxItem>
+								<ComboBoxItem>GRB</ComboBoxItem>
+								<ComboBoxItem>GBR</ComboBoxItem>
+								<ComboBoxItem>BRG</ComboBoxItem>
+								<ComboBoxItem>BGR</ComboBoxItem>
+							</ComboBox>
+							<Button IsEnabled="{Binding AllowEdit}" Click="Transpose_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+						</Grid>
+						<!--Reduce Fidelity-->
+						<Label Margin="5,10,0,0">Reduce Fidelity:</Label>
+						<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+							<ComboBox Name="ReduceBits" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+								<ComboBoxItem>3 Bit RGB</ComboBoxItem>
+								<ComboBoxItem>6 Bit RGB</ComboBoxItem>
+								<ComboBoxItem>9 Bit RGB</ComboBoxItem>
+								<ComboBoxItem>12 Bit RGB</ComboBoxItem>
+								<ComboBoxItem>15 Bit RGB</ComboBoxItem>
+								<ComboBoxItem>18 Bit RGB</ComboBoxItem>
+							</ComboBox>
+							<Button IsEnabled="{Binding AllowEdit}" Click="ReduceFidelity_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+						</Grid>
+						<!--Saturate-->
+						<Label Margin="5,10,0,0">
+							<Label.Content>
+								<MultiBinding StringFormat="Saturate by {0}%">
+									<Binding Path="#saturate.Value"/>
+								</MultiBinding>
+							</Label.Content>
+						</Label>
+						<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+							<Slider IsEnabled="{Binding AllowEdit}" Name="SaturateSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-100" Maximum="100" Value="0" x:Name="saturate" />
+							<Button IsEnabled="{Binding AllowEdit}" Click="Saturate_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+						</Grid>
+						<!--Tint-->
+						<Label Margin="5,10,0,0" Grid.Column="0">
+							<Label.Content>
+								<MultiBinding StringFormat="Tint by {0}">
+									<Binding Path="#tint.Value"/>
+								</MultiBinding>
+							</Label.Content>
+						</Label>
+						<Grid ShowGridLines="False" Margin="5,0,0,0" ColumnDefinitions="185, 45">
+							<Slider IsEnabled="{Binding AllowEdit}" Name="TintSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="1" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="-255" Maximum="255" Value="0" x:Name="tint" />
+							<ToggleSwitch Name="TintSoftHard" IsEnabled="{Binding AllowEdit}" Grid.Column="1">
+								<ToggleSwitch.Styles>
+									<Style Selector="ToggleSwitch">
+										<Setter Property="Content" Value="Soft" />
+									</Style>
+									<Style Selector="ToggleSwitch:checked">
+										<Setter Property="Content" Value="Hard" />
+									</Style>
+								</ToggleSwitch.Styles>
+							</ToggleSwitch>
+						</Grid>
+						<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="185, 45">
+							<ComboBox Name="Tint" Margin="5,0,0,0" Width="175" SelectedIndex="0">
+								<ComboBoxItem>Black &lt; -- &gt; White</ComboBoxItem>
+								<ComboBoxItem>Cyan &lt; -- &gt; Red</ComboBoxItem>
+								<ComboBoxItem>Magenta &lt; -- &gt; Green</ComboBoxItem>
+								<ComboBoxItem>Yellow &lt; -- &gt; Blue</ComboBoxItem>
+								<ComboBoxItem>Grayscale</ComboBoxItem>
+								<ComboBoxItem>Redscale</ComboBoxItem>
+								<ComboBoxItem>Greenscale</ComboBoxItem>
+								<ComboBoxItem>Bluescale</ComboBoxItem>
+								<ComboBoxItem>Cyanscale</ComboBoxItem>
+								<ComboBoxItem>Yellowscale</ComboBoxItem>
+								<ComboBoxItem>Magentascale</ComboBoxItem>
+							</ComboBox>
+							<Button IsEnabled="{Binding AllowEdit}" Click="Tint_Click" Width="45" Margin="5,0,0,0" Grid.Column="1">Go!</Button>
+						</Grid>
+						<!--Crop-->
+						<Label Margin="5,10,0,0">Crop to Aspect Ratio</Label>
+						<Grid ShowGridLines="False" Margin="5,0,0,10" ColumnDefinitions="145, 85">
+							<ComboBox Name="Crop" SelectionChanged="Crop_Selected" Margin="5,0,0,0" Width="135" SelectedIndex="0">
+								<ComboBoxItem>1:1 (Square)</ComboBoxItem>
+								<ComboBoxItem>16:9</ComboBoxItem>
+								<ComboBoxItem>4:3</ComboBoxItem>
+								<ComboBoxItem>16:15 (NES)</ComboBoxItem>
+								<ComboBoxItem>8:7 (SNES)</ComboBoxItem>
+								<ComboBoxItem>10:7 (Genesis)</ComboBoxItem>
+								<ComboBoxItem>10:9 (GB, GG)</ComboBoxItem>
+								<ComboBoxItem>3:2 (GBA)</ComboBoxItem>
+							</ComboBox>
+							<CheckBox IsEnabled="False" Name="CropPreview" Click="CropPreview_Click" Width="85" Margin="5,0,0,0" HorizontalAlignment="Right" Grid.Column="1">Preview &gt;</CheckBox>
+						</Grid>
+						<!--Resize-->
+						<Label Margin="5,10,0,0">
+							<Label.Content>
+								<MultiBinding StringFormat="Resize to {0}%">
+									<Binding Path="#resize.Value"/>
+								</MultiBinding>
+							</Label.Content>
+						</Label>
+						<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
+							<Slider IsEnabled="{Binding AllowEdit}" Name="ResizeSlider" PointerCaptureLost="ResizeSlider_Release" ValueChanged="ResizeSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5" SmallChange="1" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="5" Maximum="200" Value="100" x:Name="resize" />
+							<Label Name="ResizeTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
+							<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Resize_Click">Resize!</Button>
+						</Grid>
+						<!--Effects/Filters-->
+						<Label Margin="5,10,0,0">Other Operations</Label>
+						<SplitButton IsEnabled="{Binding AllowEdit}" Margin="5,0,0,0" Content="Select...">
+							<SplitButton.Flyout>
+								<MenuFlyout Placement="TopEdgeAlignedLeft">
+									<MenuItem Click="Pixelate_Click" Header="Pixelate" />
+									<MenuItem Click="Scanlines_Click" Header="Scanlines" />
+								</MenuFlyout>
+							</SplitButton.Flyout>
+						</SplitButton>
+					</StackPanel>
+				</ScrollViewer>
+			</DockPanel>
 		</SplitView.Pane>
 		<StackPanel>
 			<Grid ShowGridLines="False" Margin="5" ColumnDefinitions="66*, 33*">
