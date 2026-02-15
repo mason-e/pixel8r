@@ -384,15 +384,39 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         }
     }
 
+    private void PixelateSlider_Change(object? sender, RangeBaseValueChangedEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            if (PixelateSlider.Value is double sliderValue)
+            {
+                // do nothing
+            }
+        }
+    }
+
+    private void PixelateSlider_Release(object? sender, PointerCaptureLostEventArgs e)
+    {
+        if (DataContext is MainViewModel vm)
+        {
+            // do nothing for now
+        }
+    }
+
+
     private void Pixelate_Click(object? sender, RoutedEventArgs e)
     {
         if (DataContext is MainViewModel vm)
         {
             vm.PreviousImage = MainImage.Source as Bitmap;
             vm.AllowUndo = true;
-            MainImage.Source = BitmapHelper.pixelate(
-                MainImage.Source as Bitmap
-            );
+            if (PixelateSlider.Value is double sliderValue)
+            {
+                MainImage.Source = BitmapHelper.pixelate(
+                    MainImage.Source as Bitmap,
+                    (int)sliderValue
+                );
+            }
         }
     }
 

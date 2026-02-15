@@ -128,35 +128,30 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(newImage);
         }
 
-        public static Bitmap pixelate(Bitmap bitmap)
+        public static Bitmap pixelate(Bitmap bitmap, int pixelSize)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
-            int x = 1, y = 1;
+            int x = 0, y = 0;
             while (x < skBitmap.Width && y < skBitmap.Height)
             {
-                SKColor color = skBitmap.GetPixel(x, y);
-                for (int i = -1; i <= 1; i++)
+                int xToEdge = Math.Min(pixelSize, skBitmap.Width - x);
+                int yToEdge = Math.Min(pixelSize, skBitmap.Height - y);
+                SKColor color = PixelationHelper.getAverageColor(skBitmap, x, y, xToEdge, yToEdge);
+                for (int i = 0; i < xToEdge; i++)
                 {
-                    for (int j = -1; j <= 1; j++)
+                    for (int j = 0; j < yToEdge; j++)
                     {
-                        try
-                        {
-                            skBitmap.SetPixel(x + i, y + j, color);
-                        }
-                        catch (ArgumentOutOfRangeException)
-                        {
-                            // just handle the exception rather than try to account for the image not being divisible by 3
-                        }
+                        skBitmap.SetPixel(x + i, y + j, color);
                     }
                 }
-                if (x + 3 < skBitmap.Width)
+                if (x + pixelSize < skBitmap.Width)
                 {
-                    x += 3;
+                    x += pixelSize;
                 }
-                else if (y + 3 < skBitmap.Height)
+                else if (y + pixelSize < skBitmap.Height)
                 {
-                    y += 3;
-                    x = 1;
+                    y += pixelSize;
+                    x = 0;
                 }
                 else break;
             }
