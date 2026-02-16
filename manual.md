@@ -171,8 +171,8 @@ The resize slider automatically gets a range of values within the allowed size t
 
 ## Pixelate
 
-Makes the image look more pixelated by creating 3x3 (real pixel) sized "pixels". At present, to make even bigger pixels, you'd need to size the image down to 33%, pixelate, and then size back up to 100%, although this can produce weird results due to rounding.
+Gives the image a mosaic/pixelated look by creating larger "effective" pixels out of individual real pixels. The dimensions availabe for an effective pixel are 2x2, 3x3, 4x4, 5x5, 6x6, 8x8, 9x9, 10x10, 12x12, 15x15 and 16x16 - chosen for their factorability.
 
 ## Scanlines
 
-Produces a scanline effect using subtle brightness changes every other line. Reapplying this will affect it again, but is not recommended as it tends to just make the whole image look brighter. Like pixelation, the scanlines can be made bigger by sizing down before applying and then sizing back up.
+Produces darkened lines of pixels between a selectable number of other lines to simulate a scanline effect. Scanlines can be applied to an image at any time, but if planning to pixelate the image, it is recommended to pixelate first. Additionaly, the scanline value should be a factor of the pixel size - for example, if the pixels are 15x15, then the scanline choice should be either every 3 or every 5 pixels so they line up.

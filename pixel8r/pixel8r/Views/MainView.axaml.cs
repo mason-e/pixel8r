@@ -390,9 +390,13 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             vm.PreviousImage = MainImage.Source as Bitmap;
             vm.AllowUndo = true;
-            MainImage.Source = BitmapHelper.pixelate(
-                MainImage.Source as Bitmap
-            );
+            if (PixelateSlider.Value is double sliderValue)
+            {
+                MainImage.Source = BitmapHelper.pixelate(
+                    MainImage.Source as Bitmap,
+                    (int)sliderValue
+                );
+            }
         }
     }
 
@@ -402,9 +406,13 @@ public partial class MainView : ReactiveUserControl<MainViewModel>
         {
             vm.PreviousImage = MainImage.Source as Bitmap;
             vm.AllowUndo = true;
-            MainImage.Source = BitmapHelper.scanlines(
-                MainImage.Source as Bitmap
-            );
+            if (ScanlineSlider.Value is double sliderValue)
+            {
+                MainImage.Source = BitmapHelper.scanlines(
+                    MainImage.Source as Bitmap,
+                    (int)sliderValue
+                );
+            }
         }
     }
 
