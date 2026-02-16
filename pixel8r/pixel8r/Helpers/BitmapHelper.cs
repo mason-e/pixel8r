@@ -159,7 +159,7 @@ namespace pixel8r.Helpers
             return ConvertFromSkBitmap(skBitmap);
         }
 
-        public static Bitmap scanlines(Bitmap bitmap)
+        public static Bitmap scanlines(Bitmap bitmap, int scanlineHeight)
         {
             SKBitmap skBitmap = ConvertToSKBitmap(bitmap);
             for (int y = 0; y < skBitmap.Height; y++)
@@ -167,13 +167,13 @@ namespace pixel8r.Helpers
                 for (int x = 0; x < skBitmap.Width; x++)
                 {
                     SKColor color = skBitmap.GetPixel(x, y);
-                    if (y % 2 == 0)
+                    if (y % scanlineHeight == 0)
                     {
-                        color = TintHelper.getTintColor(color, "Black < -- > White", 10, false);
+                        color = TintHelper.getTintColor(color, "Black < -- > White", -10 * scanlineHeight, false);
                     }
                     else
                     {
-                        color = TintHelper.getTintColor(color, "Black < -- > White", -10, false);
+                        color = TintHelper.getTintColor(color, "Black < -- > White", 10, false);
                     }
                     skBitmap.SetPixel(x, y, color);
                 }
