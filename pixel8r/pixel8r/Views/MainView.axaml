@@ -177,17 +177,19 @@
 						</Label>
 						<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
 							<Slider IsEnabled="{Binding AllowEdit}" Name="PixelateSlider" PointerCaptureLost="PixelateSlider_Release" ValueChanged="PixelateSlider_Change" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" Ticks="2,3,4,5,6,8,9,10,12,15,16" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="2" Maximum="16" Value="2" x:Name="pixelate" />
-							<Label Name="PixelateTarget" Margin="5,0,0,0" Grid.Column="0" Grid.Row="1"></Label>
-							<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Click="Pixelate_Click">Pixelate!</Button>
+							<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Click="Pixelate_Click">Pixelate!</Button>
 						</Grid>
-						<Label Margin="5,10,0,0">Other Operations</Label>
-						<SplitButton IsEnabled="{Binding AllowEdit}" Margin="5,0,0,0" Content="Select...">
-							<SplitButton.Flyout>
-								<MenuFlyout Placement="TopEdgeAlignedLeft">
-									<MenuItem Click="Scanlines_Click" Header="Scanlines" />
-								</MenuFlyout>
-							</SplitButton.Flyout>
-						</SplitButton>
+						<Label Margin="5,10,0,0">
+							<Label.Content>
+								<MultiBinding StringFormat="Scanline every {0} pixels">
+									<Binding Path="#scanlines.Value"/>
+								</MultiBinding>
+							</Label.Content>
+						</Label>
+						<Grid Margin="5,0,0,10" ColumnDefinitions="145, 85" RowDefinitions="Auto, Auto">
+							<Slider IsEnabled="{Binding AllowEdit}" Name="ScanlineSlider" Grid.Column="0" Grid.Row="0" IsSnapToTickEnabled="True" Ticks="2,3,4,5" Margin="5,0,0,0" HorizontalAlignment="Left" Width="135" Minimum="2" Maximum="5" Value="2" x:Name="scanlines" />
+							<Button IsEnabled="{Binding AllowEdit}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Click="Scanlines_Click">Scanlines!</Button>
+						</Grid>
 					</StackPanel>
 				</ScrollViewer>
 			</DockPanel>
